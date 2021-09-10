@@ -1,6 +1,6 @@
 ﻿namespace UGF.DebugTools.Runtime
 {
-    public static class DebugDraw
+    public static class DebugShape
     {
     }
 }
