@@ -1,20 +1,20 @@
 {
-  "name": "com.ugf.package.name",
-  "displayName": "UGF.Package.Name",
+  "name": "com.ugf.debugtools",
+  "displayName": "UGF.DebugTools",
   "version": "0.0.0-preview",
   "unity": "2021.1",
   "apiCompatibility": ".NET Standard 2.0",
-  "description": "No description.",
+  "description": "Provides tools for working with debug information.",
   "author": {
     "name": "Unity Game Framework",
     "url": "https://github.com/unity-game-framework"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git://github.com/unity-game-framework/ugf-debugtools.git"
   },
-  "changelogUrl": "",
-  "licensesUrl": "",
+  "changelogUrl": "https://github.com/unity-game-framework/ugf-debugtools/blob/main/changelog.md",
+  "licensesUrl": "https://github.com/unity-game-framework/ugf-debugtools/blob/main/license",
   "publishConfig": {
     "registry": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
   },
