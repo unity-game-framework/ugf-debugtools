@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.ugf.debugtools": {
-      "version": "file:Package",
+      "version": "file:UGF.DebugTools",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
