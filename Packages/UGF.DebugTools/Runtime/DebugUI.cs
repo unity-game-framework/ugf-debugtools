@@ -11,6 +11,10 @@ namespace UGF.DebugTools.Runtime
 
         static DebugUI()
         {
+            GUISkin skin = DebugSettings.GetDefaultSkin();
+
+            Drawer.SetSkin(skin);
+
             Executor = new GameObject(nameof(DebugUIExecutor)).AddComponent<DebugUIExecutor>();
             Executor.SetDrawer(Drawer);
 
