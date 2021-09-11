@@ -7,7 +7,7 @@ namespace UGF.DebugTools.Runtime
     {
         public bool Enabled { get; set; } = true;
         public Vector3 Position { get; set; }
-        public Vector2 Size { get; set; } = Vector2.one * 100F;
+        public Vector2 Size { get; set; } = Vector2.one * 250F;
         public Vector2 Scale { get; set; } = Vector2.one;
         public Rect Rect { get; private set; }
         public bool IsVisible { get; private set; }
