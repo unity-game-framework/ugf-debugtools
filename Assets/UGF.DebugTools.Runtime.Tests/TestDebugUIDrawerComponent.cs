@@ -9,9 +9,18 @@ namespace UGF.DebugTools.Runtime.Tests
 
         private class TestPanel : DebugUIPanel
         {
+            public TestPanel()
+            {
+                Scale = Vector2.one * 2F;
+            }
+
             protected override void OnDrawGUILayout()
             {
+                GUILayout.BeginVertical(GUI.skin.box);
+
                 GUILayout.Button("Button");
+
+                GUILayout.EndVertical();
             }
         }
 
