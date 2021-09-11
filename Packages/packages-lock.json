@@ -1,12 +1,30 @@
 {
   "dependencies": {
+    "com.ugf.customsettings": {
+      "version": "3.4.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.ugf.editortools": "1.7.0"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
     "com.ugf.debugtools": {
       "version": "file:UGF.DebugTools",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
+        "com.ugf.customsettings": "3.4.1",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.ugf.editortools": {
+      "version": "1.7.0",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
