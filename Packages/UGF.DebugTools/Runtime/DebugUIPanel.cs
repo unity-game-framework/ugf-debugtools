@@ -24,32 +24,35 @@ namespace UGF.DebugTools.Runtime
 
         public void DrawGUI()
         {
-            if (IsVisible)
+            if (Enabled)
             {
-                Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(Scale.x, Scale.y, 1F));
-
-                using (new DebugUIMatrixScope(matrix))
-                using (new DebugUILayoutAreaScope(Rect))
+                if (IsVisible)
                 {
-                    OnDrawGUILayout();
+                    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(Scale.x, Scale.y, 1F));
+
+                    using (new DebugUIMatrixScope(matrix))
+                    using (new DebugUILayoutAreaScope(Rect))
+                    {
+                        OnDrawGUILayout();
+                    }
                 }
-            }
 
-            if (Event.current.type == EventType.Repaint)
-            {
-                Vector3 screenPoint = Camera.current.WorldToScreenPoint(Position);
-
-                if (screenPoint.z > 0F)
+                if (Event.current.type == EventType.Repaint)
                 {
-                    var rect = new Rect(screenPoint.x / Scale.x, (Screen.height - screenPoint.y) / Scale.y, Size.x, Size.y);
-                    var screen = new Rect(0F, 0F, Screen.width, Screen.height);
+                    Vector3 screenPoint = Camera.current.WorldToScreenPoint(Position);
 
-                    Rect = rect;
-                    IsVisible = screen.Contains(screenPoint);
-                }
-                else
-                {
-                    IsVisible = false;
+                    if (screenPoint.z > 0F)
+                    {
+                        var rect = new Rect(screenPoint.x / Scale.x, (Screen.height - screenPoint.y) / Scale.y, Size.x, Size.y);
+                        var screen = new Rect(0F, 0F, Screen.width, Screen.height);
+
+                        Rect = rect;
+                        IsVisible = screen.Contains(screenPoint);
+                    }
+                    else
+                    {
+                        IsVisible = false;
+                    }
                 }
             }
         }
