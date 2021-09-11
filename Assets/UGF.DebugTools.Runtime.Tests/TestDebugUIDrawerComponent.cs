@@ -7,7 +7,7 @@ namespace UGF.DebugTools.Runtime.Tests
         private readonly DebugUIDrawer m_drawer = new DebugUIDrawer();
         private readonly TestPanel m_panel = new TestPanel();
 
-        private class TestPanel : DebugUIPanel
+        private class TestPanel : DebugUIPanelText
         {
             public TestPanel()
             {
@@ -16,11 +16,9 @@ namespace UGF.DebugTools.Runtime.Tests
 
             protected override void OnDrawGUILayout()
             {
-                GUILayout.BeginVertical(GUI.skin.box);
+                base.OnDrawGUILayout();
 
                 GUILayout.Button("Button");
-
-                GUILayout.EndVertical();
             }
         }
 
