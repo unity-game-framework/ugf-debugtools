@@ -1,0 +1,26 @@
+﻿using UGF.DebugTools.Runtime.Scopes;
+using UnityEngine;
+
+namespace UGF.DebugTools.Runtime
+{
+    public class DebugUIPanelText : DebugUIPanel
+    {
+        public string Text { get; set; } = "Text";
+        public bool DisplayBackground { get; set; } = true;
+
+        protected override void OnDrawGUILayout()
+        {
+            if (DisplayBackground)
+            {
+                using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.box))
+                {
+                    GUILayout.Label(Text);
+                }
+            }
+            else
+            {
+                GUILayout.Label(Text);
+            }
+        }
+    }
+}
