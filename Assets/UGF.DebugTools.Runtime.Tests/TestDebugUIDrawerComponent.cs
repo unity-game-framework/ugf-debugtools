@@ -4,8 +4,7 @@ namespace UGF.DebugTools.Runtime.Tests
 {
     public class TestDebugUIDrawerComponent : MonoBehaviour
     {
-        private readonly DebugUIDrawer m_drawer = new DebugUIDrawer();
-        private readonly TestPanel m_panel = new TestPanel();
+        private TestPanel m_panel;
 
         private class TestPanel : DebugUIPanelText
         {
@@ -24,17 +23,12 @@ namespace UGF.DebugTools.Runtime.Tests
 
         private void Start()
         {
-            m_drawer.Panels.Add(m_panel);
+            m_panel = DebugUI.PanelAdd<TestPanel>();
         }
 
         private void Update()
         {
             m_panel.Position = transform.position;
-        }
-
-        private void OnGUI()
-        {
-            m_drawer.DrawGUI();
         }
     }
 }
