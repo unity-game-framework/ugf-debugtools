@@ -2,7 +2,9 @@
     "name": "UGF.DebugTools.Editor",
     "rootNamespace": "UGF.DebugTools.Editor",
     "references": [
-        "GUID:37dddc4e4de3de84f81310a1d1cd5e2c"
+        "GUID:37dddc4e4de3de84f81310a1d1cd5e2c",
+        "GUID:ff62901452104d14cae29322ac133c05",
+        "GUID:4806a292f99efd44aba38aea20847e17"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,7 +1,9 @@
 {
     "name": "UGF.DebugTools.Runtime",
     "rootNamespace": "UGF.DebugTools.Runtime",
-    "references": [],
+    "references": [
+        "GUID:ff62901452104d14cae29322ac133c05"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
