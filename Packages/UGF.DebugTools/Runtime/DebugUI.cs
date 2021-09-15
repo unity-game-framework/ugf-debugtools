@@ -14,7 +14,11 @@ namespace UGF.DebugTools.Runtime
             DebugSettingsAsset settings = DebugSettings.Settings.GetData();
 
             Drawer.Scale = settings.UIScale;
-            Drawer.SetSkin(settings.DefaultSkin);
+
+            if (settings.UISkin != null)
+            {
+                Drawer.SetSkin(settings.UISkin);
+            }
 
             Executor = new GameObject(nameof(DebugUIExecutor)).AddComponent<DebugUIExecutor>();
             Executor.SetDrawer(Drawer);
