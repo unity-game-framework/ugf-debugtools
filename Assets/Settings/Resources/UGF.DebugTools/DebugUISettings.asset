@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7f428396e29478b9f069a749c847b49, type: 3}
-  m_Name: DebugSettings
+  m_Name: DebugUISettings
   m_EditorClassIdentifier: 
-  m_uiScale: {x: 2, y: 2}
-  m_uiSkin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
+  m_scale: {x: 1, y: 1}
+  m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
+  m_drawers: []

@@ -4,12 +4,12 @@ using UnityEditor;
 
 namespace UGF.DebugTools.Editor
 {
-    internal static class DebugSettingsProvider
+    internal static class DebugUISettingsProvider
     {
         [SettingsProvider]
         private static SettingsProvider GetProvider()
         {
-            return new CustomSettingsProvider<DebugSettingsAsset>("Project/Unity Game Framework/Debug", DebugSettings.Settings, SettingsScope.Project);
+            return new CustomSettingsProvider<DebugUISettingsAsset>("Project/Unity Game Framework/Debug UI", DebugUISettings.Settings, SettingsScope.Project);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace UGF.DebugTools.Runtime
@@ -9,13 +10,21 @@ namespace UGF.DebugTools.Runtime
 
         static DebugUI()
         {
-            DebugSettingsAsset settings = DebugSettings.Settings.GetData();
+            DebugUISettingsAsset settings = DebugUISettings.Settings.GetData();
 
-            Drawer.Scale = settings.UIScale;
+            Drawer.Scale = settings.Scale;
 
-            if (settings.UISkin != null)
+            if (settings.Skin != null)
             {
-                Drawer.SetSkin(settings.UISkin);
+                Drawer.SetSkin(settings.Skin);
+            }
+
+            for (int i = 0; i < settings.Drawers.Count; i++)
+            {
+                AssetReference<DebugUIDrawerAsset> reference = settings.Drawers[i];
+                IDebugUIDrawer drawer = reference.Asset.Build();
+
+                Drawer.AddDrawer(reference.Guid, drawer);
             }
 
             OnCreateExecuter();

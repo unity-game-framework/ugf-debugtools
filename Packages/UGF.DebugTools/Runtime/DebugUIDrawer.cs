@@ -8,34 +8,36 @@ namespace UGF.DebugTools.Runtime
 {
     public class DebugUIDrawer
     {
-        public IReadOnlyCollection<IDebugUIDrawer> Drawers { get; }
+        public IReadOnlyDictionary<string, IDebugUIDrawer> Drawers { get; }
         public Vector2 Scale { get; set; } = Vector2.one;
         public GUISkin Skin { get { return HasSkin ? m_skin : throw new ArgumentException("Value not specified."); } }
         public bool HasSkin { get { return m_skin != null; } }
 
-        private readonly List<IDebugUIDrawer> m_drawers = new List<IDebugUIDrawer>();
+        private readonly Dictionary<string, IDebugUIDrawer> m_drawers = new Dictionary<string, IDebugUIDrawer>();
         private GUISkin m_skin;
 
         public DebugUIDrawer()
         {
-            Drawers = new ReadOnlyCollection<IDebugUIDrawer>(m_drawers);
+            Drawers = new ReadOnlyDictionary<string, IDebugUIDrawer>(m_drawers);
         }
 
-        public void AddDrawer(IDebugUIDrawer drawer)
+        public void AddDrawer(string id, IDebugUIDrawer drawer)
         {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
             if (drawer == null) throw new ArgumentNullException(nameof(drawer));
 
-            m_drawers.Add(drawer);
+            m_drawers.Add(id, drawer);
 
             drawer.Enable();
         }
 
-        public bool RemoveDrawer(IDebugUIDrawer drawer)
+        public bool RemoveDrawer(string id)
         {
-            if (drawer == null) throw new ArgumentNullException(nameof(drawer));
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
-            if (m_drawers.Remove(drawer))
+            if (m_drawers.TryGetValue(id, out IDebugUIDrawer drawer))
             {
+                m_drawers.Remove(id);
                 drawer.Disable();
                 return true;
             }
@@ -45,11 +47,9 @@ namespace UGF.DebugTools.Runtime
 
         public void Clear()
         {
-            for (int i = 0; i < m_drawers.Count; i++)
+            foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
             {
-                IDebugUIDrawer drawer = m_drawers[i];
-
-                drawer.Disable();
+                pair.Value.Disable();
             }
 
             m_drawers.Clear();
@@ -63,11 +63,9 @@ namespace UGF.DebugTools.Runtime
             using (new DebugUIMatrixScope(matrix))
             using (new DebugUISkinScope(skin))
             {
-                for (int i = 0; i < m_drawers.Count; i++)
+                foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
                 {
-                    IDebugUIDrawer drawer = m_drawers[i];
-
-                    drawer.DrawGUI();
+                    pair.Value.DrawGUI();
                 }
             }
         }
@@ -108,18 +106,46 @@ namespace UGF.DebugTools.Runtime
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            for (int i = 0; i < m_drawers.Count; i++)
+            foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
             {
-                drawer = m_drawers[i];
-
-                if (type.IsInstanceOfType(drawer))
+                if (type.IsInstanceOfType(pair.Value))
                 {
+                    drawer = pair.Value;
                     return true;
                 }
             }
 
             drawer = null;
             return false;
+        }
+
+        public T Get<T>(string id)
+        {
+            return (T)Get(id);
+        }
+
+        public IDebugUIDrawer Get(string id)
+        {
+            return TryGet(id, out IDebugUIDrawer drawer) ? drawer : throw new ArgumentException($"Drawer not found by the specified id: '{id}'.");
+        }
+
+        public bool TryGet<T>(string id, out T drawer) where T : IDebugUIDrawer
+        {
+            if (TryGet(id, out IDebugUIDrawer value))
+            {
+                drawer = (T)value;
+                return true;
+            }
+
+            drawer = default;
+            return false;
+        }
+
+        public bool TryGet(string id, out IDebugUIDrawer drawer)
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
+
+            return m_drawers.TryGetValue(id, out drawer);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using UGF.DebugTools.Runtime.Scopes;
-using UnityEngine;
-
-namespace UGF.DebugTools.Runtime
+﻿namespace UGF.DebugTools.Runtime
 {
     public abstract class DebugUIDrawerBase : IDebugUIDrawer
     {
