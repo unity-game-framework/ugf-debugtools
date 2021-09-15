@@ -1,5 +1,4 @@
 ﻿using UGF.CustomSettings.Runtime;
-using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
@@ -10,12 +9,5 @@ namespace UGF.DebugTools.Runtime
             "UGF.DebugTools",
             nameof(DebugSettings)
         );
-
-        public static GUISkin GetDefaultSkin()
-        {
-            DebugSettingsAsset data = Settings.GetData();
-
-            return data.DefaultSkin;
-        }
     }
 }

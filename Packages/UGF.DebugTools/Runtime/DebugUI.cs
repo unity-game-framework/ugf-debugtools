@@ -11,9 +11,10 @@ namespace UGF.DebugTools.Runtime
 
         static DebugUI()
         {
-            GUISkin skin = DebugSettings.GetDefaultSkin();
+            DebugSettingsAsset settings = DebugSettings.Settings.GetData();
 
-            Drawer.SetSkin(skin);
+            Drawer.Scale = settings.UIScale;
+            Drawer.SetSkin(settings.DefaultSkin);
 
             Executor = new GameObject(nameof(DebugUIExecutor)).AddComponent<DebugUIExecutor>();
             Executor.SetDrawer(Drawer);
@@ -39,18 +40,16 @@ namespace UGF.DebugTools.Runtime
             return panel;
         }
 
-        public static bool PanelAdd(DebugUIPanel panel)
+        public static void PanelAdd(DebugUIPanel panel)
         {
-            if (panel == null) throw new ArgumentNullException(nameof(panel));
-
-            return Drawer.Panels.Add(panel);
+            Drawer.AddPanel(panel);
         }
 
         public static bool PanelRemove(DebugUIPanel panel)
         {
             if (panel == null) throw new ArgumentNullException(nameof(panel));
 
-            return Drawer.Panels.Remove(panel);
+            return Drawer.RemovePanel(panel);
         }
     }
 }

@@ -12,11 +12,6 @@ namespace UGF.DebugTools.Runtime.Tests
             private Vector2 m_scroll;
             private float m_slider;
 
-            public TestPanel()
-            {
-                Scale = Vector2.one * 2F;
-            }
-
             protected override void OnDrawGUILayout()
             {
                 base.OnDrawGUILayout();
