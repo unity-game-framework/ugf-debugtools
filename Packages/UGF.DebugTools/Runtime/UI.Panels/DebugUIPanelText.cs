@@ -1,7 +1,7 @@
 ﻿using UGF.DebugTools.Runtime.Scopes;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.UI.Panels
 {
     public class DebugUIPanelText : DebugUIPanel
     {

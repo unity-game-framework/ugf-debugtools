@@ -2,7 +2,7 @@
 using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.UI.Sections
 {
     [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug UI Section Drawer", order = 2000)]
     public class DebugUISectionDrawerAsset : DebugUIDrawerAsset

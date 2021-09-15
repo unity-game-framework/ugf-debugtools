@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.UI.Sections
 {
     public abstract class DebugUISection
     {

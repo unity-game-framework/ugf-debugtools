@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.Scopes;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.UI.Sections
 {
     public class DebugUISectionDrawer : DebugUIDrawerBase
     {

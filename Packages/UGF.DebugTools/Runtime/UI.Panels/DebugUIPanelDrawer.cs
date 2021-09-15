@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.UI.Panels
 {
     public class DebugUIPanelDrawer : DebugUIDrawerBase
     {

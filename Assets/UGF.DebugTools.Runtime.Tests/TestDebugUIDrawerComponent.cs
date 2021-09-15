@@ -1,4 +1,5 @@
 ﻿using UGF.DebugTools.Runtime.Scopes;
+using UGF.DebugTools.Runtime.UI.Panels;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.Tests

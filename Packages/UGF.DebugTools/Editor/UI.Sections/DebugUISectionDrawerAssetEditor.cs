@@ -1,10 +1,10 @@
-﻿using UGF.DebugTools.Runtime;
+﻿using UGF.DebugTools.Runtime.UI.Sections;
 using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.AssetReferences;
 using UGF.EditorTools.Editor.IMGUI.Scopes;
 using UnityEditor;
 
-namespace UGF.DebugTools.Editor
+namespace UGF.DebugTools.Editor.UI.Sections
 {
     [CustomEditor(typeof(DebugUISectionDrawerAsset), true)]
     internal class DebugUISectionDrawerAssetEditor : UnityEditor.Editor

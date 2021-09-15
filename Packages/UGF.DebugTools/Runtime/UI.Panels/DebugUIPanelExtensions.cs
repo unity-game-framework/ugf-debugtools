@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.UI.Panels
 {
     public static class DebugUIPanelExtensions
     {

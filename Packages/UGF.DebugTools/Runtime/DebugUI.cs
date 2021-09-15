@@ -1,16 +1,12 @@
-﻿using System;
-using UGF.DebugTools.Runtime.UI.Menu;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+﻿using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace UGF.DebugTools.Runtime
 {
-    public static class DebugUI
+    public static partial class DebugUI
     {
         public static DebugUIDrawer Drawer { get; } = new DebugUIDrawer();
-
-        private static readonly DebugUIMenuDrawer m_menu = new DebugUIMenuDrawer();
 
         static DebugUI()
         {
@@ -34,42 +30,6 @@ namespace UGF.DebugTools.Runtime
             OnCreateExecuter();
         }
 
-        public static DebugUIPanelText PanelText(string text)
-        {
-            var panel = PanelAdd<DebugUIPanelText>();
-
-            panel.Text = text;
-
-            return panel;
-        }
-
-        public static T PanelAdd<T>() where T : DebugUIPanel, new()
-        {
-            var panel = new T();
-
-            PanelAdd(panel);
-
-            return panel;
-        }
-
-        public static void PanelAdd(DebugUIPanel panel)
-        {
-            Drawer.Get<DebugUIPanelDrawer>().AddPanel(panel);
-        }
-
-        public static bool PanelRemove(DebugUIPanel panel)
-        {
-            return Drawer.Get<DebugUIPanelDrawer>().RemovePanel(panel);
-        }
-
-        public static void MenuShow(DebugUIMenu menu, Rect position)
-        {
-            if (menu == null) throw new ArgumentNullException(nameof(menu));
-
-            m_menu.Position = position;
-            m_menu.SetMenu(menu);
-        }
-
         private static void OnCreateExecuter()
         {
             var executer = new GameObject(nameof(DebugUIExecuter)).AddComponent<DebugUIExecuter>();
@@ -83,10 +43,7 @@ namespace UGF.DebugTools.Runtime
         {
             Drawer.DrawGUI();
 
-            if (m_menu.AnySelected())
-            {
-                m_menu.ClearMenu();
-            }
+            MenuCheck();
         }
     }
 }
