@@ -19,6 +19,13 @@ namespace UGF.DebugTools.Runtime.UI.Menu
             menu.Add(item);
         }
 
+        public static void ShowContext(this DebugUIMenu menu)
+        {
+            if (menu == null) throw new ArgumentNullException(nameof(menu));
+
+            DebugUI.MenuShowContext(menu);
+        }
+
         public static void Show(this DebugUIMenu menu, Rect position)
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));

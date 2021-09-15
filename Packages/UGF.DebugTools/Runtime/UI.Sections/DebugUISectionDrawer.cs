@@ -93,7 +93,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             rect = DebugUIUtility.TransformToGUISpace(rect);
 
-            using (new DebugUIGroupScope(rect))
             using (new DebugUILayoutAreaScope(rect))
             {
                 Display = GUILayout.Toggle(Display, "Display Debug Sections");

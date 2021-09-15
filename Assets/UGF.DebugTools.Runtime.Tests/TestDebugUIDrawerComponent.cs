@@ -45,7 +45,7 @@ namespace UGF.DebugTools.Runtime.Tests
                 m_slider = GUILayout.HorizontalScrollbar(m_slider, 0.25f, 0, 1);
                 m_slider = GUILayout.VerticalScrollbar(m_slider, 0.25f, 0, 1);
 
-                if (GUILayout.Button("Menu"))
+                if (GUILayout.Button("Menu Context"))
                 {
                     var menu = new DebugUIMenu();
 
@@ -54,7 +54,7 @@ namespace UGF.DebugTools.Runtime.Tests
                         menu.Add(new GUIContent($"Item {i}"));
                     }
 
-                    menu.Show(new Rect(1F, 1F, 100F, 100F));
+                    menu.ShowContext();
                 }
             }
         }

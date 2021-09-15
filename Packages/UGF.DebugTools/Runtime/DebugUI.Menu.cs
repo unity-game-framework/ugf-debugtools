@@ -6,6 +6,20 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugUI
     {
+        public static void MenuShowContext(DebugUIMenu menu)
+        {
+            MenuShowContext(menu, new Vector2(150F, 300F));
+        }
+
+        public static void MenuShowContext(DebugUIMenu menu, Vector2 size)
+        {
+            Vector2 mouse = Event.current.mousePosition;
+            Vector2 screenPoint = GUIUtility.GUIToScreenPoint(mouse);
+            var rect = new Rect(screenPoint.x, screenPoint.y, size.x, size.y);
+
+            MenuShow(menu, rect);
+        }
+
         public static void MenuShow(DebugUIMenu menu, Rect position)
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));

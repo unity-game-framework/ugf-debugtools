@@ -33,7 +33,9 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             if (HasMenu)
             {
-                GUI.ModalWindow(0, Position, m_windowFunction, GUIContent.none, GUI.skin.box);
+                Rect position = DebugUIUtility.TransformToGUISpace(Position);
+
+                GUI.ModalWindow(0, position, m_windowFunction, GUIContent.none, GUI.skin.box);
                 GUI.FocusWindow(0);
             }
         }
