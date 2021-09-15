@@ -20,7 +20,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
                 AssetReference<DebugUISectionAsset> reference = m_sections[i];
                 DebugUISection section = reference.Asset.Build();
 
-                drawer.AddSection(reference.Guid, section);
+                drawer.Add(reference.Guid, section);
             }
 
             return drawer;

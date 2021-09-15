@@ -21,7 +21,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             Sections = new ReadOnlyDictionary<string, DebugUISection>(m_sections);
         }
 
-        public void AddSection(string id, DebugUISection section)
+        public void Add(string id, DebugUISection section)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
             if (section == null) throw new ArgumentNullException(nameof(section));
@@ -31,7 +31,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             section.Enable();
         }
 
-        public bool RemoveSection(string id)
+        public bool Remove(string id)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 

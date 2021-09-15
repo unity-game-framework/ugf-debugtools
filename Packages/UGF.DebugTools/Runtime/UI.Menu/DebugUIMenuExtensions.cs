@@ -5,6 +5,11 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 {
     public static class DebugUIMenuExtensions
     {
+        public static void Add(this DebugUIMenu menu, GUIContent content)
+        {
+            Add(menu, content, item => { });
+        }
+
         public static void Add(this DebugUIMenu menu, GUIContent content, DebugUIMenuItemHandler handler)
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));

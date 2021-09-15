@@ -14,6 +14,7 @@ namespace UGF.DebugTools.Runtime
         public bool HasSkin { get { return m_skin != null; } }
 
         private readonly Dictionary<string, IDebugUIDrawer> m_drawers = new Dictionary<string, IDebugUIDrawer>();
+        private readonly Dictionary<string, IDebugUIDrawer> m_drawersUpdate = new Dictionary<string, IDebugUIDrawer>();
         private GUISkin m_skin;
 
         public DebugUIDrawer()
@@ -21,7 +22,7 @@ namespace UGF.DebugTools.Runtime
             Drawers = new ReadOnlyDictionary<string, IDebugUIDrawer>(m_drawers);
         }
 
-        public void AddDrawer(string id, IDebugUIDrawer drawer)
+        public void Add(string id, IDebugUIDrawer drawer)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
             if (drawer == null) throw new ArgumentNullException(nameof(drawer));
@@ -31,7 +32,7 @@ namespace UGF.DebugTools.Runtime
             drawer.Enable();
         }
 
-        public bool RemoveDrawer(string id)
+        public bool Remove(string id)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
@@ -57,17 +58,24 @@ namespace UGF.DebugTools.Runtime
 
         public void DrawGUI()
         {
+            foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
+            {
+                m_drawersUpdate.Add(pair.Key, pair.Value);
+            }
+
             Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(Scale.x, Scale.y, 1F));
             GUISkin skin = HasSkin ? Skin : GUI.skin;
 
             using (new DebugUIMatrixScope(matrix))
             using (new DebugUISkinScope(skin))
             {
-                foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
+                foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawersUpdate)
                 {
                     pair.Value.DrawGUI();
                 }
             }
+
+            m_drawersUpdate.Clear();
         }
 
         public void SetSkin(GUISkin skin)

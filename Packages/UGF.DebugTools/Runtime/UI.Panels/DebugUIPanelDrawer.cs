@@ -15,7 +15,7 @@ namespace UGF.DebugTools.Runtime.UI.Panels
             Panels = new ReadOnlyCollection<DebugUIPanel>(m_panels);
         }
 
-        public void AddPanel(DebugUIPanel panel)
+        public void Add(DebugUIPanel panel)
         {
             if (panel == null) throw new ArgumentNullException(nameof(panel));
 
@@ -24,7 +24,7 @@ namespace UGF.DebugTools.Runtime.UI.Panels
             panel.Enable();
         }
 
-        public bool RemovePanel(DebugUIPanel panel)
+        public bool Remove(DebugUIPanel panel)
         {
             if (panel == null) throw new ArgumentNullException(nameof(panel));
 

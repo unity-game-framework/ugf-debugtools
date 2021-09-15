@@ -24,12 +24,12 @@ namespace UGF.DebugTools.Runtime
 
         public static void PanelAdd(DebugUIPanel panel)
         {
-            Drawer.Get<DebugUIPanelDrawer>().AddPanel(panel);
+            Drawer.Get<DebugUIPanelDrawer>().Add(panel);
         }
 
         public static bool PanelRemove(DebugUIPanel panel)
         {
-            return Drawer.Get<DebugUIPanelDrawer>().RemovePanel(panel);
+            return Drawer.Get<DebugUIPanelDrawer>().Remove(panel);
         }
     }
 }

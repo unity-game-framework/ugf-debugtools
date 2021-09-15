@@ -1,4 +1,5 @@
 ﻿using UGF.DebugTools.Runtime.Scopes;
+using UGF.DebugTools.Runtime.UI.Menu;
 using UGF.DebugTools.Runtime.UI.Panels;
 using UnityEngine;
 
@@ -43,6 +44,18 @@ namespace UGF.DebugTools.Runtime.Tests
 
                 m_slider = GUILayout.HorizontalScrollbar(m_slider, 0.25f, 0, 1);
                 m_slider = GUILayout.VerticalScrollbar(m_slider, 0.25f, 0, 1);
+
+                if (GUILayout.Button("Menu"))
+                {
+                    var menu = new DebugUIMenu();
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        menu.Add(new GUIContent($"Item {i}"));
+                    }
+
+                    menu.Show(new Rect(1F, 1F, 100F, 100F));
+                }
             }
         }
 

@@ -24,7 +24,7 @@ namespace UGF.DebugTools.Runtime
                 AssetReference<DebugUIDrawerAsset> reference = settings.Drawers[i];
                 IDebugUIDrawer drawer = reference.Asset.Build();
 
-                Drawer.AddDrawer(reference.Guid, drawer);
+                Drawer.Add(reference.Guid, drawer);
             }
 
             OnCreateExecuter();
@@ -42,8 +42,6 @@ namespace UGF.DebugTools.Runtime
         private static void OnDrawing()
         {
             Drawer.DrawGUI();
-
-            MenuCheck();
         }
     }
 }

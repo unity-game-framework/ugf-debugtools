@@ -1,4 +1,5 @@
 ﻿using System;
+using UGF.DebugTools.Runtime.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Menu
@@ -10,6 +11,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         public bool HasMenu { get { return m_menu != null; } }
 
         private readonly GUI.WindowFunction m_windowFunction;
+        private Vector2 m_scroll;
         private DebugUIMenu m_menu;
 
         public DebugUIMenuDrawer()
@@ -27,23 +29,6 @@ namespace UGF.DebugTools.Runtime.UI.Menu
             m_menu = null;
         }
 
-        public bool AnySelected()
-        {
-            DebugUIMenu menu = Menu;
-
-            for (int i = 0; i < menu.Items.Count; i++)
-            {
-                DebugUIMenuItem item = menu.Items[i];
-
-                if (item.Selected)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         protected override void OnDrawGUI()
         {
             if (HasMenu)
@@ -55,11 +40,28 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 
         private void OnWindow(int id)
         {
-            for (int i = 0; i < m_menu.Items.Count; i++)
-            {
-                DebugUIMenuItem item = m_menu.Items[i];
+            bool anySelected = false;
 
-                item.DrawGUILayout();
+            using (var view = new DebugUIScrollViewScope(m_scroll))
+            {
+                for (int i = 0; i < m_menu.Items.Count; i++)
+                {
+                    DebugUIMenuItem item = m_menu.Items[i];
+
+                    item.DrawGUILayout();
+
+                    if (item.Selected)
+                    {
+                        anySelected = true;
+                    }
+                }
+
+                m_scroll = view.ScrollPosition;
+            }
+
+            if (anySelected)
+            {
+                ClearMenu();
             }
         }
     }

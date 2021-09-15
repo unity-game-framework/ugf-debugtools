@@ -6,22 +6,33 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugUI
     {
-        private static readonly DebugUIMenuDrawer m_menu = new DebugUIMenuDrawer();
-
         public static void MenuShow(DebugUIMenu menu, Rect position)
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));
 
-            m_menu.Position = position;
-            m_menu.SetMenu(menu);
+            DebugUIMenuDrawer drawer = GetMenuDrawer();
+
+            if (drawer.HasMenu)
+            {
+                drawer.ClearMenu();
+            }
+
+            drawer.Position = position;
+            drawer.SetMenu(menu);
         }
 
-        private static void MenuCheck()
+        private static DebugUIMenuDrawer GetMenuDrawer()
         {
-            if (m_menu.AnySelected())
+            if (!Drawer.TryGet(out DebugUIMenuDrawer drawer))
             {
-                m_menu.ClearMenu();
+                string id = Guid.NewGuid().ToString("N");
+
+                drawer = new DebugUIMenuDrawer();
+
+                Drawer.Add(id, drawer);
             }
+
+            return drawer;
         }
     }
 }
