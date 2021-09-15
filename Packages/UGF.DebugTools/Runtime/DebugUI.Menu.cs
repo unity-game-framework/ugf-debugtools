@@ -1,4 +1,5 @@
 ﻿using System;
+using UGF.DebugTools.Runtime.Scopes;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UnityEngine;
 
@@ -13,11 +14,14 @@ namespace UGF.DebugTools.Runtime
 
         public static void MenuShowContext(DebugUIMenu menu, Vector2 size)
         {
-            Vector2 mouse = Event.current.mousePosition;
-            Vector2 screenPoint = GUIUtility.GUIToScreenPoint(mouse);
-            var rect = new Rect(screenPoint.x, screenPoint.y, size.x, size.y);
+            using (new DebugUIMatrixScope(Matrix4x4.identity))
+            {
+                Vector2 mouse = Event.current.mousePosition;
+                Vector2 screenPoint = GUIUtility.GUIToScreenPoint(mouse);
+                var position = new Rect(screenPoint, size);
 
-            MenuShow(menu, rect);
+                MenuShow(menu, position);
+            }
         }
 
         public static void MenuShow(DebugUIMenu menu, Rect position)
