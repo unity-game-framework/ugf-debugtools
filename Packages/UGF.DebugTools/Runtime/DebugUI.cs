@@ -1,4 +1,6 @@
-﻿using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+﻿using System;
+using UGF.DebugTools.Runtime.UI.Menu;
+using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -7,6 +9,8 @@ namespace UGF.DebugTools.Runtime
     public static class DebugUI
     {
         public static DebugUIDrawer Drawer { get; } = new DebugUIDrawer();
+
+        private static readonly DebugUIMenuDrawer m_menu = new DebugUIMenuDrawer();
 
         static DebugUI()
         {
@@ -58,6 +62,14 @@ namespace UGF.DebugTools.Runtime
             return Drawer.Get<DebugUIPanelDrawer>().RemovePanel(panel);
         }
 
+        public static void MenuShow(DebugUIMenu menu, Rect position)
+        {
+            if (menu == null) throw new ArgumentNullException(nameof(menu));
+
+            m_menu.Position = position;
+            m_menu.SetMenu(menu);
+        }
+
         private static void OnCreateExecuter()
         {
             var executer = new GameObject(nameof(DebugUIExecuter)).AddComponent<DebugUIExecuter>();
@@ -70,6 +82,11 @@ namespace UGF.DebugTools.Runtime
         private static void OnDrawing()
         {
             Drawer.DrawGUI();
+
+            if (m_menu.AnySelected())
+            {
+                m_menu.ClearMenu();
+            }
         }
     }
 }
