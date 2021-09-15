@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace UGF.DebugTools.Runtime
@@ -7,7 +6,6 @@ namespace UGF.DebugTools.Runtime
     public static class DebugUI
     {
         public static DebugUIDrawer Drawer { get; } = new DebugUIDrawer();
-        public static DebugUIExecutor Executor { get; }
 
         static DebugUI()
         {
@@ -20,10 +18,7 @@ namespace UGF.DebugTools.Runtime
                 Drawer.SetSkin(settings.UISkin);
             }
 
-            Executor = new GameObject(nameof(DebugUIExecutor)).AddComponent<DebugUIExecutor>();
-            Executor.SetDrawer(Drawer);
-
-            Object.DontDestroyOnLoad(Executor.gameObject);
+            OnCreateExecuter();
         }
 
         public static DebugUIPanelText PanelText(string text)
@@ -46,14 +41,26 @@ namespace UGF.DebugTools.Runtime
 
         public static void PanelAdd(DebugUIPanel panel)
         {
-            Drawer.AddPanel(panel);
+            Drawer.Get<DebugUIPanelDrawer>().AddPanel(panel);
         }
 
         public static bool PanelRemove(DebugUIPanel panel)
         {
-            if (panel == null) throw new ArgumentNullException(nameof(panel));
+            return Drawer.Get<DebugUIPanelDrawer>().RemovePanel(panel);
+        }
 
-            return Drawer.RemovePanel(panel);
+        private static void OnCreateExecuter()
+        {
+            var executer = new GameObject(nameof(DebugUIExecuter)).AddComponent<DebugUIExecuter>();
+
+            executer.Drawing += OnDrawing;
+
+            Object.DontDestroyOnLoad(executer.gameObject);
+        }
+
+        private static void OnDrawing()
+        {
+            Drawer.DrawGUI();
         }
     }
 }

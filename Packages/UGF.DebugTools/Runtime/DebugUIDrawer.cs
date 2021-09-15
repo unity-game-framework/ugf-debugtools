@@ -8,17 +8,51 @@ namespace UGF.DebugTools.Runtime
 {
     public class DebugUIDrawer
     {
-        public IReadOnlyCollection<DebugUIPanel> Panels { get; }
+        public IReadOnlyCollection<IDebugUIDrawer> Drawers { get; }
         public Vector2 Scale { get; set; } = Vector2.one;
         public GUISkin Skin { get { return HasSkin ? m_skin : throw new ArgumentException("Value not specified."); } }
         public bool HasSkin { get { return m_skin != null; } }
 
-        private readonly List<DebugUIPanel> m_panels = new List<DebugUIPanel>();
+        private readonly List<IDebugUIDrawer> m_drawers = new List<IDebugUIDrawer>();
         private GUISkin m_skin;
 
         public DebugUIDrawer()
         {
-            Panels = new ReadOnlyCollection<DebugUIPanel>(m_panels);
+            Drawers = new ReadOnlyCollection<IDebugUIDrawer>(m_drawers);
+        }
+
+        public void AddDrawer(IDebugUIDrawer drawer)
+        {
+            if (drawer == null) throw new ArgumentNullException(nameof(drawer));
+
+            m_drawers.Add(drawer);
+
+            drawer.Enable();
+        }
+
+        public bool RemoveDrawer(IDebugUIDrawer drawer)
+        {
+            if (drawer == null) throw new ArgumentNullException(nameof(drawer));
+
+            if (m_drawers.Remove(drawer))
+            {
+                drawer.Disable();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < m_drawers.Count; i++)
+            {
+                IDebugUIDrawer drawer = m_drawers[i];
+
+                drawer.Disable();
+            }
+
+            m_drawers.Clear();
         }
 
         public void DrawGUI()
@@ -29,33 +63,13 @@ namespace UGF.DebugTools.Runtime
             using (new DebugUIMatrixScope(matrix))
             using (new DebugUISkinScope(skin))
             {
-                foreach (DebugUIPanel panel in m_panels)
+                for (int i = 0; i < m_drawers.Count; i++)
                 {
-                    panel.DrawGUI();
+                    IDebugUIDrawer drawer = m_drawers[i];
+
+                    drawer.DrawGUI();
                 }
             }
-        }
-
-        public void AddPanel(DebugUIPanel panel)
-        {
-            if (panel == null) throw new ArgumentNullException(nameof(panel));
-
-            panel.Scale = Scale;
-
-            m_panels.Add(panel);
-        }
-
-        public bool RemovePanel(DebugUIPanel panel)
-        {
-            if (panel == null) throw new ArgumentNullException(nameof(panel));
-
-            if (m_panels.Remove(panel))
-            {
-                panel.Scale = Vector2.one;
-                return true;
-            }
-
-            return false;
         }
 
         public void SetSkin(GUISkin skin)
@@ -66,6 +80,46 @@ namespace UGF.DebugTools.Runtime
         public void ClearSkin()
         {
             m_skin = null;
+        }
+
+        public T Get<T>() where T : DebugUIDrawerBase
+        {
+            return (T)Get(typeof(T));
+        }
+
+        public IDebugUIDrawer Get(Type type)
+        {
+            return TryGet(type, out IDebugUIDrawer drawer) ? drawer : throw new ArgumentException($"Drawer not found by the specified type: '{type}'.");
+        }
+
+        public bool TryGet<T>(out T drawer) where T : IDebugUIDrawer
+        {
+            if (TryGet(typeof(T), out IDebugUIDrawer value))
+            {
+                drawer = (T)value;
+                return true;
+            }
+
+            drawer = default;
+            return false;
+        }
+
+        public bool TryGet(Type type, out IDebugUIDrawer drawer)
+        {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+
+            for (int i = 0; i < m_drawers.Count; i++)
+            {
+                drawer = m_drawers[i];
+
+                if (type.IsInstanceOfType(drawer))
+                {
+                    return true;
+                }
+            }
+
+            drawer = null;
+            return false;
         }
     }
 }

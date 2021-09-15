@@ -6,10 +6,9 @@ namespace UGF.DebugTools.Runtime
 {
     public abstract class DebugUIPanel
     {
-        public bool Enabled { get; set; } = true;
+        public bool Draw { get; set; } = true;
         public Vector3 Position { get; set; }
         public Vector2 Size { get; set; } = Vector2.one * 250F;
-        public Vector2 Scale { get; set; } = Vector2.one;
         public Rect Rect { get; private set; }
         public bool IsVisible { get; private set; }
         public object BindTarget { get { return m_bindTarget ?? throw new ArgumentException("Value not specified."); } }
@@ -32,13 +31,10 @@ namespace UGF.DebugTools.Runtime
 
         public void DrawGUI()
         {
-            if (Enabled)
+            if (Draw)
             {
                 if (IsVisible)
                 {
-                    Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(Scale.x, Scale.y, 1F));
-
-                    using (new DebugUIMatrixScope(matrix))
                     using (new DebugUILayoutAreaScope(Rect))
                     {
                         OnDrawGUILayout();
@@ -56,7 +52,7 @@ namespace UGF.DebugTools.Runtime
 
                     if (screenPoint.z > 0F)
                     {
-                        var rect = new Rect(screenPoint.x / Scale.x, (Screen.height - screenPoint.y) / Scale.y, Size.x, Size.y);
+                        var rect = new Rect(screenPoint.x, Screen.height - screenPoint.y, Size.x, Size.y);
                         var screen = new Rect(0F, 0F, Screen.width, Screen.height);
 
                         Rect = rect;
