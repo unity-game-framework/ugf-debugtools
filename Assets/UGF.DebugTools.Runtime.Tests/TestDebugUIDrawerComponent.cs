@@ -53,11 +53,7 @@ namespace UGF.DebugTools.Runtime.Tests
         private void Start()
         {
             m_panel = DebugUI.PanelAdd<TestPanel>();
-        }
-
-        private void Update()
-        {
-            m_panel.Position = transform.position;
+            m_panel.BindTransform(transform);
         }
     }
 }

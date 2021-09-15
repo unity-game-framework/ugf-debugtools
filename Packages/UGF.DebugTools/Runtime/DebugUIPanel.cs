@@ -1,4 +1,5 @@
-﻿using UGF.DebugTools.Runtime.Scopes;
+﻿using System;
+using UGF.DebugTools.Runtime.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -11,6 +12,13 @@ namespace UGF.DebugTools.Runtime
         public Vector2 Scale { get; set; } = Vector2.one;
         public Rect Rect { get; private set; }
         public bool IsVisible { get; private set; }
+        public object BindTarget { get { return m_bindTarget ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasBindTarget { get { return m_bindTarget != null; } }
+        public DebugUIPanelBindHandler BindHandler { get { return m_bindHandler ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasBindHandler { get { return m_bindHandler != null; } }
+
+        private object m_bindTarget;
+        private DebugUIPanelBindHandler m_bindHandler;
 
         public void Enable()
         {
@@ -39,6 +47,11 @@ namespace UGF.DebugTools.Runtime
 
                 if (Event.current.type == EventType.Repaint)
                 {
+                    if (HasBindTarget)
+                    {
+                        Position = m_bindHandler.Invoke(m_bindTarget);
+                    }
+
                     Vector3 screenPoint = Camera.current.WorldToScreenPoint(Position);
 
                     if (screenPoint.z > 0F)
@@ -55,6 +68,18 @@ namespace UGF.DebugTools.Runtime
                     }
                 }
             }
+        }
+
+        public void Bind(object target, DebugUIPanelBindHandler handler)
+        {
+            m_bindTarget = target ?? throw new ArgumentNullException(nameof(target));
+            m_bindHandler = handler ?? throw new ArgumentNullException(nameof(handler));
+        }
+
+        public void BindClear()
+        {
+            m_bindTarget = null;
+            m_bindHandler = null;
         }
 
         protected virtual void OnEnable()
