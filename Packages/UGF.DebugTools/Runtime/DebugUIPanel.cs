@@ -82,6 +82,11 @@ namespace UGF.DebugTools.Runtime
             m_bindHandler = null;
         }
 
+        public T GetBindTarget<T>()
+        {
+            return (T)m_bindTarget;
+        }
+
         protected virtual void OnEnable()
         {
         }
