@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DebugSettings
   m_EditorClassIdentifier: 
   m_uiScale: {x: 2, y: 2}
-  m_defaultSkin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
+  m_uiSkin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
