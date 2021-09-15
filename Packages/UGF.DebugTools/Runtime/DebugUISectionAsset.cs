@@ -1,0 +1,8 @@
+﻿using UGF.Builder.Runtime;
+
+namespace UGF.DebugTools.Runtime
+{
+    public abstract class DebugUISectionAsset : BuilderAsset<DebugUISection>
+    {
+    }
+}

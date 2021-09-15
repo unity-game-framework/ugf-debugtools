@@ -1,13 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
     [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug UI Section Drawer", order = 2000)]
     public class DebugUISectionDrawerAsset : DebugUIDrawerAsset
     {
+        [SerializeField] private List<AssetReference<DebugUISectionAsset>> m_sections = new List<AssetReference<DebugUISectionAsset>>();
+
+        public List<AssetReference<DebugUISectionAsset>> Sections { get { return m_sections; } }
+
         protected override IDebugUIDrawer OnBuild()
         {
-            return new DebugUISectionDrawer();
+            var drawer = new DebugUISectionDrawer();
+
+            for (int i = 0; i < m_sections.Count; i++)
+            {
+                AssetReference<DebugUISectionAsset> reference = m_sections[i];
+                DebugUISection section = reference.Asset.Build();
+
+                drawer.AddSection(reference.Guid, section);
+            }
+
+            return drawer;
         }
     }
 }
