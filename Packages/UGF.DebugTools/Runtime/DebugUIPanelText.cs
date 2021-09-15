@@ -6,7 +6,7 @@ namespace UGF.DebugTools.Runtime
     public class DebugUIPanelText : DebugUIPanel
     {
         public string Text { get; set; } = "Text";
-        public bool DisplayBackground { get; set; } = true;
+        public bool DisplayBackground { get; set; } = false;
 
         protected override void OnDrawGUILayout()
         {

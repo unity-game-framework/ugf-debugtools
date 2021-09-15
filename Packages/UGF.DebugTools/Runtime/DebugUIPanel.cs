@@ -55,6 +55,8 @@ namespace UGF.DebugTools.Runtime
                         var rect = new Rect(screenPoint.x, Screen.height - screenPoint.y, Size.x, Size.y);
                         var screen = new Rect(0F, 0F, Screen.width, Screen.height);
 
+                        rect = DebugUIUtility.TransformToGUISpace(rect);
+
                         Rect = rect;
                         IsVisible = screen.Contains(screenPoint);
                     }

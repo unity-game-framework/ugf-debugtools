@@ -9,8 +9,9 @@ namespace UGF.DebugTools.Runtime
     public class DebugUISectionDrawer : DebugUIDrawerBase
     {
         public IReadOnlyDictionary<string, DebugUISection> Sections { get; }
+        public bool Display { get; set; }
         public string Selected { get { return HasSelected ? m_selected : throw new ArgumentException("Value not specified."); } }
-        public bool HasSelected { get { return string.IsNullOrEmpty(m_selected); } }
+        public bool HasSelected { get { return !string.IsNullOrEmpty(m_selected); } }
 
         private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
         private string m_selected;
@@ -90,24 +91,32 @@ namespace UGF.DebugTools.Runtime
         {
             var rect = new Rect(0F, 0F, Screen.width, Screen.height);
 
-            using (new DebugUILayoutAreaScope(rect, GUIContent.none, GUI.skin.box))
-            {
-                GUILayout.Button("None");
+            rect = DebugUIUtility.TransformToGUISpace(rect);
 
-                if (HasSelected)
+            using (new DebugUIGroupScope(rect))
+            using (new DebugUILayoutAreaScope(rect))
+            {
+                Display = GUILayout.Toggle(Display, "Display Debug Sections");
+
+                if (Display)
                 {
-                    if (m_sections.TryGetValue(Selected, out DebugUISection section))
+                    GUILayout.Button("None");
+
+                    if (HasSelected)
                     {
-                        section.DrawGUILayout();
+                        if (m_sections.TryGetValue(Selected, out DebugUISection section))
+                        {
+                            section.DrawGUILayout();
+                        }
+                        else
+                        {
+                            GUILayout.Label("Section not found.");
+                        }
                     }
                     else
                     {
-                        GUILayout.Box("Section not found.");
+                        GUILayout.Box("Section not selected.");
                     }
-                }
-                else
-                {
-                    GUILayout.Box("Section not selected.");
                 }
             }
         }
