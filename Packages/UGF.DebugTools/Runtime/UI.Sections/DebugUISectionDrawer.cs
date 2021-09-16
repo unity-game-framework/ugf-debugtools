@@ -89,11 +89,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
         protected override void OnDrawGUI()
         {
-            var rect = new Rect(0F, 0F, Screen.width, Screen.height);
-
-            rect = DebugUIUtility.TransformToGUISpace(rect);
-
-            using (new DebugUILayoutAreaScope(rect))
+            using (new DebugUILayoutAreaScope(DebugUIUtility.GetScreenRect()))
             {
                 Display = GUILayout.Toggle(Display, "Display Debug Sections");
 

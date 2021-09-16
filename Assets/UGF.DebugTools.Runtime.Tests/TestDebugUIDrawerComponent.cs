@@ -56,6 +56,23 @@ namespace UGF.DebugTools.Runtime.Tests
 
                     menu.ShowContext();
                 }
+
+                Rect rectDropdown = GUILayoutUtility.GetRect(new GUIContent("Menu Dropdown"), GUI.skin.button);
+
+                if (GUI.Button(rectDropdown, "Menu Dropdown"))
+                {
+                    var menu = new DebugUIMenu();
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        menu.Add(new GUIContent($"Item {i}"));
+                    }
+
+                    menu.ShowDropdown(rectDropdown);
+                }
+
+                GUILayout.Button("Test Last Position");
+                GUI.Box(GUILayoutUtility.GetLastRect(), "Last Position");
             }
         }
 

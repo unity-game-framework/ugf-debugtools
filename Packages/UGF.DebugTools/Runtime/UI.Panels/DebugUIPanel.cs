@@ -52,10 +52,9 @@ namespace UGF.DebugTools.Runtime.UI.Panels
 
                     if (screenPoint.z > 0F)
                     {
-                        var rect = new Rect(screenPoint.x, Screen.height - screenPoint.y, Size.x, Size.y);
+                        Vector2 guiPoint = GUIUtility.ScreenToGUIPoint(screenPoint);
+                        var rect = new Rect(guiPoint.x, Screen.height - guiPoint.y, Size.x, Size.y);
                         var screen = new Rect(0F, 0F, Screen.width, Screen.height);
-
-                        rect = DebugUIUtility.TransformToGUISpace(rect);
 
                         Rect = rect;
                         IsVisible = screen.Contains(screenPoint);
