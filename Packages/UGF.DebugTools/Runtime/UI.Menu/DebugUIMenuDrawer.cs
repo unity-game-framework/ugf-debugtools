@@ -34,7 +34,9 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             if (HasMenu)
             {
-                GUI.ModalWindow(0, Position, m_windowFunction, GUIContent.none, GUIStyle.none);
+                Rect screen = DebugUIUtility.GetScreenRect();
+
+                GUI.ModalWindow(0, screen, m_windowFunction, GUIContent.none, GUIStyle.none);
                 GUI.FocusWindow(0);
             }
         }
@@ -43,6 +45,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             bool anySelected = false;
 
+            using (new DebugUILayoutAreaScope(Position))
             using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.box))
             using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
             {
@@ -59,6 +62,16 @@ namespace UGF.DebugTools.Runtime.UI.Menu
                 }
 
                 m_scroll = view.ScrollPosition;
+            }
+
+            if (Event.current.type == EventType.MouseUp)
+            {
+                Rect position = GUILayoutUtility.GetLastRect();
+
+                if (!position.Contains(Event.current.mousePosition))
+                {
+                    anySelected = true;
+                }
             }
 
             if (anySelected)
