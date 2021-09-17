@@ -5,7 +5,7 @@ namespace UGF.DebugTools.Runtime.Scopes
 {
     public struct DebugUIVerticalScope : IDisposable
     {
-        public DebugUIVerticalScope(params GUILayoutOption[] options) : this(GUIContent.none, GUIStyle.none, options)
+        public DebugUIVerticalScope(GUIContent content, params GUILayoutOption[] options) : this(content, GUIStyle.none, options)
         {
         }
 
