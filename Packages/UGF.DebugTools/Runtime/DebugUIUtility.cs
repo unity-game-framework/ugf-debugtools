@@ -1,4 +1,5 @@
 ﻿using System;
+using UGF.DebugTools.Runtime.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -48,6 +49,14 @@ namespace UGF.DebugTools.Runtime
             size = matrix.MultiplyPoint(size);
 
             return new Rect(position, size);
+        }
+
+        public static Vector2 GUIToScreenPosition(Vector2 position)
+        {
+            using (new DebugUIMatrixScope(Matrix4x4.identity))
+            {
+                return GUIUtility.GUIToScreenPoint(position);
+            }
         }
     }
 }

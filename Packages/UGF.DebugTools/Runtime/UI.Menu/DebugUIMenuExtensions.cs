@@ -19,11 +19,11 @@ namespace UGF.DebugTools.Runtime.UI.Menu
             menu.Add(item);
         }
 
-        public static void ShowDropdown(this DebugUIMenu menu, Rect dropdownPosition, float height = 300F)
+        public static void ShowDropdown(this DebugUIMenu menu, Rect dropdownPosition)
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));
 
-            DebugUI.MenuShowDropdown(menu, dropdownPosition, height);
+            DebugUI.MenuShowDropdown(menu, dropdownPosition);
         }
 
         public static void ShowContext(this DebugUIMenu menu)
