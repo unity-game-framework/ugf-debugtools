@@ -29,6 +29,18 @@ namespace UGF.DebugTools.Runtime.Tests
 
             private void OnDrawElements()
             {
+                if (GUILayout.Button("Menu Context"))
+                {
+                    var menu = new DebugUIMenu();
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        menu.Add(new GUIContent($"Item {i}"));
+                    }
+
+                    menu.ShowContext();
+                }
+
                 GUILayout.Button("Button");
                 GUILayout.Label("Label");
                 GUILayout.TextField("TextField");
