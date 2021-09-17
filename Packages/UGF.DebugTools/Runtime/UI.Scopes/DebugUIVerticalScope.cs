@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime.Scopes
+namespace UGF.DebugTools.Runtime.UI.Scopes
 {
     public struct DebugUIVerticalScope : IDisposable
     {

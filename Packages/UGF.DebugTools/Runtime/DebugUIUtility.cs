@@ -1,5 +1,5 @@
 ﻿using System;
-using UGF.DebugTools.Runtime.Scopes;
+using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime

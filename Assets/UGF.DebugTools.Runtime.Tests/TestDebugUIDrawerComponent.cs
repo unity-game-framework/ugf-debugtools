@@ -1,6 +1,6 @@
-﻿using UGF.DebugTools.Runtime.Scopes;
-using UGF.DebugTools.Runtime.UI.Menu;
+﻿using UGF.DebugTools.Runtime.UI.Menu;
 using UGF.DebugTools.Runtime.UI.Panels;
+using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.Tests
