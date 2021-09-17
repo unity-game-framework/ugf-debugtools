@@ -8,7 +8,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         public bool Enabled { get; }
         public GUIContent Content { get; }
 
-        public DebugUIMenuItemContent(GUIContent content, bool enabled, DebugUIMenuItemHandler handler) : base(handler)
+        public DebugUIMenuItemContent(GUIContent content, bool enabled, DebugUIMenuItemHandler handler, object value = null) : base(handler, value)
         {
             Content = content ?? throw new ArgumentNullException(nameof(content));
             Enabled = enabled;

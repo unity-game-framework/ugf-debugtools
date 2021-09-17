@@ -10,11 +10,11 @@ namespace UGF.DebugTools.Runtime.UI.Menu
             Add(menu, content, enabled, item => { });
         }
 
-        public static void Add(this DebugUIMenu menu, GUIContent content, bool enabled, DebugUIMenuItemHandler handler)
+        public static void Add(this DebugUIMenu menu, GUIContent content, bool enabled, DebugUIMenuItemHandler handler, object value = null)
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));
 
-            var item = new DebugUIMenuItemContent(content, enabled, handler);
+            var item = new DebugUIMenuItemContent(content, enabled, handler, value);
 
             menu.Add(item);
         }
