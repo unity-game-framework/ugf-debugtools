@@ -14,6 +14,9 @@ namespace UGF.DebugTools.Runtime.Tests
             private Vector2 m_scroll;
             private float m_slider;
             private int m_menuSelected;
+            private string m_textArea = "Text Area";
+            private int m_int = 10;
+            private float m_float = 10.5F;
 
             protected override void OnDrawGUILayout()
             {
@@ -40,8 +43,14 @@ namespace UGF.DebugTools.Runtime.Tests
                 GUILayout.Label("Fields");
                 DebugUI.FieldLabel(new GUIContent("Label"), new GUIContent("Content"));
                 DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
-                DebugUI.FieldDropdown(new GUIContent("Button"), new GUIContent("Content"), OnMenuCreate());
+                DebugUI.FieldButton(GUIContent.none, new GUIContent("Content"));
                 DebugUI.FieldDropdown(new GUIContent("Dropdown"), new GUIContent($"{m_menuSelected}"), OnMenuCreate());
+                DebugUI.FieldToggle(new GUIContent("Toggle"), true);
+                DebugUI.FieldPassword(new GUIContent("Password"), "Password");
+                DebugUI.FieldText(new GUIContent("Text"), "Text");
+                m_textArea = DebugUI.FieldTextArea(new GUIContent("Text Area"), m_textArea);
+                m_int = DebugUI.FieldValue(new GUIContent("Int"), m_int);
+                m_float = DebugUI.FieldValue(new GUIContent("Float"), m_float);
                 DebugUI.Space();
 
                 GUILayout.Button("Button");
