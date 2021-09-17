@@ -13,6 +13,7 @@ namespace UGF.DebugTools.Runtime.Tests
         {
             private Vector2 m_scroll;
             private float m_slider;
+            private int m_menuSelected;
 
             protected override void OnDrawGUILayout()
             {
@@ -31,15 +32,10 @@ namespace UGF.DebugTools.Runtime.Tests
             {
                 if (GUILayout.Button("Menu Context"))
                 {
-                    var menu = new DebugUIMenu();
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        menu.Add(new GUIContent($"Item {i}"));
-                    }
-
-                    menu.ShowContext();
+                    OnMenuCreate().ShowContext();
                 }
+
+                DebugUI.MenuDropdown(new GUIContent("Menu"), OnMenuCreate());
 
                 GUILayout.Button("Button");
                 GUILayout.Label("Label");
@@ -59,32 +55,37 @@ namespace UGF.DebugTools.Runtime.Tests
 
                 if (GUILayout.Button("Menu Context"))
                 {
-                    var menu = new DebugUIMenu();
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        menu.Add(new GUIContent($"Item {i}"));
-                    }
-
-                    menu.ShowContext();
+                    OnMenuCreate().ShowContext();
                 }
 
                 Rect rectDropdown = GUILayoutUtility.GetRect(new GUIContent("Menu Dropdown"), GUI.skin.button);
 
                 if (GUI.Button(rectDropdown, "Menu Dropdown"))
                 {
-                    var menu = new DebugUIMenu();
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        menu.Add(new GUIContent($"Item {i}"));
-                    }
-
-                    menu.ShowDropdown(rectDropdown);
+                    OnMenuCreate().ShowDropdown(rectDropdown);
                 }
+
+                DebugUI.MenuDropdown(new GUIContent("Menu"), OnMenuCreate());
 
                 GUILayout.Button("Test Last Position");
                 GUI.Box(GUILayoutUtility.GetLastRect(), "Last Position");
+            }
+
+            private DebugUIMenu OnMenuCreate()
+            {
+                var menu = new DebugUIMenu();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    menu.Add(new GUIContent($"Item {i}"), m_menuSelected == i, OnMenuSelect, i);
+                }
+
+                return menu;
+            }
+
+            private void OnMenuSelect(DebugUIMenuItem item)
+            {
+                m_menuSelected = item.GetValue<int>();
             }
         }
 

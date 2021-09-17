@@ -6,6 +6,17 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugUI
     {
+        public static bool MenuDropdown(GUIContent content, DebugUIMenu menu)
+        {
+            if (Dropdown(content, out Rect dropdownPosition))
+            {
+                MenuShowDropdown(menu, dropdownPosition);
+                return true;
+            }
+
+            return false;
+        }
+
         public static void MenuShowDropdown(DebugUIMenu menu, Rect dropdownPosition)
         {
             Vector2 positionScreen = DebugUIUtility.GUIToScreenPosition(dropdownPosition.position);
