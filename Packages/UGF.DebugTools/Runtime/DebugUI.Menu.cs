@@ -8,9 +8,14 @@ namespace UGF.DebugTools.Runtime
     {
         public static bool MenuDropdown(GUIContent content, DebugUIMenu menu)
         {
-            if (Dropdown(content, out Rect dropdownPosition))
+            return MenuDropdown(GetControlRect(), content, menu);
+        }
+
+        public static bool MenuDropdown(Rect position, GUIContent content, DebugUIMenu menu)
+        {
+            if (Dropdown(position, content))
             {
-                MenuShowDropdown(menu, dropdownPosition);
+                MenuShowDropdown(menu, position);
                 return true;
             }
 

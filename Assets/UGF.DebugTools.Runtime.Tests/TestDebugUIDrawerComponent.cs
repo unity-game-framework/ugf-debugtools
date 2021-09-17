@@ -37,6 +37,13 @@ namespace UGF.DebugTools.Runtime.Tests
 
                 DebugUI.MenuDropdown(new GUIContent("Menu"), OnMenuCreate());
 
+                GUILayout.Label("Fields");
+                DebugUI.FieldLabel(new GUIContent("Label"), new GUIContent("Content"));
+                DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                DebugUI.FieldDropdown(new GUIContent("Button"), new GUIContent("Content"), OnMenuCreate());
+                DebugUI.FieldDropdown(new GUIContent("Dropdown"), new GUIContent($"{m_menuSelected}"), OnMenuCreate());
+                DebugUI.Space();
+
                 GUILayout.Button("Button");
                 GUILayout.Label("Label");
                 GUILayout.TextField("TextField");
