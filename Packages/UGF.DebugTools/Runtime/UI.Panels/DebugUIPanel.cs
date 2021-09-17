@@ -48,16 +48,12 @@ namespace UGF.DebugTools.Runtime.UI.Panels
                         Position = m_bindHandler.Invoke(m_bindTarget);
                     }
 
-                    Vector3 screenPoint = Camera.current.WorldToScreenPoint(Position);
-
-                    if (screenPoint.z > 0F)
+                    if (DebugUIUtility.TryWorldToGUIPosition(Position, out Vector2 position))
                     {
-                        Vector2 guiPoint = GUIUtility.ScreenToGUIPoint(screenPoint);
-                        var rect = new Rect(guiPoint.x, Screen.height - guiPoint.y, Size.x, Size.y);
-                        var screen = new Rect(0F, 0F, Screen.width, Screen.height);
+                        Rect screen = DebugUIUtility.GetScreenRect();
 
-                        Rect = rect;
-                        IsVisible = screen.Contains(screenPoint);
+                        Rect = new Rect(position, Size);
+                        IsVisible = screen.Contains(Rect.position);
                     }
                     else
                     {

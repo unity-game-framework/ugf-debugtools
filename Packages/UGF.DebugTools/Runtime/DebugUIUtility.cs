@@ -1,11 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
     public static class DebugUIUtility
     {
-        public static Vector2 WorldToScreenPoint(Vector3 position)
+        public static bool TryWorldToGUIPosition(Vector3 position, out Vector2 result)
         {
+            return TryWorldToGUIPosition(position, Camera.current, out result);
+        }
+
+        public static bool TryWorldToGUIPosition(Vector3 position, Camera camera, out Vector2 result)
+        {
+            if (camera == null) throw new ArgumentNullException(nameof(camera));
+
+            Vector3 positionScreen = camera.WorldToScreenPoint(position);
+
+            if (positionScreen.z > 0F)
+            {
+                Vector2 positionGUI = GUIUtility.ScreenToGUIPoint(positionScreen);
+                Rect screen = GetScreenRect();
+
+                result = new Vector2(positionGUI.x, screen.height - positionGUI.y);
+                return true;
+            }
+
+            result = default;
+            return false;
         }
 
         public static Rect GetScreenRect()
