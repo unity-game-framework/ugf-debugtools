@@ -8,8 +8,10 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             Rect screen = DebugUIUtility.GetScreenRect();
             float height = screen.max.y - position.y;
+            bool isPositionOutOfScreen = position.x + width > screen.max.x;
+            float horizontalOffset = isPositionOutOfScreen ? width - (screen.max.x - position.x) : 0F;
 
-            return new Rect(position.x, position.y, width, height);
+            return new Rect(position.x - horizontalOffset, position.y, width, height);
         }
     }
 }
