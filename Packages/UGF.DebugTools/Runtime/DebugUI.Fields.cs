@@ -22,9 +22,19 @@ namespace UGF.DebugTools.Runtime
             }
         }
 
+        public static T FieldValue<T>(string label, T value)
+        {
+            return FieldValue(DebugUIContentCache.GetLabel(label), value);
+        }
+
         public static T FieldValue<T>(GUIContent label, T value)
         {
             return (T)FieldValue(label, value, typeof(T));
+        }
+
+        public static object FieldValue(string label, object value, Type type)
+        {
+            return FieldValue(DebugUIContentCache.GetLabel(label), value, type);
         }
 
         public static object FieldValue(GUIContent label, object value, Type type)
@@ -35,6 +45,11 @@ namespace UGF.DebugTools.Runtime
             Rect position = FieldPrefixLabel(label);
 
             return Value(position, value, type);
+        }
+
+        public static string FieldTextArea(string label, string value)
+        {
+            return FieldTextArea(DebugUIContentCache.GetLabel(label), value);
         }
 
         public static string FieldTextArea(GUIContent label, string value)
@@ -49,6 +64,11 @@ namespace UGF.DebugTools.Runtime
             return GUILayout.TextArea(value);
         }
 
+        public static string FieldText(string label, string value)
+        {
+            return FieldText(DebugUIContentCache.GetLabel(label), value);
+        }
+
         public static string FieldText(GUIContent label, string value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
@@ -56,6 +76,11 @@ namespace UGF.DebugTools.Runtime
             Rect position = FieldPrefixLabel(label);
 
             return GUI.TextField(position, value);
+        }
+
+        public static string FieldPassword(string label, string value)
+        {
+            return FieldPassword(DebugUIContentCache.GetLabel(label), value);
         }
 
         public static string FieldPassword(GUIContent label, string value)
@@ -67,11 +92,30 @@ namespace UGF.DebugTools.Runtime
             return GUI.PasswordField(position, value, '*');
         }
 
+        public static bool FieldToggle(string label, bool value)
+        {
+            return FieldToggle(DebugUIContentCache.GetLabel(label), value);
+        }
+
         public static bool FieldToggle(GUIContent label, bool value)
         {
             Rect position = FieldPrefixLabel(label);
 
             return GUI.Toggle(position, value, GUIContent.none);
+        }
+
+        public static bool FieldDropdown(string label, string content, Func<DebugUIMenu> onCreateMenu)
+        {
+            return FieldDropdown(DebugUIContentCache.GetLabel(label), DebugUIContentCache.GetContent(content), onCreateMenu);
+        }
+
+        public static bool FieldDropdown(GUIContent label, GUIContent content, Func<DebugUIMenu> onCreateMenu)
+        {
+            if (content == null) throw new ArgumentNullException(nameof(content));
+
+            Rect position = FieldPrefixLabel(label);
+
+            return MenuDropdown(position, content, onCreateMenu);
         }
 
         public static bool FieldDropdown(GUIContent label, GUIContent content, DebugUIMenu menu)
@@ -84,6 +128,11 @@ namespace UGF.DebugTools.Runtime
             return MenuDropdown(position, content, menu);
         }
 
+        public static bool FieldButton(string label, string content)
+        {
+            return FieldButton(DebugUIContentCache.GetLabel(label), DebugUIContentCache.GetContent(content));
+        }
+
         public static bool FieldButton(GUIContent label, GUIContent content)
         {
             if (content == null) throw new ArgumentNullException(nameof(content));
@@ -91,6 +140,11 @@ namespace UGF.DebugTools.Runtime
             Rect position = FieldPrefixLabel(label);
 
             return GUI.Button(position, content);
+        }
+
+        public static void FieldLabel(string label, string content)
+        {
+            FieldLabel(DebugUIContentCache.GetLabel(label), DebugUIContentCache.GetContent(content));
         }
 
         public static void FieldLabel(GUIContent label, GUIContent content)

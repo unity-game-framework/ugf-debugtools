@@ -6,6 +6,11 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugUI
     {
+        public static bool MenuDropdown(string content, DebugUIMenu menu)
+        {
+            return MenuDropdown(DebugUIContentCache.GetContent(content), menu);
+        }
+
         public static bool MenuDropdown(GUIContent content, DebugUIMenu menu)
         {
             return MenuDropdown(GetControlRect(), content, menu);
@@ -20,6 +25,11 @@ namespace UGF.DebugTools.Runtime
             }
 
             return false;
+        }
+
+        public static bool MenuDropdown(string content, Func<DebugUIMenu> onMenuCreate)
+        {
+            return MenuDropdown(DebugUIContentCache.GetContent(content), onMenuCreate);
         }
 
         public static bool MenuDropdown(GUIContent content, Func<DebugUIMenu> onMenuCreate)

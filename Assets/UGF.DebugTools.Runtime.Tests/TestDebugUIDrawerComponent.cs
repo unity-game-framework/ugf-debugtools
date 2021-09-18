@@ -40,20 +40,20 @@ namespace UGF.DebugTools.Runtime.Tests
                     OnMenuCreate().ShowContext();
                 }
 
-                DebugUI.MenuDropdown(new GUIContent("Menu"), OnMenuCreate());
+                DebugUI.MenuDropdown("Menu", OnMenuCreate());
 
-                DebugUI.Header(new GUIContent("Fields"));
-                DebugUI.FieldLabel(new GUIContent("Label"), new GUIContent("Content"));
-                DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
-                DebugUI.FieldButton(GUIContent.none, new GUIContent("Content"));
-                DebugUI.FieldDropdown(new GUIContent("Dropdown"), new GUIContent($"{m_menuSelected}"), OnMenuCreate());
-                m_toggle = DebugUI.FieldToggle(new GUIContent("Toggle"), m_toggle);
-                DebugUI.FieldPassword(new GUIContent("Password"), "Password");
-                DebugUI.FieldText(new GUIContent("Text"), "Text");
-                m_textArea = DebugUI.FieldTextArea(new GUIContent("Text Area"), m_textArea);
-                m_int = DebugUI.FieldValue(new GUIContent("Int"), m_int);
-                m_float = DebugUI.FieldValue(new GUIContent("Float"), m_float);
-                m_foldout = DebugUI.Foldout(new GUIContent("Foldout"), m_foldout);
+                DebugUI.Header("Fields");
+                DebugUI.FieldLabel("Label", "Content");
+                DebugUI.FieldButton("Button", "Content");
+                DebugUI.FieldButton(string.Empty, "Content");
+                DebugUI.FieldDropdown("Dropdown", $"{m_menuSelected}", OnMenuCreate);
+                m_toggle = DebugUI.FieldToggle("Toggle", m_toggle);
+                DebugUI.FieldPassword("Password", "Password");
+                DebugUI.FieldText("Text", "Text");
+                m_textArea = DebugUI.FieldTextArea("Text Area", m_textArea);
+                m_int = DebugUI.FieldValue("Int", m_int);
+                m_float = DebugUI.FieldValue("Float", m_float);
+                m_foldout = DebugUI.Foldout("Foldout", m_foldout);
 
                 if (m_foldout)
                 {
@@ -63,22 +63,22 @@ namespace UGF.DebugTools.Runtime.Tests
                     }
                 }
 
-                DebugUI.Header(new GUIContent("Indent"));
-                DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                DebugUI.Header("Indent");
+                DebugUI.FieldButton("Button", "Content");
 
                 using (new DebugUIIndentIncrementScope(1))
                 {
-                    DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                    DebugUI.FieldButton("Button", "Content");
 
                     using (new DebugUIIndentIncrementScope(1))
                     {
-                        DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                        DebugUI.FieldButton("Button", "Content");
                     }
                 }
 
                 using (new DebugUIIndentLevelScope(3))
                 {
-                    DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                    DebugUI.FieldButton("Button", "Content");
                 }
 
                 DebugUI.Space();

@@ -42,6 +42,8 @@ namespace UGF.DebugTools.Runtime
         private static void OnDrawing()
         {
             Drawer.DrawGUI();
+
+            DebugUIContentCache.Reset();
         }
     }
 }

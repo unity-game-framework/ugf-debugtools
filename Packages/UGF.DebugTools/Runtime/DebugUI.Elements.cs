@@ -10,6 +10,11 @@ namespace UGF.DebugTools.Runtime
         public static int IndentLevel { get; set; }
         public static float IndentLevelSize { get; set; } = 21F;
 
+        public static void Header(string content)
+        {
+            Header(DebugUIContentCache.GetContent(content));
+        }
+
         public static void Header(GUIContent content)
         {
             if (content == null) throw new ArgumentNullException(nameof(content));
@@ -17,11 +22,21 @@ namespace UGF.DebugTools.Runtime
             GUILayout.Label(content, DebugUIStyles.Header);
         }
 
+        public static bool Foldout(string content, bool value)
+        {
+            return Foldout(DebugUIContentCache.GetContent(content), value);
+        }
+
         public static bool Foldout(GUIContent content, bool value)
         {
             if (content == null) throw new ArgumentNullException(nameof(content));
 
             return GUILayout.Toggle(value, content, DebugUIStyles.Foldout);
+        }
+
+        public static bool Dropdown(Rect position, string content)
+        {
+            return Dropdown(position, DebugUIContentCache.GetContent(content));
         }
 
         public static bool Dropdown(Rect position, GUIContent content)
