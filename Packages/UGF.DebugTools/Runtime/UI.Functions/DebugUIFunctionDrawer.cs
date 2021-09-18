@@ -13,6 +13,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         private readonly Dictionary<string, List<DebugUIFunction>> m_functions = new Dictionary<string, List<DebugUIFunction>>();
         private readonly Dictionary<string, List<DebugUIFunction>> m_functionsUpdate = new Dictionary<string, List<DebugUIFunction>>();
         private readonly GUILayoutOption[] m_buttonDebugOptions = { GUILayout.Width(DebugUI.LineHeight) };
+        private readonly GUILayoutOption[] m_buttonMenuOptions = { GUILayout.ExpandWidth(false) };
 
         public DebugUIFunctionDrawer()
         {
@@ -92,7 +93,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
                     foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functionsUpdate)
                     {
-                        if (GUILayout.Button(pair.Key, DebugUIStyles.FrameHighlight))
+                        if (GUILayout.Button(pair.Key, DebugUIStyles.FrameHighlight, m_buttonMenuOptions))
                         {
                             DebugUIMenu menu = OnCreateMenu(pair.Value);
 

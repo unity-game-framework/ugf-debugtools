@@ -8,6 +8,10 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         public DebugUIFunctionExecuteHandler ExecuteHandler { get; }
         public DebugUIFunctionValidateHandler ValidateHandler { get; }
 
+        public DebugUIFunctionHandler(GUIContent content, DebugUIFunctionExecuteHandler executeHandler) : this(content, executeHandler, function => true)
+        {
+        }
+
         public DebugUIFunctionHandler(GUIContent content, DebugUIFunctionExecuteHandler executeHandler, DebugUIFunctionValidateHandler validateHandler) : base(content)
         {
             ExecuteHandler = executeHandler ?? throw new ArgumentNullException(nameof(executeHandler));

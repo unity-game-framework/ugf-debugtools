@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UGF.DebugTools.Runtime.UI.Functions;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
         private readonly Func<DebugUIMenu> m_onMenuCreateFunction;
         private readonly DebugUIMenuItemHandler m_onMenuItemHandler;
+        private DebugUIFunction m_functionDisplay;
         private string m_selected;
 
         public DebugUISectionDrawer()
@@ -92,6 +94,20 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             }
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            m_functionDisplay = DebugUI.AddFunction("Sections", "Display", OnFunctionDisplay);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            DebugUI.RemoveFunction("Sections", m_functionDisplay);
+        }
+
         protected override void OnUpdatePosition()
         {
             base.OnUpdatePosition();
@@ -154,6 +170,13 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             string id = item.GetValue<string>();
 
             SetSelected(id);
+        }
+
+        private void OnFunctionDisplay(DebugUIFunction function)
+        {
+            Display = !Display;
+
+            function.Enabled = Display;
         }
     }
 }
