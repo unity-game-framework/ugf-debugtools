@@ -6,13 +6,21 @@ namespace UGF.DebugTools.Runtime
 {
     public abstract class DebugGLShape
     {
-        public void GetVertices(ICollection<Vector3> vertices)
-        {
-            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
+        public DebugGLMode Mode { get; set; } = DebugGLMode.Line;
+        public List<Vector3> Vertices { get; } = new List<Vector3>();
+        public Material Material { get { return m_material ? m_material : throw new ArgumentException("Value not specified."); } }
+        public bool HasMaterial { get { return m_material != null; } }
 
-            OnGetVertices(vertices);
+        private Material m_material;
+
+        public void SetMaterial(Material material)
+        {
+            m_material = material ? material : throw new ArgumentNullException(nameof(material));
         }
 
-        protected abstract void OnGetVertices(ICollection<Vector3> vertices);
+        public void ClearMaterial()
+        {
+            m_material = null;
+        }
     }
 }

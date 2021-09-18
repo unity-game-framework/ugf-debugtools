@@ -10,14 +10,9 @@ namespace UGF.DebugTools.Runtime
     {
         public IReadOnlyDictionary<string, DebugGLShape> Shapes { get; }
         public IReadOnlyList<DebugGLDrawCommand> Commands { get; }
-        public Material Material { get { return m_material ? m_material : throw new ArgumentException("Value not specified."); } }
-        public bool HasMaterial { get { return m_material != null; } }
 
         private readonly Dictionary<string, DebugGLShape> m_shapes = new Dictionary<string, DebugGLShape>();
         private readonly List<DebugGLDrawCommand> m_commands = new List<DebugGLDrawCommand>();
-        private readonly List<DebugGLDrawCommand> m_commandsUpdate = new List<DebugGLDrawCommand>();
-        private readonly List<Vector3> m_verticesUpdate = new List<Vector3>();
-        private Material m_material;
 
         public DebugGLDrawer()
         {
@@ -54,14 +49,9 @@ namespace UGF.DebugTools.Runtime
 
         public void DrawGL()
         {
-            for (int i = 0; i < m_commands.Count; i++)
-            {
-                m_commandsUpdate.Add(m_commands[i]);
-            }
+            DrawGLCommands(m_commands);
 
-            DrawGLCommands(m_commandsUpdate);
-
-            m_commandsUpdate.Clear();
+            m_commands.Clear();
         }
 
         public void DrawGLCommands(IReadOnlyList<DebugGLDrawCommand> commands)
@@ -74,14 +64,10 @@ namespace UGF.DebugTools.Runtime
 
                 if (m_shapes.TryGetValue(command.Shape, out DebugGLShape shape))
                 {
-                    shape.GetVertices(m_verticesUpdate);
-
                     Matrix4x4 matrix = Matrix4x4.TRS(command.Position, command.Rotation, command.Scale);
-                    Material material = HasMaterial ? Material : DebugGLUtility.DefaultMaterial;
+                    Material material = shape.HasMaterial ? shape.Material : DebugGLUtility.DefaultMaterial;
 
-                    DrawGLVertices(m_verticesUpdate, command.Mode, matrix, command.Color, material);
-
-                    m_verticesUpdate.Clear();
+                    DrawGLVertices(shape.Vertices, shape.Mode, matrix, command.Color, material);
                 }
             }
         }
@@ -90,11 +76,11 @@ namespace UGF.DebugTools.Runtime
         {
             if (material == null) throw new ArgumentNullException(nameof(material));
 
-            material.SetPass(pass);
-
             using (new DebugGLMatrixScope(matrix))
             using (new DebugGLDrawScope(mode))
             {
+                material.SetPass(pass);
+
                 UnityEngine.GL.Color(color);
 
                 for (int i = 0; i < vertices.Count; i++)
@@ -102,16 +88,6 @@ namespace UGF.DebugTools.Runtime
                     UnityEngine.GL.Vertex(vertices[i]);
                 }
             }
-        }
-
-        public void SetMaterial(Material material)
-        {
-            m_material = material ? material : throw new ArgumentNullException(nameof(material));
-        }
-
-        public void ClearMaterial()
-        {
-            m_material = null;
         }
     }
 }

@@ -1,12 +1,14 @@
-﻿using UGF.CustomSettings.Runtime;
+﻿using System.Collections.Generic;
+using UGF.CustomSettings.Runtime;
+using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
     public class DebugGLSettingsAsset : CustomSettingsData
     {
-        [SerializeField] private Material m_material;
+        [SerializeField] private List<AssetReference<DebugGLShapeAsset>> m_shapes = new List<AssetReference<DebugGLShapeAsset>>();
 
-        public Material Material { get { return m_material; } set { m_material = value; } }
+        public List<AssetReference<DebugGLShapeAsset>> Shapes { get { return m_shapes; } }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
@@ -10,9 +11,11 @@ namespace UGF.DebugTools.Runtime
         {
             DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
 
-            if (settings.Material != null)
+            for (int i = 0; i < settings.Shapes.Count; i++)
             {
-                Drawer.SetMaterial(settings.Material);
+                AssetReference<DebugGLShapeAsset> reference = settings.Shapes[i];
+
+                Drawer.AddShape(reference.Guid, reference.Asset.Build());
             }
 
             Camera.onPostRender += OnDrawGL;
