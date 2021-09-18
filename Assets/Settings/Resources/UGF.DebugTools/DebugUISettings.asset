@@ -15,9 +15,9 @@ MonoBehaviour:
   m_scale: 2
   m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
   m_drawers:
+  - m_guid: f856bfcfa6327534fbdcfb32e09bad6f
+    m_asset: {fileID: 11400000, guid: f856bfcfa6327534fbdcfb32e09bad6f, type: 2}
   - m_guid: e22946bc75712b245899bc6dfb0c8498
     m_asset: {fileID: 11400000, guid: e22946bc75712b245899bc6dfb0c8498, type: 2}
   - m_guid: 2c3a2510c22cba645ac071cc0c57d937
     m_asset: {fileID: 11400000, guid: 2c3a2510c22cba645ac071cc0c57d937, type: 2}
-  - m_guid: f856bfcfa6327534fbdcfb32e09bad6f
-    m_asset: {fileID: 11400000, guid: f856bfcfa6327534fbdcfb32e09bad6f, type: 2}

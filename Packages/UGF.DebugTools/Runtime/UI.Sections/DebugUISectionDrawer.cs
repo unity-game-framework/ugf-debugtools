@@ -15,6 +15,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
         private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
         private readonly Func<DebugUIMenu> m_onMenuCreateFunction;
+        private readonly DebugUIMenuItemHandler m_onMenuItemHandler;
         private string m_selected;
 
         public DebugUISectionDrawer()
@@ -22,6 +23,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             Sections = new ReadOnlyDictionary<string, DebugUISection>(m_sections);
 
             m_onMenuCreateFunction = OnMenuSectionsCreate;
+            m_onMenuItemHandler = OnMenuSectionsSelected;
         }
 
         public void Add(string id, DebugUISection section)
@@ -141,7 +143,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
             {
-                menu.Add(new GUIContent(pair.Value.DisplayName), m_selected == pair.Key, OnMenuSectionsSelected, pair.Key);
+                menu.Add(new GUIContent(pair.Value.DisplayName), m_selected == pair.Key, m_onMenuItemHandler, pair.Key);
             }
 
             return menu;
