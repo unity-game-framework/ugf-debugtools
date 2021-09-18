@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UGF.DebugTools.Runtime.UI.Menu;
 using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
         private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
         private string m_selected;
+        private Vector2 m_scroll;
 
         public DebugUISectionDrawer()
         {
@@ -95,25 +97,62 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
                 if (Display)
                 {
-                    GUILayout.Button("None");
+                    DebugUI.MenuDropdown(OnGetSelectedDisplayName(), OnMenuSectionsCreate);
 
-                    if (HasSelected)
+                    using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.window))
+                    using (var view = new DebugUIScrollViewScope(m_scroll))
                     {
-                        if (m_sections.TryGetValue(Selected, out DebugUISection section))
+                        if (HasSelected)
                         {
-                            section.DrawGUILayout();
+                            if (m_sections.TryGetValue(Selected, out DebugUISection section))
+                            {
+                                section.DrawGUILayout();
+                            }
+                            else
+                            {
+                                GUILayout.Label("Section not found.");
+                            }
                         }
                         else
                         {
-                            GUILayout.Label("Section not found.");
+                            GUILayout.Label("Section not selected.");
                         }
-                    }
-                    else
-                    {
-                        GUILayout.Box("Section not selected.");
+
+                        m_scroll = view.ScrollPosition;
                     }
                 }
             }
+        }
+
+        private GUIContent OnGetSelectedDisplayName()
+        {
+            if (HasSelected)
+            {
+                return m_sections.TryGetValue(Selected, out DebugUISection section)
+                    ? new GUIContent(section.DisplayName)
+                    : new GUIContent("Unknown");
+            }
+
+            return new GUIContent("None");
+        }
+
+        private DebugUIMenu OnMenuSectionsCreate()
+        {
+            var menu = new DebugUIMenu();
+
+            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            {
+                menu.Add(new GUIContent(pair.Value.DisplayName), m_selected == pair.Key, OnMenuSectionsSelected, pair.Key);
+            }
+
+            return menu;
+        }
+
+        private void OnMenuSectionsSelected(DebugUIMenuItem item)
+        {
+            string id = item.GetValue<string>();
+
+            SetSelected(id);
         }
     }
 }
