@@ -7,8 +7,6 @@ namespace UGF.DebugTools.Runtime.Tests
 {
     public class TestDebugUIDrawerComponent : MonoBehaviour
     {
-        private TestPanel m_panel;
-
         private class TestPanel : DebugUIPanelText
         {
             private Vector2 m_scroll;
@@ -19,6 +17,11 @@ namespace UGF.DebugTools.Runtime.Tests
             private float m_float = 10.5F;
             private bool m_toggle;
             private bool m_foldout;
+
+            public TestPanel()
+            {
+                Display = true;
+            }
 
             protected override void OnDrawGUILayout()
             {
@@ -138,8 +141,7 @@ namespace UGF.DebugTools.Runtime.Tests
 
         private void Start()
         {
-            m_panel = DebugUI.PanelAdd<TestPanel>();
-            m_panel.BindTransform(transform);
+            DebugUI.PanelAdd<TestPanel>().BindTransform(transform);
         }
     }
 }

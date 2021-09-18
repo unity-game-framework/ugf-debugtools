@@ -2,31 +2,25 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.UI.Menu;
-using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Sections
 {
-    public class DebugUISectionDrawer : DebugUIDrawerBase
+    public class DebugUISectionDrawer : DebugUIWindowDrawer
     {
         public IReadOnlyDictionary<string, DebugUISection> Sections { get; }
-        public bool Display { get; set; }
         public Vector4 PaddingRatio { get; set; } = Vector4.zero;
         public string Selected { get { return HasSelected ? m_selected : throw new ArgumentException("Value not specified."); } }
         public bool HasSelected { get { return !string.IsNullOrEmpty(m_selected); } }
 
         private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
-        private readonly GUI.WindowFunction m_windowFunction;
         private readonly Func<DebugUIMenu> m_onMenuCreateFunction;
         private string m_selected;
-        private Vector2 m_scroll;
-        private int? m_windowId;
 
         public DebugUISectionDrawer()
         {
             Sections = new ReadOnlyDictionary<string, DebugUISection>(m_sections);
 
-            m_windowFunction = OnWindow;
             m_onMenuCreateFunction = OnMenuSectionsCreate;
         }
 
@@ -96,47 +90,34 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             }
         }
 
-        protected override void OnDrawGUI()
+        protected override Rect OnGetPosition()
         {
             Rect screen = DebugUIUtility.GetScreenRect();
 
             screen.min += new Vector2(screen.width * PaddingRatio.x, screen.height * PaddingRatio.y);
             screen.max -= new Vector2(screen.width * PaddingRatio.z, screen.height * PaddingRatio.w);
 
-            if (Display)
-            {
-                m_windowId ??= GetHashCode();
-
-                GUI.Window(m_windowId.Value, screen, m_windowFunction, GUIContent.none);
-            }
+            return screen;
         }
 
-        private void OnWindow(int id)
+        protected override void OnDrawGUILayout()
         {
-            if (Display)
+            DebugUI.MenuDropdown(OnGetSelectedDisplayName(), m_onMenuCreateFunction);
+
+            if (HasSelected)
             {
-                DebugUI.MenuDropdown(OnGetSelectedDisplayName(), m_onMenuCreateFunction);
-
-                using (var view = new DebugUIScrollViewScope(m_scroll))
+                if (m_sections.TryGetValue(Selected, out DebugUISection section))
                 {
-                    if (HasSelected)
-                    {
-                        if (m_sections.TryGetValue(Selected, out DebugUISection section))
-                        {
-                            section.DrawGUILayout();
-                        }
-                        else
-                        {
-                            GUILayout.Label("Section not found.");
-                        }
-                    }
-                    else
-                    {
-                        GUILayout.Label("Section not selected.");
-                    }
-
-                    m_scroll = view.ScrollPosition;
+                    section.DrawGUILayout();
                 }
+                else
+                {
+                    GUILayout.Label("Section not found.");
+                }
+            }
+            else
+            {
+                GUILayout.Label("Section not selected.");
             }
         }
 

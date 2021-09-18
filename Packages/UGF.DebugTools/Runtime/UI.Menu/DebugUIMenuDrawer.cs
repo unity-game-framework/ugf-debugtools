@@ -4,22 +4,15 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Menu
 {
-    public class DebugUIMenuDrawer : DebugUIDrawerBase
+    public class DebugUIMenuDrawer : DebugUIWindowDrawer
     {
         public Rect Position { get; set; }
         public DebugUIMenu Menu { get { return m_menu ?? throw new ArgumentException("Value not specified."); } }
         public bool HasMenu { get { return m_menu != null; } }
 
-        private readonly GUI.WindowFunction m_windowFunction;
         private readonly GUILayoutOption[] m_scrollOptions = { GUILayout.ExpandHeight(false) };
         private Vector2 m_scroll;
         private DebugUIMenu m_menu;
-        private int? m_windowId;
-
-        public DebugUIMenuDrawer()
-        {
-            m_windowFunction = OnWindow;
-        }
 
         public void SetMenu(DebugUIMenu menu)
         {
@@ -35,22 +28,22 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             if (HasMenu)
             {
-                m_windowId ??= GetHashCode();
-
-                Rect screen = DebugUIUtility.GetScreenRect();
-
-                GUI.ModalWindow(m_windowId.Value, screen, m_windowFunction, GUIContent.none, GUIStyle.none);
-                GUI.FocusWindow(m_windowId.Value);
+                base.OnDrawGUI();
             }
         }
 
-        private void OnWindow(int id)
+        protected override Rect OnGetPosition()
+        {
+            return Position;
+        }
+
+        protected override void OnDrawGUILayout()
         {
             bool anySelected = false;
 
             using (new DebugUILayoutAreaScope(Position))
             using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.box))
-            using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
+                // using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
             {
                 for (int i = 0; i < m_menu.Items.Count; i++)
                 {
@@ -69,7 +62,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
                     GUILayout.Label("Empty");
                 }
 
-                m_scroll = view.ScrollPosition;
+                // m_scroll = view.ScrollPosition;
             }
 
             if (Event.current.type == EventType.MouseUp)
