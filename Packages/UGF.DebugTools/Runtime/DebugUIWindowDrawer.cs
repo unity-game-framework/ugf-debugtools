@@ -8,6 +8,7 @@ namespace UGF.DebugTools.Runtime
     {
         public bool Display { get; set; }
         public bool DisplayBackground { get; set; } = true;
+        public Rect Position { get; set; } = new Rect(0F, 0F, 200F, 200F);
         public bool IsModal { get; set; }
         public int WindowId { get { return m_windowId ?? throw new ArgumentException("Value not specified."); } }
 
@@ -37,25 +38,20 @@ namespace UGF.DebugTools.Runtime
         {
             if (Display)
             {
-                Rect position = OnGetPosition();
+                OnUpdatePosition();
+
                 m_windowId ??= GetHashCode();
 
                 GUIStyle style = DisplayBackground ? GUI.skin.window : GUIStyle.none;
 
-                if (IsModal)
-                {
-                    GUI.ModalWindow(m_windowId.Value, position, m_windowFunction, GUIContent.none, style);
-                }
-                else
-                {
-                    GUI.Window(m_windowId.Value, position, m_windowFunction, GUIContent.none, style);
-                }
+                Position = IsModal
+                    ? GUI.ModalWindow(m_windowId.Value, Position, m_windowFunction, GUIContent.none, style)
+                    : GUI.Window(m_windowId.Value, Position, m_windowFunction, GUIContent.none, style);
             }
         }
 
-        protected virtual Rect OnGetPosition()
+        protected virtual void OnUpdatePosition()
         {
-            return DebugUIUtility.GetScreenRect();
         }
 
         protected abstract void OnDrawGUILayout();

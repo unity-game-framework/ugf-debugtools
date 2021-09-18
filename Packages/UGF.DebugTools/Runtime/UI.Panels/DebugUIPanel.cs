@@ -5,7 +5,6 @@ namespace UGF.DebugTools.Runtime.UI.Panels
 {
     public abstract class DebugUIPanel : DebugUIWindowDrawer
     {
-        public Rect Position { get; private set; } = new Rect(0F, 0F, 200F, 200F);
         public bool IsVisible { get; private set; }
         public object BindTarget { get { return m_bindTarget ?? throw new ArgumentException("Value not specified."); } }
         public bool HasBindTarget { get { return m_bindTarget != null; } }
@@ -30,11 +29,6 @@ namespace UGF.DebugTools.Runtime.UI.Panels
         public T GetBindTarget<T>()
         {
             return (T)m_bindTarget;
-        }
-
-        protected override Rect OnGetPosition()
-        {
-            return Position;
         }
 
         protected override void OnDrawGUI()

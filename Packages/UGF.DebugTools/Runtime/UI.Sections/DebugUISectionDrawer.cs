@@ -90,14 +90,16 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             }
         }
 
-        protected override Rect OnGetPosition()
+        protected override void OnUpdatePosition()
         {
+            base.OnUpdatePosition();
+
             Rect screen = DebugUIUtility.GetScreenRect();
 
             screen.min += new Vector2(screen.width * PaddingRatio.x, screen.height * PaddingRatio.y);
             screen.max -= new Vector2(screen.width * PaddingRatio.z, screen.height * PaddingRatio.w);
 
-            return screen;
+            Position = screen;
         }
 
         protected override void OnDrawGUILayout()

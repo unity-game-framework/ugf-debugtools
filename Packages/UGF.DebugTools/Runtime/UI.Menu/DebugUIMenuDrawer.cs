@@ -6,7 +6,6 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 {
     public class DebugUIMenuDrawer : DebugUIWindowDrawer
     {
-        public Rect Position { get; set; }
         public DebugUIMenu Menu { get { return m_menu ?? throw new ArgumentException("Value not specified."); } }
         public bool HasMenu { get { return m_menu != null; } }
 
@@ -34,13 +33,14 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             if (HasMenu)
             {
-                base.OnDrawGUI();
-            }
-        }
+                Rect position = Position;
 
-        protected override Rect OnGetPosition()
-        {
-            return DebugUIUtility.GetScreenRect();
+                Position = DebugUIUtility.GetScreenRect();
+
+                base.OnDrawGUI();
+
+                Position = position;
+            }
         }
 
         protected override void OnDrawGUILayout()
