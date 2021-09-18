@@ -83,15 +83,15 @@ MonoBehaviour:
   m_button:
     m_Name: button
     m_Normal:
-      m_Background: {fileID: 2800000, guid: d52a87021682792478ab6a1e9df7a4cd, type: 3}
+      m_Background: {fileID: 2800000, guid: 77cda70a239de204eb212057dcd77300, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_Hover:
-      m_Background: {fileID: 2800000, guid: 944c5db2dbf08704daae7ebcb843c123, type: 3}
+      m_Background: {fileID: 2800000, guid: 0d6f9827c0c59b04d9a0a505d653cdc4, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_Active:
-      m_Background: {fileID: 2800000, guid: 89413fc917a2d8f409615a3b480da001, type: 3}
+      m_Background: {fileID: 2800000, guid: aaac030b37f9d2e4388bf09007f2add1, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_Focused:
@@ -99,15 +99,15 @@ MonoBehaviour:
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
     m_OnNormal:
-      m_Background: {fileID: 2800000, guid: d52a87021682792478ab6a1e9df7a4cd, type: 3}
+      m_Background: {fileID: 2800000, guid: 77cda70a239de204eb212057dcd77300, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_OnHover:
-      m_Background: {fileID: 2800000, guid: 944c5db2dbf08704daae7ebcb843c123, type: 3}
+      m_Background: {fileID: 2800000, guid: 0d6f9827c0c59b04d9a0a505d653cdc4, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_OnActive:
-      m_Background: {fileID: 2800000, guid: 89413fc917a2d8f409615a3b480da001, type: 3}
+      m_Background: {fileID: 2800000, guid: aaac030b37f9d2e4388bf09007f2add1, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_OnFocused:
@@ -462,7 +462,7 @@ MonoBehaviour:
     m_Padding:
       m_Left: 3
       m_Right: 3
-      m_Top: 23
+      m_Top: 3
       m_Bottom: 3
     m_Overflow:
       m_Left: 2
@@ -1354,6 +1354,72 @@ MonoBehaviour:
     m_StretchWidth: 1
     m_StretchHeight: 0
   m_CustomStyles:
+  - m_Name: header
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 2
+      m_Right: 0
+      m_Top: 2
+      m_Bottom: 2
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: -1
+      m_Bottom: -1
+    m_Font: {fileID: 0}
+    m_FontSize: 11
+    m_FontStyle: 1
+    m_Alignment: 0
+    m_WordWrap: 1
+    m_RichText: 1
+    m_TextClipping: 1
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
   - m_Name: frame
     m_Normal:
       m_Background: {fileID: 2800000, guid: 418a8c08cade42344857704c57bd3a4a, type: 3}
@@ -1486,7 +1552,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
-  - m_Name: arrow
+  - m_Name: checkmark
     m_Normal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
