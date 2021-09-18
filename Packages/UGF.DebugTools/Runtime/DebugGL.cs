@@ -8,6 +8,13 @@ namespace UGF.DebugTools.Runtime
 
         static DebugGL()
         {
+            DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
+
+            if (settings.Material != null)
+            {
+                Drawer.SetMaterial(settings.Material);
+            }
+
             Camera.onPostRender += OnDrawGL;
         }
 

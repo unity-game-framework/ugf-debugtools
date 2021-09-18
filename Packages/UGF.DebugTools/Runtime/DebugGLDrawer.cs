@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.GL.Scopes;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace UGF.DebugTools.Runtime
 {
@@ -11,24 +10,19 @@ namespace UGF.DebugTools.Runtime
     {
         public IReadOnlyDictionary<string, DebugGLShape> Shapes { get; }
         public IReadOnlyList<DebugGLDrawCommand> Commands { get; }
+        public Material Material { get { return m_material ? m_material : throw new ArgumentException("Value not specified."); } }
+        public bool HasMaterial { get { return m_material != null; } }
 
         private readonly Dictionary<string, DebugGLShape> m_shapes = new Dictionary<string, DebugGLShape>();
         private readonly List<DebugGLDrawCommand> m_commands = new List<DebugGLDrawCommand>();
         private readonly List<DebugGLDrawCommand> m_commandsUpdate = new List<DebugGLDrawCommand>();
         private readonly List<Vector3> m_verticesUpdate = new List<Vector3>();
-
-        private static readonly int m_srcBlend = Shader.PropertyToID("_SrcBlend");
-        private static readonly int m_dstBlend = Shader.PropertyToID("_DstBlend");
-        private static readonly int m_cull = Shader.PropertyToID("_Cull");
-        private static readonly int m_zWrite = Shader.PropertyToID("_ZWrite");
         private Material m_material;
 
         public DebugGLDrawer()
         {
             Shapes = new ReadOnlyDictionary<string, DebugGLShape>(m_shapes);
             Commands = new ReadOnlyCollection<DebugGLDrawCommand>(m_commands);
-
-            m_material = OnCreateMaterial();
         }
 
         public void DrawGL()
@@ -56,8 +50,9 @@ namespace UGF.DebugTools.Runtime
                     shape.GetVertices(m_verticesUpdate);
 
                     Matrix4x4 matrix = Matrix4x4.TRS(command.Position, command.Rotation, command.Scale);
+                    Material material = HasMaterial ? Material : DebugGLUtility.DefaultMaterial;
 
-                    DrawGLVertices(m_verticesUpdate, command.Mode, matrix, command.Color, m_material);
+                    DrawGLVertices(m_verticesUpdate, command.Mode, matrix, command.Color, material);
 
                     m_verticesUpdate.Clear();
                 }
@@ -82,17 +77,14 @@ namespace UGF.DebugTools.Runtime
             }
         }
 
-        private Material OnCreateMaterial()
+        public void SetMaterial(Material material)
         {
-            Shader shader = Shader.Find("Hidden/Internal-Colored");
-            var material = new Material(shader);
+            m_material = material ? material : throw new ArgumentNullException(nameof(material));
+        }
 
-            material.SetInteger(m_srcBlend, (int)BlendMode.SrcAlpha);
-            material.SetInteger(m_dstBlend, (int)BlendMode.OneMinusSrcAlpha);
-            material.SetInteger(m_cull, (int)CullMode.Off);
-            material.SetInteger(m_zWrite, 0);
-
-            return material;
+        public void ClearMaterial()
+        {
+            m_material = null;
         }
     }
 }
