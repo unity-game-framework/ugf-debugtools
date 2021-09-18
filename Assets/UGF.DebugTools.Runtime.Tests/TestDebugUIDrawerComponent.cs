@@ -17,6 +17,7 @@ namespace UGF.DebugTools.Runtime.Tests
             private string m_textArea = "Text Area";
             private int m_int = 10;
             private float m_float = 10.5F;
+            private bool m_toggle;
 
             protected override void OnDrawGUILayout()
             {
@@ -45,7 +46,7 @@ namespace UGF.DebugTools.Runtime.Tests
                 DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
                 DebugUI.FieldButton(GUIContent.none, new GUIContent("Content"));
                 DebugUI.FieldDropdown(new GUIContent("Dropdown"), new GUIContent($"{m_menuSelected}"), OnMenuCreate());
-                DebugUI.FieldToggle(new GUIContent("Toggle"), true);
+                m_toggle = DebugUI.FieldToggle(new GUIContent("Toggle"), m_toggle);
                 DebugUI.FieldPassword(new GUIContent("Password"), "Password");
                 DebugUI.FieldText(new GUIContent("Text"), "Text");
                 m_textArea = DebugUI.FieldTextArea(new GUIContent("Text Area"), m_textArea);
