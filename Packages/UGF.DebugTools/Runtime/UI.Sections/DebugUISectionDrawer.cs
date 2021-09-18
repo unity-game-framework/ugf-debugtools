@@ -15,12 +15,18 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         public bool HasSelected { get { return !string.IsNullOrEmpty(m_selected); } }
 
         private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
+        private readonly GUI.WindowFunction m_windowFunction;
+        private readonly Func<DebugUIMenu> m_onMenuCreateFunction;
         private string m_selected;
         private Vector2 m_scroll;
+        private int? m_windowId;
 
         public DebugUISectionDrawer()
         {
             Sections = new ReadOnlyDictionary<string, DebugUISection>(m_sections);
+
+            m_windowFunction = OnWindow;
+            m_onMenuCreateFunction = OnMenuSectionsCreate;
         }
 
         public void Add(string id, DebugUISection section)
@@ -91,35 +97,46 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
         protected override void OnDrawGUI()
         {
-            using (new DebugUILayoutAreaScope(DebugUIUtility.GetScreenRect()))
+            Rect screen = DebugUIUtility.GetScreenRect();
+
+            using (new DebugUILayoutAreaScope(screen))
             {
                 Display = GUILayout.Toggle(Display, "Display Debug Sections");
+            }
 
-                if (Display)
+            if (Display)
+            {
+                m_windowId ??= GetHashCode();
+
+                GUI.Window(m_windowId.Value, screen, m_windowFunction, GUIContent.none);
+            }
+        }
+
+        private void OnWindow(int id)
+        {
+            if (Display)
+            {
+                DebugUI.MenuDropdown(OnGetSelectedDisplayName(), m_onMenuCreateFunction);
+
+                using (var view = new DebugUIScrollViewScope(m_scroll))
                 {
-                    DebugUI.MenuDropdown(OnGetSelectedDisplayName(), OnMenuSectionsCreate);
-
-                    using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.window))
-                    using (var view = new DebugUIScrollViewScope(m_scroll))
+                    if (HasSelected)
                     {
-                        if (HasSelected)
+                        if (m_sections.TryGetValue(Selected, out DebugUISection section))
                         {
-                            if (m_sections.TryGetValue(Selected, out DebugUISection section))
-                            {
-                                section.DrawGUILayout();
-                            }
-                            else
-                            {
-                                GUILayout.Label("Section not found.");
-                            }
+                            section.DrawGUILayout();
                         }
                         else
                         {
-                            GUILayout.Label("Section not selected.");
+                            GUILayout.Label("Section not found.");
                         }
-
-                        m_scroll = view.ScrollPosition;
                     }
+                    else
+                    {
+                        GUILayout.Label("Section not selected.");
+                    }
+
+                    m_scroll = view.ScrollPosition;
                 }
             }
         }

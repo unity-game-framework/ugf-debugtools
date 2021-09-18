@@ -14,6 +14,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         private readonly GUILayoutOption[] m_scrollOptions = { GUILayout.ExpandHeight(false) };
         private Vector2 m_scroll;
         private DebugUIMenu m_menu;
+        private int? m_windowId;
 
         public DebugUIMenuDrawer()
         {
@@ -34,10 +35,12 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             if (HasMenu)
             {
+                m_windowId ??= GetHashCode();
+
                 Rect screen = DebugUIUtility.GetScreenRect();
 
-                GUI.ModalWindow(0, screen, m_windowFunction, GUIContent.none, GUIStyle.none);
-                GUI.FocusWindow(0);
+                GUI.ModalWindow(m_windowId.Value, screen, m_windowFunction, GUIContent.none, GUIStyle.none);
+                GUI.FocusWindow(m_windowId.Value);
             }
         }
 

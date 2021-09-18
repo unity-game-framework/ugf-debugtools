@@ -1,12 +1,12 @@
 ﻿using System;
-using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Panels
 {
     public abstract class DebugUIPanel
     {
-        public bool Draw { get; set; } = true;
+        public bool Display { get; set; } = true;
+        public bool DisplayBackground { get; set; }
         public Vector3 Position { get; set; }
         public Vector2 Size { get; set; } = Vector2.one * 250F;
         public Rect Rect { get; private set; }
@@ -16,8 +16,15 @@ namespace UGF.DebugTools.Runtime.UI.Panels
         public DebugUIPanelBindHandler BindHandler { get { return m_bindHandler ?? throw new ArgumentException("Value not specified."); } }
         public bool HasBindHandler { get { return m_bindHandler != null; } }
 
+        private readonly GUI.WindowFunction m_windowFunction;
         private object m_bindTarget;
         private DebugUIPanelBindHandler m_bindHandler;
+        private int? m_windowId;
+
+        protected DebugUIPanel()
+        {
+            m_windowFunction = OnWindow;
+        }
 
         public void Enable()
         {
@@ -31,14 +38,15 @@ namespace UGF.DebugTools.Runtime.UI.Panels
 
         public void DrawGUI()
         {
-            if (Draw)
+            if (Display)
             {
                 if (IsVisible)
                 {
-                    using (new DebugUILayoutAreaScope(Rect))
-                    {
-                        OnDrawGUILayout();
-                    }
+                    m_windowId ??= GetHashCode();
+
+                    GUIStyle style = DisplayBackground ? GUI.skin.window : GUIStyle.none;
+
+                    GUI.Window(m_windowId.Value, Rect, m_windowFunction, GUIContent.none, style);
                 }
 
                 if (Event.current.type == EventType.Repaint)
@@ -61,6 +69,11 @@ namespace UGF.DebugTools.Runtime.UI.Panels
                     }
                 }
             }
+        }
+
+        private void OnWindow(int id)
+        {
+            OnDrawGUILayout();
         }
 
         public void Bind(object target, DebugUIPanelBindHandler handler)
