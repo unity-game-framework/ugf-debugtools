@@ -39,6 +39,32 @@ namespace UGF.DebugTools.Runtime
             return value;
         }
 
+        public static T Value<T>(Rect position, T value)
+        {
+            return (T)Value(position, value, typeof(T));
+        }
+
+        public static object Value(Rect position, object value, Type type)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (type == null) throw new ArgumentNullException(nameof(type));
+
+            string text = (string)Convert.ChangeType(value, typeof(string));
+
+            text = GUI.TextField(position, text);
+
+            try
+            {
+                value = Convert.ChangeType(text, type);
+            }
+            catch
+            {
+                // ignored
+            }
+
+            return value;
+        }
+
         public static Rect GetControlRect()
         {
             return GUILayoutUtility.GetRect(0F, float.MaxValue, LineHeight, LineHeight);

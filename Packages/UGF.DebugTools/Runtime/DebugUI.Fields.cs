@@ -32,20 +32,9 @@ namespace UGF.DebugTools.Runtime
             if (value == null) throw new ArgumentNullException(nameof(value));
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            string text = (string)Convert.ChangeType(value, typeof(string));
+            Rect position = FieldPrefixLabel(label);
 
-            text = FieldText(label, text);
-
-            try
-            {
-                value = Convert.ChangeType(text, type);
-            }
-            catch
-            {
-                // ignored
-            }
-
-            return value;
+            return Value(position, value, type);
         }
 
         public static string FieldTextArea(GUIContent label, string value)
