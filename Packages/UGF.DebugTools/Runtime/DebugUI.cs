@@ -12,7 +12,7 @@ namespace UGF.DebugTools.Runtime
         {
             DebugUISettingsAsset settings = DebugUISettings.Settings.GetData();
 
-            Drawer.Scale = settings.Scale;
+            Drawer.Scale = Vector2.one * settings.Scale;
 
             if (settings.Skin != null)
             {
