@@ -31,46 +31,20 @@ namespace UGF.DebugTools.Runtime
             m_material = OnCreateMaterial();
         }
 
-        public void DrawGL(Camera camera)
+        public void DrawGL()
         {
-            if (camera == null) throw new ArgumentNullException(nameof(camera));
-
             for (int i = 0; i < m_commands.Count; i++)
             {
                 m_commandsUpdate.Add(m_commands[i]);
             }
 
-            DrawGLCommands(camera, m_commandsUpdate);
+            DrawGLCommands(m_commandsUpdate);
 
             m_commandsUpdate.Clear();
-
-            // lineMaterial.SetPass(0);
-            //
-            // GL.PushMatrix();
-            // // Set transformation matrix for drawing to
-            // // match our transform
-            // GL.MultMatrix(transform.localToWorldMatrix);
-            //
-            // // Draw lines
-            // GL.Begin(GL.LINES);
-            // for (int i = 0; i < lineCount; ++i)
-            // {
-            //     float a = i / (float)lineCount;
-            //     float angle = a * Mathf.PI * 2;
-            //     // Vertex colors change from red to green
-            //     GL.Color(new Color(a, 1 - a, 0, 0.8F));
-            //     // One vertex at transform position
-            //     GL.Vertex3(0, 0, 0);
-            //     // Another vertex at edge of circle
-            //     GL.Vertex3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0);
-            // }
-            // GL.End();
-            // GL.PopMatrix();
         }
 
-        public void DrawGLCommands(Camera camera, IReadOnlyList<DebugGLDrawCommand> commands)
+        public void DrawGLCommands(IReadOnlyList<DebugGLDrawCommand> commands)
         {
-            if (camera == null) throw new ArgumentNullException(nameof(camera));
             if (commands == null) throw new ArgumentNullException(nameof(commands));
 
             for (int i = 0; i < commands.Count; i++)
@@ -81,19 +55,22 @@ namespace UGF.DebugTools.Runtime
                 {
                     shape.GetVertices(m_verticesUpdate);
 
-                    DrawGLVertices(m_material, command.Mode, command.Color, m_verticesUpdate);
+                    Matrix4x4 matrix = Matrix4x4.TRS(command.Position, command.Rotation, command.Scale);
+
+                    DrawGLVertices(m_verticesUpdate, command.Mode, matrix, command.Color, m_material);
 
                     m_verticesUpdate.Clear();
                 }
             }
         }
 
-        public void DrawGLVertices(Material material, DebugGLMode mode, Color color, IReadOnlyList<Vector3> vertices)
+        public void DrawGLVertices(IReadOnlyList<Vector3> vertices, DebugGLMode mode, Matrix4x4 matrix, Color color, Material material, int pass = 0)
         {
             if (material == null) throw new ArgumentNullException(nameof(material));
 
-            material.SetPass(0);
+            material.SetPass(pass);
 
+            using (new DebugGLMatrixScope(matrix))
             using (new DebugGLDrawScope(mode))
             {
                 UnityEngine.GL.Color(color);

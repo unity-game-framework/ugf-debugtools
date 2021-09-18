@@ -13,7 +13,7 @@ namespace UGF.DebugTools.Runtime
 
         private static void OnDrawGL(Camera camera)
         {
-            Drawer.DrawGL(camera);
+            Drawer.DrawGL();
         }
 
         [RuntimeInitializeOnLoadMethod]
