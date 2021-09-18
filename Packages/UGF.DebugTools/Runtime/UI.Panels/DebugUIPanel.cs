@@ -32,6 +32,11 @@ namespace UGF.DebugTools.Runtime.UI.Panels
             return (T)m_bindTarget;
         }
 
+        protected override Rect OnGetPosition()
+        {
+            return Position;
+        }
+
         protected override void OnDrawGUI()
         {
             if (IsVisible || !HasBindTarget)
@@ -62,11 +67,6 @@ namespace UGF.DebugTools.Runtime.UI.Panels
                     IsVisible = true;
                 }
             }
-        }
-
-        protected override Rect OnGetPosition()
-        {
-            return Position;
         }
     }
 }

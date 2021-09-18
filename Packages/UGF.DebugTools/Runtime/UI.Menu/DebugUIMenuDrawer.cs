@@ -11,8 +11,14 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         public bool HasMenu { get { return m_menu != null; } }
 
         private readonly GUILayoutOption[] m_scrollOptions = { GUILayout.ExpandHeight(false) };
-        private Vector2 m_scroll;
         private DebugUIMenu m_menu;
+        private Vector2 m_scroll;
+
+        public DebugUIMenuDrawer()
+        {
+            DisplayBackground = false;
+            IsModal = true;
+        }
 
         public void SetMenu(DebugUIMenu menu)
         {
@@ -34,7 +40,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 
         protected override Rect OnGetPosition()
         {
-            return Position;
+            return DebugUIUtility.GetScreenRect();
         }
 
         protected override void OnDrawGUILayout()
@@ -42,8 +48,8 @@ namespace UGF.DebugTools.Runtime.UI.Menu
             bool anySelected = false;
 
             using (new DebugUILayoutAreaScope(Position))
-            using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.box))
-                // using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
+            using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.window))
+            using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
             {
                 for (int i = 0; i < m_menu.Items.Count; i++)
                 {
@@ -62,7 +68,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
                     GUILayout.Label("Empty");
                 }
 
-                // m_scroll = view.ScrollPosition;
+                m_scroll = view.ScrollPosition;
             }
 
             if (Event.current.type == EventType.MouseUp)

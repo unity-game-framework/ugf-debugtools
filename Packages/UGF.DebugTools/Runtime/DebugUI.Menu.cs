@@ -82,6 +82,7 @@ namespace UGF.DebugTools.Runtime
 
             drawer.Position = position;
             drawer.SetMenu(menu);
+            drawer.Focus();
         }
 
         private static DebugUIMenuDrawer GetMenuDrawer()
@@ -90,7 +91,10 @@ namespace UGF.DebugTools.Runtime
             {
                 string id = Guid.NewGuid().ToString("N");
 
-                drawer = new DebugUIMenuDrawer();
+                drawer = new DebugUIMenuDrawer
+                {
+                    Display = true
+                };
 
                 Drawer.Add(id, drawer);
             }

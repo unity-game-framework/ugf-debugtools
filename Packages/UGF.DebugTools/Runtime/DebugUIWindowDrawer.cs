@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -7,6 +8,8 @@ namespace UGF.DebugTools.Runtime
     {
         public bool Display { get; set; }
         public bool DisplayBackground { get; set; } = true;
+        public bool IsModal { get; set; }
+        public int WindowId { get { return m_windowId ?? throw new ArgumentException("Value not specified."); } }
 
         private readonly GUI.WindowFunction m_windowFunction;
         private int? m_windowId;
@@ -15,6 +18,19 @@ namespace UGF.DebugTools.Runtime
         protected DebugUIWindowDrawer()
         {
             m_windowFunction = OnWindow;
+        }
+
+        public void Focus()
+        {
+            if (m_windowId.HasValue)
+            {
+                GUI.FocusWindow(m_windowId.Value);
+            }
+        }
+
+        public void Unfocus()
+        {
+            GUI.UnfocusWindow();
         }
 
         protected override void OnDrawGUI()
@@ -26,7 +42,14 @@ namespace UGF.DebugTools.Runtime
 
                 GUIStyle style = DisplayBackground ? GUI.skin.window : GUIStyle.none;
 
-                GUI.Window(m_windowId.Value, position, m_windowFunction, GUIContent.none, style);
+                if (IsModal)
+                {
+                    GUI.ModalWindow(m_windowId.Value, position, m_windowFunction, GUIContent.none, style);
+                }
+                else
+                {
+                    GUI.Window(m_windowId.Value, position, m_windowFunction, GUIContent.none, style);
+                }
             }
         }
 
