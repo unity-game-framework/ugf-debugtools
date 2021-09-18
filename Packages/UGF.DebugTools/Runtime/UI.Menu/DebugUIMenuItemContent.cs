@@ -16,14 +16,19 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 
         protected override void OnDrawGUILayout()
         {
+            GUIStyle style = GUI.skin.FindStyle(DebugUIStyles.CheckMark);
             Rect position = GUILayoutUtility.GetRect(Content, DebugUIStyles.FrameHighlight);
 
-            if (Event.current.type == EventType.Repaint)
+            if (Event.current.type == EventType.Repaint && Enabled)
             {
-                GUI.skin.FindStyle(DebugUIStyles.CheckMark).Draw(position, false, false, Enabled, false);
+                style.Draw(position, false, false, false, false);
             }
 
-            if (GUI.Button(position, Content, DebugUIStyles.FrameHighlight))
+            var rectLabel = new Rect(position.x + style.normal.background.width, position.y, position.width - style.normal.background.width, position.height);
+
+            GUI.Label(rectLabel, Content);
+
+            if (GUI.Button(position, GUIContent.none, DebugUIStyles.FrameHighlight))
             {
                 Select();
             }
