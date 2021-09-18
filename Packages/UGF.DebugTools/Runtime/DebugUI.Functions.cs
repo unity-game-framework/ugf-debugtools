@@ -5,6 +5,8 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugUI
     {
+        public static string DebugFunctionGroupName { get; } = "Debug";
+
         public static DebugUIFunction AddFunction(string groupName, string content, DebugUIFunctionExecuteHandler executeHandler)
         {
             return AddFunction(groupName, new GUIContent(content), executeHandler);

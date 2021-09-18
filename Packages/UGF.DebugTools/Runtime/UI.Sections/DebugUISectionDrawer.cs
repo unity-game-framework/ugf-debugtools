@@ -98,14 +98,14 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             base.OnEnable();
 
-            m_functionDisplay = DebugUI.AddFunction("Sections", "Display", OnFunctionDisplay);
+            m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Sections Display", OnFunctionDisplay);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
 
-            DebugUI.RemoveFunction("Sections", m_functionDisplay);
+            DebugUI.RemoveFunction(DebugUI.DebugFunctionGroupName, m_functionDisplay);
         }
 
         protected override void OnUpdatePosition()

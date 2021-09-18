@@ -79,7 +79,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
             using (new DebugUIHorizontalScope(GUIContent.none))
             {
-                if (GUILayout.Button("D", m_buttonDebugOptions))
+                if (GUILayout.Button(GUIContent.none, m_buttonDebugOptions))
                 {
                     DisplayMenu = !DisplayMenu;
                 }
