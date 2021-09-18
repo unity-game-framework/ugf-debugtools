@@ -6,11 +6,11 @@ namespace UGF.DebugTools.Runtime
     [AddComponentMenu("")]
     public class DebugUIExecuter : MonoBehaviour
     {
-        public event Action Drawing;
+        public event Action DrawGUI;
 
         private void OnGUI()
         {
-            Drawing?.Invoke();
+            DrawGUI?.Invoke();
         }
     }
 }

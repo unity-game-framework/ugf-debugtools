@@ -34,12 +34,12 @@ namespace UGF.DebugTools.Runtime
         {
             var executer = new GameObject(nameof(DebugUIExecuter)).AddComponent<DebugUIExecuter>();
 
-            executer.Drawing += OnDrawing;
+            executer.DrawGUI += OnDrawGUI;
 
             Object.DontDestroyOnLoad(executer.gameObject);
         }
 
-        private static void OnDrawing()
+        private static void OnDrawGUI()
         {
             Drawer.DrawGUI();
 
