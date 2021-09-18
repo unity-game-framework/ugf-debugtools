@@ -113,7 +113,14 @@ namespace UGF.DebugTools.Runtime.UI.Functions
             {
                 DebugUIFunction function = functions[i];
 
-                menu.Add(function.Content, function.Validate(), item => item.GetValue<DebugUIFunction>().Execute(), function);
+                if (function.Validate())
+                {
+                    menu.Add(function.Content, function.Enabled, item => item.GetValue<DebugUIFunction>().Execute(), function);
+                }
+                else
+                {
+                    menu.AddDisabled(function.Content, function.Enabled);
+                }
             }
 
             return menu;

@@ -6,6 +6,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
     public abstract class DebugUIFunction
     {
         public GUIContent Content { get; }
+        public bool Enabled { get; set; }
 
         protected DebugUIFunction(GUIContent content)
         {
@@ -23,6 +24,10 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         }
 
         protected abstract void OnExecute();
-        protected abstract bool OnValidate();
+
+        protected virtual bool OnValidate()
+        {
+            return true;
+        }
     }
 }
