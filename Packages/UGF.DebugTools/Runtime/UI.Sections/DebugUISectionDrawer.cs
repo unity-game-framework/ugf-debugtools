@@ -11,6 +11,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
     {
         public IReadOnlyDictionary<string, DebugUISection> Sections { get; }
         public bool Display { get; set; }
+        public Vector4 PaddingRatio { get; set; } = Vector4.zero;
         public string Selected { get { return HasSelected ? m_selected : throw new ArgumentException("Value not specified."); } }
         public bool HasSelected { get { return !string.IsNullOrEmpty(m_selected); } }
 
@@ -99,10 +100,8 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             Rect screen = DebugUIUtility.GetScreenRect();
 
-            using (new DebugUILayoutAreaScope(screen))
-            {
-                Display = GUILayout.Toggle(Display, "Display Debug Sections");
-            }
+            screen.min += new Vector2(screen.width * PaddingRatio.x, screen.height * PaddingRatio.y);
+            screen.max -= new Vector2(screen.width * PaddingRatio.z, screen.height * PaddingRatio.w);
 
             if (Display)
             {

@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e42efd3d2cfe48488c9be47c649411d2, type: 3}
   m_Name: New Debug UI Section Drawer Asset
   m_EditorClassIdentifier: 
+  m_paddingRatio: {x: 0.5, y: 0.05, z: 0, w: 0}
+  m_sections: []
