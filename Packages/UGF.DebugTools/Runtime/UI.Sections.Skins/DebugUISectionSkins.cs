@@ -11,7 +11,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
 
         private readonly Func<DebugUIMenu> m_onMenuSkinCreate;
 
-        public DebugUISectionSkins() : base("UI Skins")
+        public DebugUISectionSkins() : base("UI Skin")
         {
             m_onMenuSkinCreate = OnMenuSkinCreate;
         }

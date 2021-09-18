@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Sections.Skins
 {
-    [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug UI Skins Section", order = 2000)]
+    [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug UI Skin Section", order = 2000)]
     public class DebugUISectionSkinsAsset : DebugUISectionAsset
     {
         [SerializeField] private List<GUISkin> m_skins = new List<GUISkin>();
