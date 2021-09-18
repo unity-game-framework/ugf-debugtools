@@ -135,6 +135,8 @@ namespace UGF.DebugTools.Runtime
             var label = new Rect(position.x, position.y, position.width * FieldLabelRatio, position.height);
             var field = new Rect(label.xMax, position.y, position.width * (1F - FieldLabelRatio), position.height);
 
+            label = GetIndentedRect(label);
+
             return new FieldPositions(position, label, field);
         }
     }

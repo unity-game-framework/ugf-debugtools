@@ -77,7 +77,6 @@ namespace UGF.DebugTools.Runtime
             float indent = GetIndentWidth();
 
             rect.xMin += indent;
-            rect.width -= indent;
 
             return rect;
         }

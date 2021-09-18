@@ -63,6 +63,24 @@ namespace UGF.DebugTools.Runtime.Tests
                     }
                 }
 
+                DebugUI.Header(new GUIContent("Indent"));
+                DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+
+                using (new DebugUIIndentIncrementScope(1))
+                {
+                    DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+
+                    using (new DebugUIIndentIncrementScope(1))
+                    {
+                        DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                    }
+                }
+
+                using (new DebugUIIndentLevelScope(3))
+                {
+                    DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
+                }
+
                 DebugUI.Space();
 
                 GUILayout.Label("Defaults");
