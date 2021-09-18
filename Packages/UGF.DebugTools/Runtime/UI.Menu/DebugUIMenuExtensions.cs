@@ -5,6 +5,11 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 {
     public static class DebugUIMenuExtensions
     {
+        public static void AddDisabled(this DebugUIMenu menu, GUIContent content, bool enabled = false)
+        {
+            menu.Add(new DebugUIMenuItemDisabled(content, enabled));
+        }
+
         public static void Add(this DebugUIMenu menu, GUIContent content, bool enabled = false)
         {
             Add(menu, content, enabled, item => { });
@@ -14,9 +19,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         {
             if (menu == null) throw new ArgumentNullException(nameof(menu));
 
-            var item = new DebugUIMenuItemContent(content, enabled, handler, value);
-
-            menu.Add(item);
+            menu.Add(new DebugUIMenuItemContent(content, enabled, handler, value));
         }
 
         public static void ShowDropdown(this DebugUIMenu menu, Rect dropdownPosition)
