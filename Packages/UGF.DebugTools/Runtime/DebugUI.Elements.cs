@@ -15,6 +15,13 @@ namespace UGF.DebugTools.Runtime
             GUILayout.Label(content, DebugUIStyles.Header);
         }
 
+        public static bool Foldout(GUIContent content, bool value)
+        {
+            if (content == null) throw new ArgumentNullException(nameof(content));
+
+            return GUILayout.Toggle(value, content, DebugUIStyles.Foldout);
+        }
+
         public static bool Dropdown(Rect position, GUIContent content)
         {
             if (content == null) throw new ArgumentNullException(nameof(content));

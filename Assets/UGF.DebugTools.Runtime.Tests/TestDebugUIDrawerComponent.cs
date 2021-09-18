@@ -18,6 +18,7 @@ namespace UGF.DebugTools.Runtime.Tests
             private int m_int = 10;
             private float m_float = 10.5F;
             private bool m_toggle;
+            private bool m_foldout;
 
             protected override void OnDrawGUILayout()
             {
@@ -52,6 +53,16 @@ namespace UGF.DebugTools.Runtime.Tests
                 m_textArea = DebugUI.FieldTextArea(new GUIContent("Text Area"), m_textArea);
                 m_int = DebugUI.FieldValue(new GUIContent("Int"), m_int);
                 m_float = DebugUI.FieldValue(new GUIContent("Float"), m_float);
+                m_foldout = DebugUI.Foldout(new GUIContent("Foldout"), m_foldout);
+
+                if (m_foldout)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        GUILayout.Button("Button");
+                    }
+                }
+
                 DebugUI.Space();
 
                 GUILayout.Label("Defaults");
