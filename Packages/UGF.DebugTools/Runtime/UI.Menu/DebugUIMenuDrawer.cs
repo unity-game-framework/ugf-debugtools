@@ -12,6 +12,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         private readonly GUILayoutOption[] m_scrollOptions = { GUILayout.ExpandHeight(false) };
         private DebugUIMenu m_menu;
         private Vector2 m_scroll;
+        private Rect m_rect;
 
         public DebugUIMenuDrawer()
         {
@@ -45,43 +46,49 @@ namespace UGF.DebugTools.Runtime.UI.Menu
 
         protected override void OnDrawGUILayout()
         {
-            bool anySelected = false;
+            bool selected = false;
 
             using (new DebugUILayoutAreaScope(Position))
-            using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.window))
-            using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
             {
-                for (int i = 0; i < m_menu.Items.Count; i++)
+                using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.window))
+                using (var view = new DebugUIScrollViewScope(m_scroll, false, false, m_scrollOptions))
                 {
-                    DebugUIMenuItem item = m_menu.Items[i];
-
-                    item.DrawGUILayout();
-
-                    if (item.Selected)
+                    for (int i = 0; i < m_menu.Items.Count; i++)
                     {
-                        anySelected = true;
+                        DebugUIMenuItem item = m_menu.Items[i];
+
+                        item.DrawGUILayout();
+
+                        if (item.Selected)
+                        {
+                            selected = true;
+                        }
                     }
+
+                    if (m_menu.Items.Count == 0)
+                    {
+                        GUILayout.Label("Empty");
+                    }
+
+                    m_scroll = view.ScrollPosition;
                 }
 
-                if (m_menu.Items.Count == 0)
+                if (Event.current.type == EventType.Repaint)
                 {
-                    GUILayout.Label("Empty");
+                    m_rect = GUILayoutUtility.GetLastRect();
+                    m_rect.position = Position.position;
                 }
-
-                m_scroll = view.ScrollPosition;
             }
 
             if (Event.current.type == EventType.MouseUp)
             {
-                Rect position = GUILayoutUtility.GetLastRect();
-
-                if (!position.Contains(Event.current.mousePosition))
+                if (!m_rect.Contains(Event.current.mousePosition))
                 {
-                    anySelected = true;
+                    selected = true;
                 }
             }
 
-            if (anySelected)
+            if (selected)
             {
                 ClearMenu();
             }
