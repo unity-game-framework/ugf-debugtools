@@ -5,8 +5,10 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugUI
     {
-        public static float LineHeight { get; } = 21F;
-        public static float LineSpacing { get; } = 3F;
+        public static float LineHeight { get; set; } = 21F;
+        public static float LineSpacing { get; set; } = 3F;
+        public static int IndentLevel { get; set; }
+        public static float IndentLevelSize { get; set; } = 21F;
 
         public static void Header(GUIContent content)
         {
@@ -68,6 +70,26 @@ namespace UGF.DebugTools.Runtime
         public static Rect GetControlRect()
         {
             return GUILayoutUtility.GetRect(0F, float.MaxValue, LineHeight, LineHeight);
+        }
+
+        public static Rect GetIndentedRect(Rect rect)
+        {
+            float indent = GetIndentWidth();
+
+            rect.xMin += indent;
+            rect.width -= indent;
+
+            return rect;
+        }
+
+        public static float GetIndentWidth()
+        {
+            return GetIndentWidth(IndentLevel);
+        }
+
+        public static float GetIndentWidth(int level)
+        {
+            return IndentLevelSize * level;
         }
 
         public static void Space()
