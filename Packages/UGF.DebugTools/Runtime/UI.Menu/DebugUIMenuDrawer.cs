@@ -61,6 +61,11 @@ namespace UGF.DebugTools.Runtime.UI.Menu
                     }
                 }
 
+                if (m_menu.Items.Count == 0)
+                {
+                    GUILayout.Label("Empty");
+                }
+
                 m_scroll = view.ScrollPosition;
             }
 

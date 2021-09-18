@@ -22,6 +22,26 @@ namespace UGF.DebugTools.Runtime
             return false;
         }
 
+        public static bool MenuDropdown(GUIContent content, Func<DebugUIMenu> onMenuCreate)
+        {
+            return MenuDropdown(GetControlRect(), content, onMenuCreate);
+        }
+
+        public static bool MenuDropdown(Rect position, GUIContent content, Func<DebugUIMenu> onMenuCreate)
+        {
+            if (onMenuCreate == null) throw new ArgumentNullException(nameof(onMenuCreate));
+
+            if (Dropdown(position, content))
+            {
+                DebugUIMenu menu = onMenuCreate();
+
+                MenuShowDropdown(menu, position);
+                return true;
+            }
+
+            return false;
+        }
+
         public static void MenuShowDropdown(DebugUIMenu menu, Rect dropdownPosition)
         {
             Vector2 positionScreen = DebugUIUtility.GUIToScreenPosition(dropdownPosition.position);
