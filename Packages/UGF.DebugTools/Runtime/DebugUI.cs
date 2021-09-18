@@ -34,6 +34,7 @@ namespace UGF.DebugTools.Runtime
         {
             var executer = new GameObject(nameof(DebugUIExecuter)).AddComponent<DebugUIExecuter>();
 
+            executer.gameObject.hideFlags = HideFlags.HideAndDontSave;
             executer.DrawGUI += OnDrawGUI;
 
             Object.DontDestroyOnLoad(executer.gameObject);
