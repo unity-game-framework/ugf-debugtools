@@ -89,11 +89,16 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
                     foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functionsUpdate)
                     {
-                        if (GUILayout.Button(pair.Key, DebugUIStyles.FrameHighlight, m_buttonMenuOptions))
+                        var content = new GUIContent(pair.Key);
+                        Rect position = GUILayoutUtility.GetRect(content, DebugUIStyles.FrameHighlight, m_buttonMenuOptions);
+
+                        if (GUI.Button(position, content, DebugUIStyles.FrameHighlight))
                         {
+                            position.width = 200F;
+
                             DebugUIMenu menu = OnCreateMenu(pair.Value);
 
-                            DebugUI.MenuShowContext(menu);
+                            DebugUI.MenuShowDropdown(menu, position);
                         }
                     }
 
