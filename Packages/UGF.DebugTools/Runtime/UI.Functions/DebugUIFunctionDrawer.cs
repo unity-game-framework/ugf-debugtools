@@ -58,6 +58,11 @@ namespace UGF.DebugTools.Runtime.UI.Functions
             return false;
         }
 
+        public void Clear()
+        {
+            m_functions.Clear();
+        }
+
         protected override void OnUpdatePosition()
         {
             base.OnUpdatePosition();

@@ -8,7 +8,7 @@ namespace UGF.DebugTools.Runtime
 
         static DebugGLUtility()
         {
-            DefaultMaterial = new Material(Shader.Find("Sprites/Default"));
+            DefaultMaterial = new Material(Shader.Find("Hidden/Internal-Colored"));
         }
     }
 }
