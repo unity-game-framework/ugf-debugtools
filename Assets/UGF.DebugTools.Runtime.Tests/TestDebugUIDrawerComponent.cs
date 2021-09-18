@@ -22,7 +22,7 @@ namespace UGF.DebugTools.Runtime.Tests
             {
                 base.OnDrawGUILayout();
 
-                using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.box))
+                using (new DebugUIVerticalScope(GUIContent.none, GUI.skin.window))
                 using (var view = new DebugUIScrollViewScope(m_scroll))
                 {
                     OnDrawElements();
@@ -40,7 +40,7 @@ namespace UGF.DebugTools.Runtime.Tests
 
                 DebugUI.MenuDropdown(new GUIContent("Menu"), OnMenuCreate());
 
-                GUILayout.Label("Fields");
+                DebugUI.Header(new GUIContent("Fields"));
                 DebugUI.FieldLabel(new GUIContent("Label"), new GUIContent("Content"));
                 DebugUI.FieldButton(new GUIContent("Button"), new GUIContent("Content"));
                 DebugUI.FieldButton(GUIContent.none, new GUIContent("Content"));
@@ -53,6 +53,7 @@ namespace UGF.DebugTools.Runtime.Tests
                 m_float = DebugUI.FieldValue(new GUIContent("Float"), m_float);
                 DebugUI.Space();
 
+                GUILayout.Label("Defaults");
                 GUILayout.Button("Button");
                 GUILayout.Label("Label");
                 GUILayout.TextField("TextField");
