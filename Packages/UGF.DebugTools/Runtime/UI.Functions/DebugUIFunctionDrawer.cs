@@ -12,7 +12,6 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
         private readonly Dictionary<string, List<DebugUIFunction>> m_functions = new Dictionary<string, List<DebugUIFunction>>();
         private readonly Dictionary<string, List<DebugUIFunction>> m_functionsUpdate = new Dictionary<string, List<DebugUIFunction>>();
-        private readonly GUILayoutOption[] m_buttonDebugOptions = { GUILayout.Width(DebugUI.LineHeight) };
         private readonly GUILayoutOption[] m_buttonMenuOptions = { GUILayout.ExpandWidth(false) };
 
         public DebugUIFunctionDrawer()
@@ -79,10 +78,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
             using (new DebugUIHorizontalScope(GUIContent.none))
             {
-                if (GUILayout.Button(GUIContent.none, m_buttonDebugOptions))
-                {
-                    DisplayMenu = !DisplayMenu;
-                }
+                DisplayMenu = GUILayout.Toggle(DisplayMenu, GUIContent.none, m_buttonMenuOptions);
 
                 if (DisplayMenu)
                 {
