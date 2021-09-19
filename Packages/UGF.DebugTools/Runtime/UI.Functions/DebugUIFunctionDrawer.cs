@@ -9,7 +9,6 @@ namespace UGF.DebugTools.Runtime.UI.Functions
     {
         public bool DisplayMenu { get; set; }
         public float Width { get; set; } = 200F;
-        public float MenuWidth { get; set; } = 200F;
 
         private readonly Dictionary<string, List<DebugUIFunction>> m_functions = new Dictionary<string, List<DebugUIFunction>>();
         private readonly Dictionary<string, List<DebugUIFunction>> m_functionsUpdate = new Dictionary<string, List<DebugUIFunction>>();

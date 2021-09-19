@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: New Debug UI Function Drawer Asset
   m_EditorClassIdentifier: 
   m_display: 1
+  m_width: 200
