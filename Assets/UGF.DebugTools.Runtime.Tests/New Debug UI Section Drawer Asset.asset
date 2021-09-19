@@ -16,6 +16,8 @@ MonoBehaviour:
   m_height: 200
   m_alignment: 2
   m_sections:
+  - m_guid: 60a9038347e38bf4b83684852fa42041
+    m_asset: {fileID: 11400000, guid: 60a9038347e38bf4b83684852fa42041, type: 2}
   - m_guid: abf62bc648755db4681bd9e0dee115ba
     m_asset: {fileID: 11400000, guid: abf62bc648755db4681bd9e0dee115ba, type: 2}
   - m_guid: b78f2462ac2317f4d822640421fd7bc9

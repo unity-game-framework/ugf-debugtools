@@ -100,12 +100,22 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             base.OnEnable();
 
+            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            {
+                pair.Value.Enable();
+            }
+
             m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Sections Display", OnFunctionDisplay);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
+
+            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            {
+                pair.Value.Disable();
+            }
 
             DebugUI.RemoveFunction(DebugUI.DebugFunctionGroupName, m_functionDisplay);
         }
