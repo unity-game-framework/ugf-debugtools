@@ -99,7 +99,7 @@ namespace UGF.DebugTools.Runtime
 
             Rect position = FieldPrefixLabel(label);
 
-            return GUI.TextField(position, value);
+            return DelayedTextField(position, value);
         }
 
         public static string FieldPassword(string label, string value)

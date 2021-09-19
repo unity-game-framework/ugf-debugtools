@@ -13,10 +13,13 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
         private float m_slider;
         private string m_menu;
         private bool m_toggle;
+        private string m_text = "Text";
         private string m_textArea = "Text Area";
         private int m_int = 10;
         private float m_float = 10.5F;
         private bool m_foldout;
+        private string m_delayedText = "Delayed Text";
+        private string m_delayedText2 = "Delayed Text 2";
         private TypeCode m_enum;
 
         public DebugUISectionSkinSamples() : base("UI Skin Samples")
@@ -51,11 +54,21 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
             DebugUI.FieldDropdown("Dropdown", m_menu, m_onMenuCreate);
             m_toggle = DebugUI.FieldToggle("Toggle", m_toggle);
             DebugUI.FieldPassword("Password", "Password");
-            DebugUI.FieldText("Text", "Text");
+            m_text = DebugUI.FieldText("Text", m_text);
             m_textArea = DebugUI.FieldTextArea("Text Area", m_textArea);
             m_int = DebugUI.FieldValue("Int", m_int);
             m_float = DebugUI.FieldValue("Float", m_float);
             DebugUI.FieldEnum("Enum", m_enum, m_onEnumItemHandler);
+
+            DebugUI.Space();
+            DebugUI.Header("Elements");
+            GUILayout.Label("Enum");
+            DebugUI.ValueEnum($"{m_enum}", m_enum, m_onEnumItemHandler);
+            GUILayout.Label("Delayed Text Field");
+            m_delayedText = DebugUI.DelayedTextField(m_delayedText);
+            DebugUI.FieldLabel("Delayed Value", m_delayedText);
+            m_delayedText2 = DebugUI.DelayedTextField(m_delayedText2);
+            DebugUI.FieldLabel("Delayed Value 2", m_delayedText2);
 
             DebugUI.Space();
             DebugUI.Header("Menu");
@@ -65,9 +78,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
             {
                 DebugUI.MenuShowContext(OnMenuCreate());
             }
-
-            GUILayout.Label("Enum");
-            DebugUI.ValueEnum($"{m_enum}", m_enum, m_onEnumItemHandler);
 
             DebugUI.Space();
             DebugUI.Header("Foldout");

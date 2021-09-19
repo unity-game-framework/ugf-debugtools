@@ -11,6 +11,11 @@ namespace UGF.DebugTools.Runtime
         public static int IndentLevel { get; set; }
         public static float IndentLevelSize { get; set; } = 21F;
 
+        private static readonly int m_delayedTextFieldControlHint = nameof(DelayedTextField).GetHashCode();
+        private static readonly string m_delayedTextFieldControlName = nameof(DelayedTextField);
+        private static string m_delayedTextFieldValueControl;
+        private static string m_delayedTextFieldValue;
+
         public static void Header(string content)
         {
             Header(DebugUIContentCache.GetContent(content));
@@ -100,6 +105,49 @@ namespace UGF.DebugTools.Runtime
             return (T)Value(position, value, typeof(T));
         }
 
+        public static string DelayedTextField(string value)
+        {
+            return DelayedTextField(GetControlRect(), value);
+        }
+
+        public static string DelayedTextField(Rect position, string value)
+        {
+            int controlId = GUIUtility.GetControlID(m_delayedTextFieldControlHint, FocusType.Keyboard, position);
+            string controlName = $"{m_delayedTextFieldControlName}:{controlId}";
+
+            GUI.SetNextControlName(controlName);
+
+            string controlFocused = GUI.GetNameOfFocusedControl();
+
+            if (m_delayedTextFieldValueControl == null && controlName == controlFocused)
+            {
+                m_delayedTextFieldValueControl = controlName;
+                m_delayedTextFieldValue = value;
+            }
+
+            if (m_delayedTextFieldValueControl == controlName && m_delayedTextFieldValueControl != controlFocused)
+            {
+                value = m_delayedTextFieldValue;
+
+                m_delayedTextFieldValueControl = null;
+                m_delayedTextFieldValue = null;
+            }
+
+            if (m_delayedTextFieldValueControl == controlName)
+            {
+                m_delayedTextFieldValue = GUI.TextField(position, m_delayedTextFieldValue);
+
+                return value;
+            }
+
+            return GUI.TextField(position, value);
+        }
+
+        public static object Value(object value, Type type)
+        {
+            return Value(GetControlRect(), value, type);
+        }
+
         public static object Value(Rect position, object value, Type type)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
@@ -107,7 +155,7 @@ namespace UGF.DebugTools.Runtime
 
             string text = (string)Convert.ChangeType(value, typeof(string));
 
-            text = GUI.TextField(position, text);
+            text = DelayedTextField(position, text);
 
             try
             {
