@@ -8,12 +8,14 @@ namespace UGF.DebugTools.Editor
     [CustomEditor(typeof(DebugUISettingsAsset), true)]
     internal class DebugUISettingsAssetEditor : UnityEditor.Editor
     {
+        private SerializedProperty m_propertyEnable;
         private SerializedProperty m_propertyScale;
         private SerializedProperty m_propertySkin;
         private AssetReferenceListDrawer m_listDrawers;
 
         private void OnEnable()
         {
+            m_propertyEnable = serializedObject.FindProperty("m_enable");
             m_propertyScale = serializedObject.FindProperty("m_scale");
             m_propertySkin = serializedObject.FindProperty("m_skin");
             m_listDrawers = new AssetReferenceListDrawer(serializedObject.FindProperty("m_drawers"));
@@ -29,6 +31,7 @@ namespace UGF.DebugTools.Editor
         {
             using (new SerializedObjectUpdateScope(serializedObject))
             {
+                EditorGUILayout.PropertyField(m_propertyEnable);
                 EditorGUILayout.PropertyField(m_propertyScale);
                 EditorGUILayout.PropertyField(m_propertySkin);
 

@@ -11,6 +11,8 @@ namespace UGF.DebugTools.Runtime
         {
             DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
 
+            Drawer.Enable = settings.Enable;
+
             for (int i = 0; i < settings.Shapes.Count; i++)
             {
                 AssetReference<DebugGLShapeAsset> reference = settings.Shapes[i];

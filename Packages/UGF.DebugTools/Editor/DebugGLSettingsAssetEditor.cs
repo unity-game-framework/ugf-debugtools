@@ -8,10 +8,12 @@ namespace UGF.DebugTools.Editor
     [CustomEditor(typeof(DebugGLSettingsAsset), true)]
     internal class DebugGLSettingsAssetEditor : UnityEditor.Editor
     {
+        private SerializedProperty m_propertyEnable;
         private AssetReferenceListDrawer m_listShapes;
 
         private void OnEnable()
         {
+            m_propertyEnable = serializedObject.FindProperty("m_enable");
             m_listShapes = new AssetReferenceListDrawer(serializedObject.FindProperty("m_shapes"));
             m_listShapes.Enable();
         }
@@ -25,6 +27,8 @@ namespace UGF.DebugTools.Editor
         {
             using (new SerializedObjectUpdateScope(serializedObject))
             {
+                EditorGUILayout.PropertyField(m_propertyEnable);
+
                 m_listShapes.DrawGUILayout();
             }
         }

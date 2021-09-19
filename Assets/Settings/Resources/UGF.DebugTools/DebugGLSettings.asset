@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821f8acfec44421fb4d60606a716694b, type: 3}
   m_Name: DebugGLSettings
   m_EditorClassIdentifier: 
+  m_enable: 1
   m_shapes:
   - m_guid: c12784ef4dfe8a34ba927634338ef05e
     m_asset: {fileID: 11400000, guid: c12784ef4dfe8a34ba927634338ef05e, type: 2}

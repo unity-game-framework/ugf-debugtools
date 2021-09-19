@@ -8,6 +8,7 @@ namespace UGF.DebugTools.Runtime
 {
     public class DebugUIDrawer
     {
+        public bool Enable { get; set; }
         public IReadOnlyDictionary<string, IDebugUIDrawer> Drawers { get; }
         public Vector2 Scale { get; set; } = Vector2.one;
         public GUISkin Skin { get { return HasSkin ? m_skin : throw new ArgumentException("Value not specified."); } }
@@ -58,24 +59,27 @@ namespace UGF.DebugTools.Runtime
 
         public void DrawGUI()
         {
-            foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
+            if (Enable)
             {
-                m_drawersUpdate.Add(pair.Key, pair.Value);
-            }
-
-            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(Scale.x, Scale.y, 1F));
-            GUISkin skin = HasSkin ? Skin : GUI.skin;
-
-            using (new DebugUIMatrixScope(matrix))
-            using (new DebugUISkinScope(skin))
-            {
-                foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawersUpdate)
+                foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
                 {
-                    pair.Value.DrawGUI();
+                    m_drawersUpdate.Add(pair.Key, pair.Value);
                 }
-            }
 
-            m_drawersUpdate.Clear();
+                Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(Scale.x, Scale.y, 1F));
+                GUISkin skin = HasSkin ? Skin : GUI.skin;
+
+                using (new DebugUIMatrixScope(matrix))
+                using (new DebugUISkinScope(skin))
+                {
+                    foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawersUpdate)
+                    {
+                        pair.Value.DrawGUI();
+                    }
+                }
+
+                m_drawersUpdate.Clear();
+            }
         }
 
         public void SetSkin(GUISkin skin)
