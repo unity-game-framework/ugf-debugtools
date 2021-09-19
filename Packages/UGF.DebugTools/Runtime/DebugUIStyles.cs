@@ -7,5 +7,6 @@
         public static string FrameHighlight { get; } = "highlight";
         public static string CheckMark { get; } = "checkmark";
         public static string Foldout { get; } = "foldout";
+        public static string ButtonTextLeft { get; } = "buttontextleft";
     }
 }

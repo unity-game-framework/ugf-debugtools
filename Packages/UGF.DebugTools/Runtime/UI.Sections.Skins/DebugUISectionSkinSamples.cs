@@ -55,7 +55,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
             m_textArea = DebugUI.FieldTextArea("Text Area", m_textArea);
             m_int = DebugUI.FieldValue("Int", m_int);
             m_float = DebugUI.FieldValue("Float", m_float);
-            DebugUI.FieldEnum("Enum", $"{m_enum}", m_enum, m_onEnumItemHandler);
+            DebugUI.FieldEnum("Enum", m_enum, m_onEnumItemHandler);
 
             DebugUI.Space();
             DebugUI.Header("Menu");
@@ -110,7 +110,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
 
             for (int i = 0; i < 5; i++)
             {
-                string content = "Item {i}";
+                string content = $"Item {i}";
 
                 menu.Add(content, m_menu == content, m_onMenuItemHandler, content);
             }

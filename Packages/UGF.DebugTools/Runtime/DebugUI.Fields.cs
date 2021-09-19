@@ -22,6 +22,18 @@ namespace UGF.DebugTools.Runtime
             }
         }
 
+        public static void FieldEnum(string label, object value, DebugUIMenuItemHandler handler)
+        {
+            FieldEnum(DebugUIContentCache.GetLabel(label), value, handler);
+        }
+
+        public static void FieldEnum(GUIContent label, object value, DebugUIMenuItemHandler handler)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+
+            FieldEnum(label, DebugUIContentCache.GetContent(value.ToString()), value, handler);
+        }
+
         public static void FieldEnum(string label, string content, object value, DebugUIMenuItemHandler handler)
         {
             FieldEnum(DebugUIContentCache.GetLabel(label), DebugUIContentCache.GetContent(content), value, handler);
@@ -151,7 +163,7 @@ namespace UGF.DebugTools.Runtime
 
             Rect position = FieldPrefixLabel(label);
 
-            return GUI.Button(position, content);
+            return GUI.Button(position, content, DebugUIStyles.ButtonTextLeft);
         }
 
         public static void FieldLabel(string label, string content)

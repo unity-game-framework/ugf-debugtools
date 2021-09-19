@@ -54,7 +54,7 @@ namespace UGF.DebugTools.Runtime
         {
             if (content == null) throw new ArgumentNullException(nameof(content));
 
-            bool value = GUI.Button(position, content);
+            bool value = GUI.Button(position, content, DebugUIStyles.ButtonTextLeft);
 
             if (Event.current.type == EventType.Repaint)
             {
@@ -148,6 +148,11 @@ namespace UGF.DebugTools.Runtime
         public static void Space()
         {
             GUILayout.Space(LineHeight);
+        }
+
+        public static void Spacing()
+        {
+            GUILayout.Space(LineSpacing);
         }
     }
 }
