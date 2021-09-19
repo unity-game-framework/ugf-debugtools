@@ -10,7 +10,8 @@ namespace UGF.DebugTools.Runtime.UI.Sections
     public class DebugUISectionDrawer : DebugUIWindowDrawer
     {
         public IReadOnlyDictionary<string, DebugUISection> Sections { get; }
-        public Vector4 PaddingRatio { get; set; } = Vector4.zero;
+        public Vector2 Size { get; set; } = new Vector2(200F, 200F);
+        public DebugUISectionAlignment Alignment { get; set; } = DebugUISectionAlignment.Left;
         public string Selected { get { return HasSelected ? m_selected : throw new ArgumentException("Value not specified."); } }
         public bool HasSelected { get { return !string.IsNullOrEmpty(m_selected); } }
 
@@ -114,10 +115,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             Rect screen = DebugUIUtility.GetScreenRect();
 
-            screen.min += new Vector2(screen.width * PaddingRatio.x, screen.height * PaddingRatio.y);
-            screen.max -= new Vector2(screen.width * PaddingRatio.z, screen.height * PaddingRatio.w);
-
-            Position = screen;
+            Position = GetPosition(screen, Alignment, Size);
         }
 
         protected override void OnDrawGUILayout()
@@ -177,6 +175,19 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             Display = !Display;
 
             function.Enabled = Display;
+        }
+
+        private Rect GetPosition(Rect screen, DebugUISectionAlignment alignment, Vector2 size)
+        {
+            switch (alignment)
+            {
+                case DebugUISectionAlignment.Top: return new Rect(0F, 0F, screen.width, size.y);
+                case DebugUISectionAlignment.Bottom: return new Rect(0F, screen.height - size.y, screen.width, size.y);
+                case DebugUISectionAlignment.Right: return new Rect(screen.width - size.x, 0F, size.x, screen.height);
+                case DebugUISectionAlignment.Left: return new Rect(0F, 0F, size.x, screen.height);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null);
+            }
         }
     }
 }
