@@ -85,6 +85,28 @@ namespace UGF.DebugTools.Runtime
             drawer.Focus();
         }
 
+        public static DebugUIMenu GetMenuFromEnum(object value, DebugUIMenuItemHandler handler)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+
+            Type type = value.GetType();
+            string[] names = Enum.GetNames(type);
+            Array values = Enum.GetValues(type);
+            var menu = new DebugUIMenu();
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                string elementName = names[i];
+                object elementValue = values.GetValue(i);
+                var enumObject = (Enum)Enum.ToObject(type, elementValue);
+
+                menu.Add(elementName, enumObject.Equals(value), handler, elementValue);
+            }
+
+            return menu;
+        }
+
         private static DebugUIMenuDrawer GetMenuDrawer()
         {
             if (!Drawer.TryGet(out DebugUIMenuDrawer drawer))

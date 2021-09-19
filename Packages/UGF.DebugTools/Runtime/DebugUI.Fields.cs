@@ -22,6 +22,18 @@ namespace UGF.DebugTools.Runtime
             }
         }
 
+        public static void FieldEnum(string label, string content, object value, DebugUIMenuItemHandler handler)
+        {
+            FieldEnum(DebugUIContentCache.GetLabel(label), DebugUIContentCache.GetContent(content), value, handler);
+        }
+
+        public static void FieldEnum(GUIContent label, GUIContent content, object value, DebugUIMenuItemHandler handler)
+        {
+            Rect position = FieldPrefixLabel(label);
+
+            ValueEnum(position, content, value, handler);
+        }
+
         public static T FieldValue<T>(string label, T value)
         {
             return FieldValue(DebugUIContentCache.GetLabel(label), value);

@@ -9,6 +9,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
     {
         private readonly Func<DebugUIMenu> m_onMenuCreate;
         private readonly DebugUIMenuItemHandler m_onMenuItemHandler;
+        private readonly DebugUIMenuItemHandler m_onEnumItemHandler;
         private float m_slider;
         private string m_menu;
         private bool m_toggle;
@@ -16,11 +17,13 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
         private int m_int = 10;
         private float m_float = 10.5F;
         private bool m_foldout;
+        private TypeCode m_enum;
 
         public DebugUISectionSkinSamples() : base("UI Skin Samples")
         {
             m_onMenuCreate = OnMenuCreate;
             m_onMenuItemHandler = OnMenuSelect;
+            m_onEnumItemHandler = OnEnumSelect;
         }
 
         protected override void OnDrawGUILayout()
@@ -52,6 +55,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
             m_textArea = DebugUI.FieldTextArea("Text Area", m_textArea);
             m_int = DebugUI.FieldValue("Int", m_int);
             m_float = DebugUI.FieldValue("Float", m_float);
+            DebugUI.FieldEnum("Enum", $"{m_enum}", m_enum, m_onEnumItemHandler);
 
             DebugUI.Space();
             DebugUI.Header("Menu");
@@ -61,6 +65,9 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
             {
                 DebugUI.MenuShowContext(OnMenuCreate());
             }
+
+            GUILayout.Label("Enum");
+            DebugUI.ValueEnum($"{m_enum}", m_enum, m_onEnumItemHandler);
 
             DebugUI.Space();
             DebugUI.Header("Foldout");
@@ -116,6 +123,11 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
         private void OnMenuSelect(DebugUIMenuItem item)
         {
             m_menu = item.GetValue<string>();
+        }
+
+        private void OnEnumSelect(DebugUIMenuItem item)
+        {
+            m_enum = item.GetValue<TypeCode>();
         }
     }
 }

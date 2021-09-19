@@ -1,4 +1,5 @@
 ﻿using System;
+using UGF.DebugTools.Runtime.UI.Menu;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -34,6 +35,16 @@ namespace UGF.DebugTools.Runtime
             return GUILayout.Toggle(value, content, DebugUIStyles.Foldout);
         }
 
+        public static bool Dropdown(string content)
+        {
+            return Dropdown(DebugUIContentCache.GetContent(content));
+        }
+
+        public static bool Dropdown(GUIContent content)
+        {
+            return Dropdown(GetControlRect(), content);
+        }
+
         public static bool Dropdown(Rect position, string content)
         {
             return Dropdown(position, DebugUIContentCache.GetContent(content));
@@ -54,6 +65,34 @@ namespace UGF.DebugTools.Runtime
             }
 
             return value;
+        }
+
+        public static void ValueEnum(string content, object value, DebugUIMenuItemHandler handler)
+        {
+            ValueEnum(DebugUIContentCache.GetContent(content), value, handler);
+        }
+
+        public static void ValueEnum(GUIContent content, object value, DebugUIMenuItemHandler handler)
+        {
+            ValueEnum(GetControlRect(), content, value, handler);
+        }
+
+        public static void ValueEnum(Rect position, string content, object value, DebugUIMenuItemHandler handler)
+        {
+            ValueEnum(position, DebugUIContentCache.GetContent(content), value, handler);
+        }
+
+        public static void ValueEnum(Rect position, GUIContent content, object value, DebugUIMenuItemHandler handler)
+        {
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+
+            if (Dropdown(position, content))
+            {
+                DebugUIMenu menu = GetMenuFromEnum(value, handler);
+
+                menu.ShowDropdown(position);
+            }
         }
 
         public static T Value<T>(Rect position, T value)
