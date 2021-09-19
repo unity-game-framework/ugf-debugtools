@@ -13,6 +13,21 @@ namespace UGF.DebugTools.Runtime
 
         private Material m_material;
 
+        protected DebugGLShape(Material material = null)
+        {
+            m_material = material;
+        }
+
+        public void PreDraw()
+        {
+            OnPreDraw();
+        }
+
+        public void PostDraw()
+        {
+            OnPostDraw();
+        }
+
         public void SetMaterial(Material material)
         {
             m_material = material ? material : throw new ArgumentNullException(nameof(material));
@@ -21,6 +36,14 @@ namespace UGF.DebugTools.Runtime
         public void ClearMaterial()
         {
             m_material = null;
+        }
+
+        protected virtual void OnPreDraw()
+        {
+        }
+
+        protected virtual void OnPostDraw()
+        {
         }
     }
 }

@@ -62,12 +62,16 @@ namespace UGF.DebugTools.Runtime
             {
                 DebugGLDrawCommand command = commands[i];
 
-                if (m_shapes.TryGetValue(command.Shape, out DebugGLShape shape))
+                if (m_shapes.TryGetValue(command.ShapeId, out DebugGLShape shape))
                 {
+                    shape.PreDraw();
+
                     Matrix4x4 matrix = Matrix4x4.TRS(command.Position, command.Rotation, command.Scale);
                     Material material = shape.HasMaterial ? shape.Material : DebugGLUtility.DefaultMaterial;
 
                     DrawGLVertices(shape.Vertices, shape.Mode, matrix, command.Color, material);
+
+                    shape.PostDraw();
                 }
             }
         }

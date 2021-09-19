@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
-    public static class DebugGL
+    public static partial class DebugGL
     {
         public static DebugGLDrawer Drawer { get; } = new DebugGLDrawer();
 

@@ -6,19 +6,17 @@ namespace UGF.DebugTools.Runtime
 {
     public readonly struct DebugGLDrawCommand
     {
-        public string Shape { get; }
-        public DebugGLMode Mode { get; }
+        public string ShapeId { get; }
         public Vector3 Position { get; }
         public Quaternion Rotation { get; }
         public Vector3 Scale { get; }
         public Color Color { get; }
 
-        public DebugGLDrawCommand(string shape, DebugGLMode mode, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        public DebugGLDrawCommand(string shapeId, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
         {
-            if (string.IsNullOrEmpty(shape)) throw new ArgumentException("Value cannot be null or empty.", nameof(shape));
+            if (string.IsNullOrEmpty(shapeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(shapeId));
 
-            Shape = shape;
-            Mode = mode;
+            ShapeId = shapeId;
             Position = position;
             Rotation = rotation;
             Scale = scale;
@@ -27,12 +25,12 @@ namespace UGF.DebugTools.Runtime
 
         public bool IsValid()
         {
-            return !string.IsNullOrEmpty(Shape);
+            return !string.IsNullOrEmpty(ShapeId);
         }
 
         public bool Equals(DebugGLDrawCommand other)
         {
-            return Shape == other.Shape && Mode == other.Mode && Position.Equals(other.Position) && Rotation.Equals(other.Rotation) && Scale.Equals(other.Scale) && Color.Equals(other.Color);
+            return ShapeId == other.ShapeId && Position.Equals(other.Position) && Rotation.Equals(other.Rotation) && Scale.Equals(other.Scale) && Color.Equals(other.Color);
         }
 
         public override bool Equals(object obj)
@@ -44,8 +42,7 @@ namespace UGF.DebugTools.Runtime
         {
             unchecked
             {
-                int hashCode = (Shape != null ? Shape.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (int)Mode;
+                int hashCode = ShapeId != null ? ShapeId.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ Rotation.GetHashCode();
                 hashCode = (hashCode * 397) ^ Scale.GetHashCode();
