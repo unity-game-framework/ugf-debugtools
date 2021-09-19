@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_width: 200
   m_height: 200
-  m_alignment: 3
+  m_alignment: 2
   m_sections:
   - m_guid: abf62bc648755db4681bd9e0dee115ba
     m_asset: {fileID: 11400000, guid: abf62bc648755db4681bd9e0dee115ba, type: 2}
