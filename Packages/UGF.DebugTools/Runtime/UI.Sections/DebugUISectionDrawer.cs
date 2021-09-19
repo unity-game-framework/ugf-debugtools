@@ -131,12 +131,18 @@ namespace UGF.DebugTools.Runtime.UI.Sections
                 }
                 else
                 {
-                    GUILayout.Label("Section not found.");
+                    using (new DebugUICenterScope(GUIContent.none))
+                    {
+                        GUILayout.Label("Section not found.");
+                    }
                 }
             }
             else
             {
-                GUILayout.Label("Section not selected.");
+                using (new DebugUICenterScope(GUIContent.none))
+                {
+                    GUILayout.Label("Section not selected.");
+                }
             }
         }
 
