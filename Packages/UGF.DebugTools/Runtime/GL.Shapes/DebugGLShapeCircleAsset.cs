@@ -13,7 +13,11 @@ namespace UGF.DebugTools.Runtime.GL.Shapes
 
         protected override DebugGLShape OnBuild()
         {
-            return new DebugGLShapeCircle(m_segments, m_degrees, Mode, Material);
+            DebugGLShape shape = base.OnBuild();
+
+            DebugGLUtility.AddVerticesCircle(shape.Vertices, m_segments, m_degrees);
+
+            return shape;
         }
     }
 }

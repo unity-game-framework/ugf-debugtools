@@ -7,7 +7,15 @@ namespace UGF.DebugTools.Runtime.GL.Shapes
     {
         protected override DebugGLShape OnBuild()
         {
-            return new DebugGLShapeQuad(Mode, Material);
+            DebugGLShape shape = base.OnBuild();
+
+            shape.Vertices.Add(new Vector3(-0.5F, -0.5F, 0F));
+            shape.Vertices.Add(new Vector3(-0.5F, 0.5F, 0F));
+            shape.Vertices.Add(new Vector3(0.5F, 0.5F, 0F));
+            shape.Vertices.Add(new Vector3(0.5F, -0.5F, 0F));
+            shape.Vertices.Add(new Vector3(-0.5F, -0.5F, 0F));
+
+            return shape;
         }
     }
 }
