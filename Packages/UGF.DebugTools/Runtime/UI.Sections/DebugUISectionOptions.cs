@@ -8,7 +8,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
     {
         private readonly DebugUIMenuItemHandler m_onAlignmentSelect;
         private DebugUISectionDrawer m_drawer;
-        private Vector2 m_size;
 
         public DebugUISectionOptions() : base("UI Section Options")
         {
@@ -22,7 +21,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             if (DebugUI.Drawer.TryGet(out DebugUISectionDrawer drawer))
             {
                 m_drawer = drawer;
-                m_size = drawer.Size;
             }
         }
 
@@ -37,22 +35,14 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             if (m_drawer != null)
             {
-                m_size.x = DebugUI.FieldValue("Width", m_size.x);
-                m_size.y = DebugUI.FieldValue("Height", m_size.y);
+                Vector2 size = m_drawer.Size;
+
+                size.x = DebugUI.FieldValue("Width", size.x);
+                size.y = DebugUI.FieldValue("Height", size.y);
+
+                m_drawer.Size = size;
 
                 DebugUI.FieldEnum("Alignment", m_drawer.Alignment, m_onAlignmentSelect);
-
-                using (new DebugUIHorizontalScope(GUIContent.none))
-                {
-                    GUILayout.FlexibleSpace();
-
-                    if (GUILayout.Button("Apply", GUILayout.Width(50F)))
-                    {
-                        m_drawer.Size = m_size;
-                    }
-
-                    DebugUI.Spacing();
-                }
             }
             else
             {
