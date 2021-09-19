@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.UI.Functions;
 using UGF.DebugTools.Runtime.UI.Menu;
+using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Sections
@@ -139,21 +140,23 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             }
         }
 
-        private GUIContent OnGetSelectedDisplayName()
+        private string OnGetSelectedDisplayName()
         {
             if (HasSelected)
             {
                 return m_sections.TryGetValue(Selected, out DebugUISection section)
-                    ? new GUIContent(section.DisplayName)
-                    : new GUIContent("Unknown");
+                    ? section.DisplayName
+                    : "Unknown";
             }
 
-            return new GUIContent("None");
+            return "None";
         }
 
         private DebugUIMenu OnMenuSectionsCreate()
         {
             var menu = new DebugUIMenu();
+
+            menu.Add("None", !HasSelected, m_onMenuItemHandler);
 
             foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
             {
@@ -165,9 +168,16 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
         private void OnMenuSectionsSelected(DebugUIMenuItem item)
         {
-            string id = item.GetValue<string>();
+            if (item.HasValue)
+            {
+                string id = item.GetValue<string>();
 
-            SetSelected(id);
+                SetSelected(id);
+            }
+            else
+            {
+                ClearSelected();
+            }
         }
 
         private void OnFunctionDisplay(DebugUIFunction function)
