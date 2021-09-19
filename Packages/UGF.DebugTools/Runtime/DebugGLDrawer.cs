@@ -68,14 +68,13 @@ namespace UGF.DebugTools.Runtime
 
                 if (m_shapes.TryGetValue(command.ShapeId, out DebugGLShape shape))
                 {
-                    shape.PreDraw();
-
                     Matrix4x4 matrix = Matrix4x4.TRS(command.Position, command.Rotation, command.Scale);
-                    Material material = shape.HasMaterial ? shape.Material : DebugGLUtility.DefaultMaterial;
 
-                    DrawGLVertices(shape.Vertices, shape.Mode, matrix, command.Color, material);
-
-                    shape.PostDraw();
+                    DrawGLVertices(shape.Vertices, shape.Mode, matrix, command.Color, shape.Material);
+                }
+                else
+                {
+                    throw new ArgumentException($"Shape not found by the specified id: '{command.ShapeId}'.");
                 }
             }
         }

@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf8c776ab40d468c8ab4cab85a1419f2, type: 3}
-  m_Name: New Debug GL Shape Quad Wire Asset
+  m_Script: {fileID: 11500000, guid: 13b2cddaec09458588cdaea4dde3d7d6, type: 3}
+  m_Name: New Debug GL Shape Circle Solid Asset
   m_EditorClassIdentifier: 
-  m_mode: 2
+  m_mode: 7
   m_material: {fileID: 0}
+  m_segments: 16
+  m_degrees: 360

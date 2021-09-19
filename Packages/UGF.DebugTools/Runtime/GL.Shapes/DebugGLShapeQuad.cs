@@ -2,11 +2,10 @@
 
 namespace UGF.DebugTools.Runtime.GL.Shapes
 {
-    public class DebugGLShapeQuadWire : DebugGLShape
+    public class DebugGLShapeQuad : DebugGLShape
     {
-        public DebugGLShapeQuadWire(Material material = null) : base(material)
+        public DebugGLShapeQuad(DebugGLMode mode, Material material = null) : base(mode, material)
         {
-            Mode = DebugGLMode.LineStrip;
             Vertices.Add(new Vector3(-0.5F, -0.5F, 0F));
             Vertices.Add(new Vector3(-0.5F, 0.5F, 0F));
             Vertices.Add(new Vector3(0.5F, 0.5F, 0F));
