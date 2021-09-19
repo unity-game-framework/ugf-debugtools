@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UGF.DebugTools.Runtime.UI.Menu;
-using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Functions
@@ -9,10 +8,11 @@ namespace UGF.DebugTools.Runtime.UI.Functions
     public class DebugUIFunctionDrawer : DebugUIWindowDrawer
     {
         public bool DisplayMenu { get; set; }
+        public float Width { get; set; } = 200F;
+        public float MenuWidth { get; set; } = 200F;
 
         private readonly Dictionary<string, List<DebugUIFunction>> m_functions = new Dictionary<string, List<DebugUIFunction>>();
         private readonly Dictionary<string, List<DebugUIFunction>> m_functionsUpdate = new Dictionary<string, List<DebugUIFunction>>();
-        private readonly GUILayoutOption[] m_buttonMenuOptions = { GUILayout.ExpandWidth(false) };
 
         public DebugUIFunctionDrawer()
         {
@@ -69,46 +69,38 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
             Rect screen = DebugUIUtility.GetScreenRect();
 
-            screen.height = DebugUI.LineHeight;
-
-            Position = screen;
+            Position = DisplayMenu
+                ? new Rect(0F, 0F, Width, screen.height)
+                : new Rect(0F, 0F, 30F, 30F);
         }
 
         protected override void OnDrawGUILayout()
         {
-            if (DisplayMenu && Event.current.type == EventType.Repaint)
-            {
-                GUI.skin.window.Draw(Position, false, false, false, false);
-            }
+            string label = DisplayMenu ? "Debug Functions" : string.Empty;
 
-            using (new DebugUIHorizontalScope(GUIContent.none))
-            {
-                DisplayMenu = GUILayout.Toggle(DisplayMenu, GUIContent.none, m_buttonMenuOptions);
+            DisplayMenu = GUILayout.Toggle(DisplayMenu, label);
+            DisplayBackground = DisplayMenu;
 
-                if (DisplayMenu)
+            if (DisplayMenu)
+            {
+                foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functions)
                 {
-                    foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functions)
-                    {
-                        m_functionsUpdate.Add(pair.Key, pair.Value);
-                    }
-
-                    foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functionsUpdate)
-                    {
-                        var content = new GUIContent(pair.Key);
-                        Rect position = GUILayoutUtility.GetRect(content, DebugUIStyles.FrameHighlight, m_buttonMenuOptions);
-
-                        if (GUI.Button(position, content, DebugUIStyles.FrameHighlight))
-                        {
-                            position.width = 200F;
-
-                            DebugUIMenu menu = OnCreateMenu(pair.Value);
-
-                            DebugUI.MenuShowDropdown(menu, position);
-                        }
-                    }
-
-                    m_functionsUpdate.Clear();
+                    m_functionsUpdate.Add(pair.Key, pair.Value);
                 }
+
+                foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functionsUpdate)
+                {
+                    Rect position = DebugUI.GetControlRect();
+
+                    if (DebugUI.Dropdown(position, pair.Key))
+                    {
+                        DebugUIMenu menu = OnCreateMenu(pair.Value);
+
+                        DebugUI.MenuShowDropdown(menu, position);
+                    }
+                }
+
+                m_functionsUpdate.Clear();
             }
         }
 
