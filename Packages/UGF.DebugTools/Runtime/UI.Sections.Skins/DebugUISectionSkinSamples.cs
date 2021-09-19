@@ -103,12 +103,12 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
 
             for (int i = 0; i < 5; i++)
             {
-                var content = new GUIContent($"Item {i}");
+                string content = "Item {i}";
 
-                menu.Add(content, m_menu == content.text, m_onMenuItemHandler, content.text);
+                menu.Add(content, m_menu == content, m_onMenuItemHandler, content);
             }
 
-            menu.AddDisabled(new GUIContent("Disabled"));
+            menu.AddDisabled("Disabled");
 
             return menu;
         }

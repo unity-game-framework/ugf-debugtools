@@ -130,7 +130,7 @@ namespace UGF.DebugTools.Runtime.Tests
                     menu.Add(new GUIContent($"Item {i}"), m_menuSelected == i, OnMenuSelect, i);
                 }
 
-                menu.AddDisabled(new GUIContent("Disabled"));
+                menu.AddDisabled("Disabled");
 
                 return menu;
             }

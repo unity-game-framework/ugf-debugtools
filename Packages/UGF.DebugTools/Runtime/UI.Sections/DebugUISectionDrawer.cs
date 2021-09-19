@@ -157,7 +157,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
             {
-                menu.Add(new GUIContent(pair.Value.DisplayName), m_selected == pair.Key, m_onMenuItemHandler, pair.Key);
+                menu.Add(pair.Value.DisplayName, m_selected == pair.Key, m_onMenuItemHandler, pair.Key);
             }
 
             return menu;
