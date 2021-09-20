@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.Tests
 {
@@ -7,6 +6,7 @@ namespace UGF.DebugTools.Runtime.Tests
     {
         private void Update()
         {
+            DebugGL.CubeWire(transform.position, transform.rotation, transform.localScale, Color.red);
         }
     }
 }

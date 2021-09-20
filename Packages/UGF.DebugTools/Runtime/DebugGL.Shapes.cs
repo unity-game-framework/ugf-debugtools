@@ -5,11 +5,11 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugGL
     {
-        public static void Shape(string id, Transform transform, Color color)
-        {
-            if (transform == null) throw new ArgumentNullException(nameof(transform));
+        public static string ShapeCubeWireId { get; } = Guid.NewGuid().ToString("N");
 
-            Shape(id, transform.position, transform.rotation, transform.localScale, color);
+        public static void CubeWire(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        {
+            Shape(ShapeCubeWireId, position, rotation, scale, color);
         }
 
         public static void Shape(string id, Vector3 position, Color color)

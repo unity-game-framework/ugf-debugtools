@@ -13,30 +13,18 @@ namespace UGF.DebugTools.Runtime
             DefaultMaterial = new Material(Shader.Find("Hidden/Internal-Colored"));
         }
 
-        public static void AddVerticesCircle(ICollection<Vector3> vertices, int segments, float degrees = 360F)
+        public static DebugGLShape CreateShapeCubeWire()
         {
-            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
+            var shape = new DebugGLShape(DebugGLMode.Line, DefaultMaterial);
 
-            float angle = degrees / segments;
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 90F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, -0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, -0.5F, 0F), Quaternion.Euler(0F, 90F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0.5F), Quaternion.Euler(90F, 0F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, -0.5F), Quaternion.Euler(90F, 0F, 0F), Vector3.one));
 
-            for (float i = 0F; i < degrees; i += angle)
-            {
-                Vector3 vertex = Quaternion.Euler(0F, 0F, i) * Vector3.up * 0.5F;
-
-                vertices.Add(vertex);
-            }
-
-            vertices.Add(Quaternion.Euler(0F, 0F, 0F) * Vector3.up * 0.5F);
-        }
-
-        public static void AddVerticesCube(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F)
-        {
-            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
-
-            AddVerticesQuad(vertices, matrix * Matrix4x4.TRS(Vector3.up * size, Quaternion.identity, Vector3.one), size);
-            AddVerticesQuad(vertices, matrix * Matrix4x4.TRS(Vector3.down * size, Quaternion.identity, Vector3.one), size);
-            AddVerticesQuad(vertices, matrix * Matrix4x4.TRS(Vector3.forward * size, Quaternion.identity, Vector3.one), size);
-            AddVerticesQuad(vertices, matrix * Matrix4x4.TRS(Vector3.back * size, Quaternion.identity, Vector3.one), size);
+            return shape;
         }
 
         public static void AddVerticesCircle(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F, int segments = 16, float degrees = 360F)
