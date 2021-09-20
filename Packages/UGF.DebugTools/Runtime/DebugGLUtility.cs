@@ -92,6 +92,23 @@ namespace UGF.DebugTools.Runtime
             return shape;
         }
 
+        public static DebugGLShape CreateShapeCylinderWire()
+        {
+            return CreateShapeCylinderWire(DefaultMaterial);
+        }
+
+        public static DebugGLShape CreateShapeCylinderWire(Material material)
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line, material);
+
+            AddVerticesCircleLines(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
+            AddVerticesCircleLines(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, -0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(90F, 0F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(90F, 90F, 0F), Vector3.one));
+
+            return shape;
+        }
+
         public static void AddVerticesCircleLines(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F, int segments = 16, float degrees = 360F)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
