@@ -1,5 +1,4 @@
-﻿using System;
-using UGF.DebugTools.Runtime.UI.Scopes;
+﻿using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Menu

@@ -21,19 +21,19 @@ namespace UGF.DebugTools.Runtime
             Commands = new ReadOnlyCollection<DebugGLDrawCommand>(m_commands);
         }
 
-        public void AddShape(string name, DebugGLShape shape)
+        public void AddShape(string id, DebugGLShape shape)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Value cannot be null or empty.", nameof(name));
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
             if (shape == null) throw new ArgumentNullException(nameof(shape));
 
-            m_shapes.Add(name, shape);
+            m_shapes.Add(id, shape);
         }
 
-        public bool RemoveShape(string name)
+        public bool RemoveShape(string id)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Value cannot be null or empty.", nameof(name));
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
-            return m_shapes.Remove(name);
+            return m_shapes.Remove(id);
         }
 
         public void AddCommand(DebugGLDrawCommand command)
