@@ -13,6 +13,7 @@ namespace UGF.DebugTools.Runtime
 
             Drawer.Enable = settings.Enable;
             Drawer.AddShape(ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
+            Drawer.AddShape(ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
             Drawer.AddShape(ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
             Drawer.AddShape(ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
             Drawer.AddShape(ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());

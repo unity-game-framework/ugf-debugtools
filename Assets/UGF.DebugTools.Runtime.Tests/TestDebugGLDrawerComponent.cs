@@ -12,6 +12,7 @@ namespace UGF.DebugTools.Runtime.Tests
             DebugGL.CircleWire(transform.position + transform.up, transform.rotation, transform.localScale, Color.cyan);
             DebugGL.SphereWire(transform.position + transform.right, transform.rotation, transform.localScale, Color.yellow);
             DebugGL.CylinderWire(transform.position - transform.right, transform.rotation, transform.localScale, Color.yellow);
+            DebugGL.TriangleWire(transform.position - transform.forward, transform.rotation, transform.localScale, Color.magenta);
         }
     }
 }

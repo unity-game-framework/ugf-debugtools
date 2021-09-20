@@ -6,6 +6,7 @@ namespace UGF.DebugTools.Runtime
     public static partial class DebugGL
     {
         public static string ShapeLineWireId { get; } = Guid.NewGuid().ToString("N");
+        public static string ShapeTriangleWireId { get; } = Guid.NewGuid().ToString("N");
         public static string ShapeQuadWireId { get; } = Guid.NewGuid().ToString("N");
         public static string ShapeCircleWireId { get; } = Guid.NewGuid().ToString("N");
         public static string ShapeCubeWireId { get; } = Guid.NewGuid().ToString("N");
@@ -19,6 +20,11 @@ namespace UGF.DebugTools.Runtime
             Vector3 scale = Vector3.one * direction.magnitude;
 
             Shape(ShapeLineWireId, start, rotation, scale, color);
+        }
+
+        public static void TriangleWire(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        {
+            Shape(ShapeTriangleWireId, position, rotation, scale, color);
         }
 
         public static void QuadWire(Vector3 position, Quaternion rotation, Vector3 scale, Color color)

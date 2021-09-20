@@ -23,6 +23,15 @@ namespace UGF.DebugTools.Runtime
             return shape;
         }
 
+        public static DebugGLShape CreateShapeTriangleWire()
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line);
+
+            AddVerticesTriangleLines(shape.Vertices, Matrix4x4.identity);
+
+            return shape;
+        }
+
         public static DebugGLShape CreateShapeQuadWire()
         {
             var shape = new DebugGLShape(DebugGLMode.Line);
@@ -79,13 +88,6 @@ namespace UGF.DebugTools.Runtime
             return shape;
         }
 
-        public static DebugGLShape CreateShapeCapsule()
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line);
-
-            return shape;
-        }
-
         public static void AddVerticesCircleLines(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F, int segments = 16, float degrees = 360F)
         {
             if (vertices == null) throw new ArgumentNullException(nameof(vertices));
@@ -119,6 +121,27 @@ namespace UGF.DebugTools.Runtime
 
                 vertices.Add(vertex);
             }
+        }
+
+        public static void AddVerticesTriangleLines(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F)
+        {
+            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
+
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(-size, 0F, -size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(0F, 0F, size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(0F, 0F, size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(size, 0F, -size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(size, 0F, -size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(-size, 0F, -size)));
+        }
+
+        public static void AddVerticesTriangle(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F)
+        {
+            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
+
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(-size, 0F, -size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(0F, 0F, size)));
+            vertices.Add(matrix.MultiplyPoint3x4(new Vector3(size, 0F, -size)));
         }
 
         public static void AddVerticesQuad(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F)
