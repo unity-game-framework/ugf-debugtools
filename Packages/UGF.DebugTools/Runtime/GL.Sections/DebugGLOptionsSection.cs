@@ -1,0 +1,16 @@
+﻿using UGF.DebugTools.Runtime.UI.Sections;
+
+namespace UGF.DebugTools.Runtime.GL.Sections
+{
+    public class DebugGLOptionsSection : DebugUISection
+    {
+        public DebugGLOptionsSection() : base("GL Options")
+        {
+        }
+
+        protected override void OnDrawGUILayout()
+        {
+            DebugGL.Drawer.Enable = DebugUI.FieldToggle("Enable", DebugGL.Drawer.Enable);
+        }
+    }
+}
