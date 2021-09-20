@@ -43,6 +43,29 @@ namespace UGF.DebugTools.Runtime
             return shape;
         }
 
+        public static DebugGLShape CreateShapeCircleWire(int segments = 16, float degrees = 360F)
+        {
+            return CreateShapeCircleWire(DefaultMaterial, segments, degrees);
+        }
+
+        public static DebugGLShape CreateShapeCircleWire(Material material, int segments = 16, float degrees = 360F)
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line, material);
+
+            float angle = degrees / segments;
+
+            for (float i = 0; i < degrees; i += angle)
+            {
+                Vector3 start = Quaternion.Euler(0F, i, 0F) * Vector3.forward * 0.5F;
+                Vector3 end = Quaternion.Euler(0F, i + angle, 0F) * Vector3.forward * 0.5F;
+
+                shape.Vertices.Add(start);
+                shape.Vertices.Add(end);
+            }
+
+            return shape;
+        }
+
         public static DebugGLShape CreateShapeCubeWire()
         {
             return CreateShapeCubeWire(DefaultMaterial);
