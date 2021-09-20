@@ -12,6 +12,7 @@ namespace UGF.DebugTools.Runtime
             DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
 
             Drawer.Enable = settings.Enable;
+            Drawer.AddShape(ShapeCubeWireId, CreateCubeWire(DebugGLUtility.DefaultMaterial));
 
             for (int i = 0; i < settings.Shapes.Count; i++)
             {

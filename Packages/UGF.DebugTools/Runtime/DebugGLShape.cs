@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -9,10 +10,14 @@ namespace UGF.DebugTools.Runtime
         public Material Material { get; }
         public List<Vector3> Vertices { get; } = new List<Vector3>();
 
-        public DebugGLShape(DebugGLMode mode, Material material = null)
+        public DebugGLShape(DebugGLMode mode) : this(mode, DebugGLUtility.DefaultMaterial)
+        {
+        }
+
+        public DebugGLShape(DebugGLMode mode, Material material)
         {
             Mode = mode;
-            Material = material ? material : DebugGLUtility.DefaultMaterial;
+            Material = material ? material : throw new ArgumentNullException(nameof(material));
         }
     }
 }

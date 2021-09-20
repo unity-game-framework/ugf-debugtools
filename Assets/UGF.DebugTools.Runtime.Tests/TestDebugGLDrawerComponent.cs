@@ -1,16 +1,12 @@
-﻿using UGF.EditorTools.Runtime.IMGUI.Attributes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.Tests
 {
     public class TestDebugGLDrawerComponent : MonoBehaviour
     {
-        [AssetGuid(typeof(DebugGLShapeAsset))]
-        [SerializeField] private string m_shape;
-
         private void Update()
         {
-            DebugGL.Shape(m_shape, transform, Color.red);
+            DebugGL.CubeWire(transform, Color.blue);
         }
     }
 }
