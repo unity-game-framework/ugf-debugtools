@@ -15,12 +15,7 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugGLShape CreateShapeLineWire()
         {
-            return CreateShapeLineWire(DefaultMaterial);
-        }
-
-        public static DebugGLShape CreateShapeLineWire(Material material)
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line, material);
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             shape.Vertices.Add(new Vector3(0F, 0F, 0F));
             shape.Vertices.Add(new Vector3(0F, 0F, 1F));
@@ -30,12 +25,7 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugGLShape CreateShapeQuadWire()
         {
-            return CreateShapeQuadWire(DefaultMaterial);
-        }
-
-        public static DebugGLShape CreateShapeQuadWire(Material material)
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line, material);
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(0F, 90F, 0F), Vector3.one));
@@ -45,12 +35,7 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugGLShape CreateShapeCircleWire()
         {
-            return CreateShapeCircleWire(DefaultMaterial);
-        }
-
-        public static DebugGLShape CreateShapeCircleWire(Material material)
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line, material);
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             AddVerticesCircleLines(shape.Vertices, Matrix4x4.identity);
 
@@ -59,12 +44,7 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugGLShape CreateShapeCubeWire()
         {
-            return CreateShapeCubeWire(DefaultMaterial);
-        }
-
-        public static DebugGLShape CreateShapeCubeWire(Material material)
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line, material);
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 90F, 0F), Vector3.one));
@@ -78,12 +58,7 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugGLShape CreateShapeSphereWire()
         {
-            return CreateShapeSphereWire(DefaultMaterial);
-        }
-
-        public static DebugGLShape CreateShapeSphereWire(Material material)
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line, material);
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             AddVerticesCircleLines(shape.Vertices, Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0F, 0F, 0F), Vector3.one));
             AddVerticesCircleLines(shape.Vertices, Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(90F, 0F, 0F), Vector3.one));
@@ -94,17 +69,19 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugGLShape CreateShapeCylinderWire()
         {
-            return CreateShapeCylinderWire(DefaultMaterial);
-        }
-
-        public static DebugGLShape CreateShapeCylinderWire(Material material)
-        {
-            var shape = new DebugGLShape(DebugGLMode.Line, material);
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             AddVerticesCircleLines(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
             AddVerticesCircleLines(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, -0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(90F, 0F, 0F), Vector3.one));
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(90F, 90F, 0F), Vector3.one));
+
+            return shape;
+        }
+
+        public static DebugGLShape CreateShapeCapsule()
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line);
 
             return shape;
         }

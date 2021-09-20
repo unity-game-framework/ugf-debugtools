@@ -29,6 +29,13 @@ namespace UGF.DebugTools.Runtime
             Camera.onPostRender += OnDrawGL;
         }
 
+        public static Material GetDefaultMaterial()
+        {
+            DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
+
+            return settings.DefaultMaterial ? settings.DefaultMaterial : DebugGLUtility.DefaultMaterial;
+        }
+
         private static void OnDrawGL(Camera camera)
         {
             Drawer.DrawGL();

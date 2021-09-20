@@ -10,8 +10,9 @@ namespace UGF.DebugTools.Runtime
         public Quaternion Rotation { get; }
         public Vector3 Scale { get; }
         public Color Color { get; }
+        public Material Material { get; }
 
-        public DebugGLDrawCommand(string shapeId, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        public DebugGLDrawCommand(string shapeId, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
         {
             if (string.IsNullOrEmpty(shapeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(shapeId));
 
@@ -20,6 +21,7 @@ namespace UGF.DebugTools.Runtime
             Rotation = rotation;
             Scale = scale;
             Color = color;
+            Material = material ? material : throw new ArgumentNullException(nameof(material));
         }
 
         public bool IsValid()

@@ -70,7 +70,7 @@ namespace UGF.DebugTools.Runtime
                 {
                     Matrix4x4 matrix = Matrix4x4.TRS(command.Position, command.Rotation, command.Scale);
 
-                    DrawGLVertices(shape.Vertices, shape.Mode, matrix, command.Color, shape.Material);
+                    DrawGLVertices(shape.Vertices, shape.Mode, matrix, command.Color, command.Material);
                 }
                 else
                 {

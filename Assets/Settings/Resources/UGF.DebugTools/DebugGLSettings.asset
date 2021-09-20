@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: DebugGLSettings
   m_EditorClassIdentifier: 
   m_enable: 1
+  m_defaultMaterial: {fileID: 0}
   m_shapes: []

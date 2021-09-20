@@ -46,16 +46,14 @@ namespace UGF.DebugTools.Runtime
             Shape(ShapeCylinderWireId, position, rotation, scale, color);
         }
 
-        public static void Shape(string id, Vector3 position, Color color)
-        {
-            Shape(id, position, Quaternion.identity, Vector3.one, color);
-        }
-
         public static void Shape(string id, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
+            Shape(id, position, rotation, scale, color, GetDefaultMaterial());
+        }
 
-            Drawer.AddCommand(new DebugGLDrawCommand(id, position, rotation, scale, color));
+        public static void Shape(string id, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
+        {
+            Drawer.AddCommand(new DebugGLDrawCommand(id, position, rotation, scale, color, material));
         }
     }
 }
