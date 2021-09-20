@@ -13,9 +13,44 @@ namespace UGF.DebugTools.Runtime
             DefaultMaterial = new Material(Shader.Find("Hidden/Internal-Colored"));
         }
 
+        public static DebugGLShape CreateShapeLineWire()
+        {
+            return CreateShapeLineWire(DefaultMaterial);
+        }
+
+        public static DebugGLShape CreateShapeLineWire(Material material)
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line, material);
+
+            shape.Vertices.Add(new Vector3(0F, 0F, 0F));
+            shape.Vertices.Add(new Vector3(0F, 0F, 1F));
+
+            return shape;
+        }
+
+        public static DebugGLShape CreateShapeQuadWire()
+        {
+            return CreateShapeQuadWire(DefaultMaterial);
+        }
+
+        public static DebugGLShape CreateShapeQuadWire(Material material)
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line, material);
+
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
+            AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, 0F), Quaternion.Euler(0F, 90F, 0F), Vector3.one));
+
+            return shape;
+        }
+
         public static DebugGLShape CreateShapeCubeWire()
         {
-            var shape = new DebugGLShape(DebugGLMode.Line, DefaultMaterial);
+            return CreateShapeCubeWire(DefaultMaterial);
+        }
+
+        public static DebugGLShape CreateShapeCubeWire(Material material)
+        {
+            var shape = new DebugGLShape(DebugGLMode.Line, material);
 
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 0F, 0F), Vector3.one));
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0.5F, 0F), Quaternion.Euler(0F, 90F, 0F), Vector3.one));
