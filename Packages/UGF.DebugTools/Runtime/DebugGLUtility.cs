@@ -43,25 +43,16 @@ namespace UGF.DebugTools.Runtime
             return shape;
         }
 
-        public static DebugGLShape CreateShapeCircleWire(int segments = 16, float degrees = 360F)
+        public static DebugGLShape CreateShapeCircleWire()
         {
-            return CreateShapeCircleWire(DefaultMaterial, segments, degrees);
+            return CreateShapeCircleWire(DefaultMaterial);
         }
 
-        public static DebugGLShape CreateShapeCircleWire(Material material, int segments = 16, float degrees = 360F)
+        public static DebugGLShape CreateShapeCircleWire(Material material)
         {
             var shape = new DebugGLShape(DebugGLMode.Line, material);
 
-            float angle = degrees / segments;
-
-            for (float i = 0; i < degrees; i += angle)
-            {
-                Vector3 start = Quaternion.Euler(0F, i, 0F) * Vector3.forward * 0.5F;
-                Vector3 end = Quaternion.Euler(0F, i + angle, 0F) * Vector3.forward * 0.5F;
-
-                shape.Vertices.Add(start);
-                shape.Vertices.Add(end);
-            }
+            AddVerticesCircleLines(shape.Vertices, Matrix4x4.identity);
 
             return shape;
         }
@@ -83,6 +74,25 @@ namespace UGF.DebugTools.Runtime
             AddVerticesQuad(shape.Vertices, Matrix4x4.TRS(new Vector3(0F, 0F, -0.5F), Quaternion.Euler(90F, 0F, 0F), Vector3.one));
 
             return shape;
+        }
+
+        public static void AddVerticesCircleLines(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F, int segments = 16, float degrees = 360F)
+        {
+            if (vertices == null) throw new ArgumentNullException(nameof(vertices));
+
+            float angle = degrees / segments;
+
+            for (float i = 0; i < degrees; i += angle)
+            {
+                Vector3 start = Quaternion.Euler(0F, i, 0F) * Vector3.forward * size;
+                Vector3 end = Quaternion.Euler(0F, i + angle, 0F) * Vector3.forward * size;
+
+                start = matrix.MultiplyPoint3x4(start);
+                end = matrix.MultiplyPoint3x4(end);
+
+                vertices.Add(start);
+                vertices.Add(end);
+            }
         }
 
         public static void AddVerticesCircle(ICollection<Vector3> vertices, Matrix4x4 matrix, float size = 0.5F, int segments = 16, float degrees = 360F)
