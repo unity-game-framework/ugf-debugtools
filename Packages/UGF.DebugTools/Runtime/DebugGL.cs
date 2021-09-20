@@ -16,6 +16,7 @@ namespace UGF.DebugTools.Runtime
             Drawer.AddShape(ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
             Drawer.AddShape(ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
             Drawer.AddShape(ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
+            Drawer.AddShape(ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
 
             for (int i = 0; i < settings.Shapes.Count; i++)
             {

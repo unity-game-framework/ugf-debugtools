@@ -9,6 +9,7 @@ namespace UGF.DebugTools.Runtime
         public static string ShapeQuadWireId { get; } = Guid.NewGuid().ToString("N");
         public static string ShapeCircleWireId { get; } = Guid.NewGuid().ToString("N");
         public static string ShapeCubeWireId { get; } = Guid.NewGuid().ToString("N");
+        public static string ShapeSphereWireId { get; } = Guid.NewGuid().ToString("N");
 
         public static void Line(Vector3 start, Vector3 end, Color color)
         {
@@ -32,6 +33,11 @@ namespace UGF.DebugTools.Runtime
         public static void CubeWire(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
         {
             Shape(ShapeCubeWireId, position, rotation, scale, color);
+        }
+
+        public static void SphereWire(Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        {
+            Shape(ShapeSphereWireId, position, rotation, scale, color);
         }
 
         public static void Shape(string id, Vector3 position, Color color)
