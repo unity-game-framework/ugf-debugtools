@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UGF.DebugTools.Runtime
 {
     [AddComponentMenu("")]
-    internal class DebugUIExecuter : MonoBehaviour
+    public class DebugUIEventComponent : MonoBehaviour
     {
         public event Action DrawGUI;
 
