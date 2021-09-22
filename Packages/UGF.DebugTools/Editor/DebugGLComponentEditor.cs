@@ -5,8 +5,8 @@ using UnityEditor;
 
 namespace UGF.DebugTools.Editor
 {
-    [CustomEditor(typeof(DebugGLSettingsAsset), true)]
-    internal class DebugGLSettingsAssetEditor : UnityEditor.Editor
+    [CustomEditor(typeof(DebugGLComponent), true)]
+    internal class DebugGLComponentEditor : UnityEditor.Editor
     {
         private SerializedProperty m_propertyEnable;
         private SerializedProperty m_propertyDefaultMaterial;
