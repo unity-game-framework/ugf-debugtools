@@ -53,8 +53,6 @@ namespace UGF.DebugTools.Runtime
             if (Enable)
             {
                 DrawGLCommands(m_commands);
-
-                m_commands.Clear();
             }
         }
 

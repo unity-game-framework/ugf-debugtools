@@ -6,8 +6,6 @@ namespace UGF.DebugTools.Runtime
 {
     public static class DebugGLUtility
     {
-        public static Material DefaultMaterial { get; } = CreateDefaultMaterial();
-
         public static DebugGLShape CreateShapeLineWire()
         {
             var shape = new DebugGLShape(DebugGLMode.Line);
