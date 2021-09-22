@@ -8,7 +8,7 @@ namespace UGF.DebugTools.Runtime
 {
     public class DebugUIDrawer
     {
-        public bool Enable { get; set; }
+        public bool Enable { get; set; } = true;
         public IReadOnlyDictionary<string, IDebugUIDrawer> Drawers { get; }
         public Vector2 Scale { get; set; } = Vector2.one;
         public GUISkin Skin { get { return HasSkin ? m_skin : throw new ArgumentException("Value not specified."); } }
