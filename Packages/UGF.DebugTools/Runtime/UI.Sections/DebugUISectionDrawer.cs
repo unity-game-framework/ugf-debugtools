@@ -211,6 +211,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
                 case DebugUISectionAlignment.Bottom: return new Rect(0F, screen.height - size.y, screen.width, size.y);
                 case DebugUISectionAlignment.Right: return new Rect(screen.width - size.x, 0F, size.x, screen.height);
                 case DebugUISectionAlignment.Left: return new Rect(0F, 0F, size.x, screen.height);
+                case DebugUISectionAlignment.Full: return new Rect(0F, 0F, screen.width, screen.height);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null);
             }

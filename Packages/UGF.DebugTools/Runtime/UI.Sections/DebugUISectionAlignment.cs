@@ -5,6 +5,7 @@
         Top = 0,
         Bottom = 1,
         Right = 2,
-        Left = 3
+        Left = 3,
+        Full = 4
     }
 }
