@@ -5,8 +5,8 @@ using UnityEditor;
 
 namespace UGF.DebugTools.Editor
 {
-    [CustomEditor(typeof(DebugUISettingsAsset), true)]
-    internal class DebugUISettingsAssetEditor : UnityEditor.Editor
+    [CustomEditor(typeof(DebugUIComponent), true)]
+    internal class DebugUIComponentEditor : UnityEditor.Editor
     {
         private SerializedProperty m_propertyEnable;
         private SerializedProperty m_propertyScale;

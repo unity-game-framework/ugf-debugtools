@@ -8,7 +8,7 @@ namespace UGF.DebugTools.Runtime
 {
     public class DebugGLDrawer
     {
-        public bool Enable { get; set; }
+        public bool Enable { get; set; } = true;
         public IReadOnlyDictionary<string, DebugGLShape> Shapes { get; }
         public IReadOnlyList<DebugGLDrawCommand> Commands { get; }
 
@@ -53,8 +53,6 @@ namespace UGF.DebugTools.Runtime
             if (Enable)
             {
                 DrawGLCommands(m_commands);
-
-                m_commands.Clear();
             }
         }
 

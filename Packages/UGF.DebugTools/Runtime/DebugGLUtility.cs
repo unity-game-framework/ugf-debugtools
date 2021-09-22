@@ -6,13 +6,6 @@ namespace UGF.DebugTools.Runtime
 {
     public static class DebugGLUtility
     {
-        public static Material DefaultMaterial { get; }
-
-        static DebugGLUtility()
-        {
-            DefaultMaterial = new Material(Shader.Find("Hidden/Internal-Colored"));
-        }
-
         public static DebugGLShape CreateShapeLineWire()
         {
             var shape = new DebugGLShape(DebugGLMode.Line);
@@ -152,6 +145,13 @@ namespace UGF.DebugTools.Runtime
             vertices.Add(matrix.MultiplyPoint3x4(new Vector3(-size, 0F, size)));
             vertices.Add(matrix.MultiplyPoint3x4(new Vector3(size, 0F, size)));
             vertices.Add(matrix.MultiplyPoint3x4(new Vector3(size, 0F, -size)));
+        }
+
+        public static Material CreateDefaultMaterial()
+        {
+            Shader shader = Shader.Find("Hidden/Internal-Colored");
+
+            return new Material(shader);
         }
     }
 }

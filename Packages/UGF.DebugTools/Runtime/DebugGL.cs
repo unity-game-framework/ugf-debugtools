@@ -1,4 +1,4 @@
-﻿using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+﻿using System;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -6,12 +6,13 @@ namespace UGF.DebugTools.Runtime
     public static partial class DebugGL
     {
         public static DebugGLDrawer Drawer { get; } = new DebugGLDrawer();
+        public static Material DefaultMaterial { get { return m_defaultMaterial != null ? m_defaultMaterial : throw new ArgumentException("Value not specified."); } }
+        public static bool HasDefaultMaterial { get { return m_defaultMaterial != null; } }
+
+        private static Material m_defaultMaterial;
 
         static DebugGL()
         {
-            DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
-
-            Drawer.Enable = settings.Enable;
             Drawer.AddShape(ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
             Drawer.AddShape(ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
             Drawer.AddShape(ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
@@ -19,32 +20,18 @@ namespace UGF.DebugTools.Runtime
             Drawer.AddShape(ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
             Drawer.AddShape(ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
             Drawer.AddShape(ShapeCylinderWireId, DebugGLUtility.CreateShapeCylinderWire());
-
-            for (int i = 0; i < settings.Shapes.Count; i++)
-            {
-                AssetReference<DebugGLShapeAsset> reference = settings.Shapes[i];
-
-                Drawer.AddShape(reference.Guid, reference.Asset.Build());
-            }
-
-            Camera.onPostRender += OnDrawGL;
         }
 
-        public static Material GetDefaultMaterial()
+        public static void SetDefaultMaterial(Material material)
         {
-            DebugGLSettingsAsset settings = DebugGLSettings.Settings.GetData();
+            if (material == null) throw new ArgumentNullException(nameof(material));
 
-            return settings.DefaultMaterial ? settings.DefaultMaterial : DebugGLUtility.DefaultMaterial;
+            m_defaultMaterial = material;
         }
 
-        private static void OnDrawGL(Camera camera)
+        public static void ClearDefaultMaterial()
         {
-            Drawer.DrawGL();
-        }
-
-        [RuntimeInitializeOnLoadMethod]
-        private static void OnInitialize()
-        {
+            m_defaultMaterial = null;
         }
     }
 }

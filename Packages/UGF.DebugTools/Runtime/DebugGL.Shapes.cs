@@ -54,7 +54,7 @@ namespace UGF.DebugTools.Runtime
 
         public static void Shape(string id, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
         {
-            Shape(id, position, rotation, scale, color, GetDefaultMaterial());
+            Shape(id, position, rotation, scale, color, DefaultMaterial);
         }
 
         public static void Shape(string id, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
