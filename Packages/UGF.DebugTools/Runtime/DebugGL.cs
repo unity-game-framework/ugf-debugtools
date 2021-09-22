@@ -41,10 +41,5 @@ namespace UGF.DebugTools.Runtime
         {
             Drawer.DrawGL();
         }
-
-        [RuntimeInitializeOnLoadMethod]
-        private static void OnInitialize()
-        {
-        }
     }
 }

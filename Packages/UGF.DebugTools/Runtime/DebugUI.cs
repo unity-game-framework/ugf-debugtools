@@ -46,10 +46,5 @@ namespace UGF.DebugTools.Runtime
 
             DebugUIContentCache.Reset();
         }
-
-        [RuntimeInitializeOnLoadMethod]
-        private static void Initialize()
-        {
-        }
     }
 }
