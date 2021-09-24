@@ -41,13 +41,16 @@ namespace UGF.DebugTools.Runtime
 
             m_drawer.SetDefaultMaterial(m_defaultMaterial ? m_defaultMaterial : DebugGLUtility.CreateDefaultMaterial());
 
-            m_drawer.AddShape(DebugGL.ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
-            m_drawer.AddShape(DebugGL.ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
-            m_drawer.AddShape(DebugGL.ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
-            m_drawer.AddShape(DebugGL.ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
-            m_drawer.AddShape(DebugGL.ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
-            m_drawer.AddShape(DebugGL.ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
-            m_drawer.AddShape(DebugGL.ShapeCylinderWireId, DebugGLUtility.CreateShapeCylinderWire());
+            if (m_defaultShapes)
+            {
+                m_drawer.AddShape(DebugGL.ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
+                m_drawer.AddShape(DebugGL.ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
+                m_drawer.AddShape(DebugGL.ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
+                m_drawer.AddShape(DebugGL.ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
+                m_drawer.AddShape(DebugGL.ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
+                m_drawer.AddShape(DebugGL.ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
+                m_drawer.AddShape(DebugGL.ShapeCylinderWireId, DebugGLUtility.CreateShapeCylinderWire());
+            }
 
             for (int i = 0; i < m_shapes.Count; i++)
             {
