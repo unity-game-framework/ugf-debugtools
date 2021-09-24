@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enable: 1
+  m_defaultShapes: 1
   m_defaultMaterial: {fileID: 0}
   m_shapes: []
 --- !u!1 &770230239
@@ -468,7 +469,7 @@ GameObject:
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1531290047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +594,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1823135812
 Transform:
   m_ObjectHideFlags: 0

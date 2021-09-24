@@ -17,38 +17,57 @@ namespace UGF.DebugTools.Runtime
         public float Scale { get { return m_scale; } set { m_scale = value; } }
         public GUISkin Skin { get { return m_skin; } set { m_skin = value; } }
         public List<AssetReference<DebugUIDrawerAsset>> Drawers { get { return m_drawers; } }
+        public DebugUIDrawer Drawer { get { return m_drawer ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasDrawer { get { return m_drawer != null; } }
+
+        private DebugUIDrawer m_drawer;
 
         private void Start()
         {
-            DebugUI.Drawer.Enable = m_enable;
-            DebugUI.Drawer.Scale = Vector2.one * m_scale;
+            if (DebugUI.HasDrawer) throw new InvalidOperationException("Debug UI Drawer already specified.");
+
+            m_drawer = new DebugUIDrawer
+            {
+                Enable = m_enable,
+                Scale = Vector2.one * m_scale
+            };
 
             if (m_skin != null)
             {
-                DebugUI.Drawer.SetSkin(m_skin);
+                m_drawer.SetSkin(m_skin);
             }
 
             for (int i = 0; i < m_drawers.Count; i++)
             {
                 AssetReference<DebugUIDrawerAsset> reference = m_drawers[i];
 
-                DebugUI.Drawer.Add(reference.Guid, reference.Asset.Build());
+                m_drawer.Add(reference.Guid, reference.Asset.Build());
             }
+
+            DebugUI.DrawerSet(m_drawer);
+
+            m_drawer.Initialize();
         }
 
         private void OnDestroy()
         {
-            for (int i = m_drawers.Count - 1; i >= 0; i--)
+            if (HasDrawer)
             {
-                AssetReference<DebugUIDrawerAsset> reference = m_drawers[i];
+                m_drawer.Uninitialize();
 
-                DebugUI.Drawer.Remove(reference.Guid);
+                if (DebugUI.HasDrawer && DebugUI.Drawer == m_drawer)
+                {
+                    DebugUI.DrawerClear();
+                }
+
+                m_drawer = null;
             }
         }
 
         private void OnGUI()
         {
-            DebugUI.Drawer.DrawGUI();
+            m_drawer.DrawGUI();
+
             DebugUIContentCache.Reset();
         }
     }

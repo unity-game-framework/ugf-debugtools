@@ -1,8 +1,9 @@
 ﻿using System;
+using UGF.Initialize.Runtime;
 
 namespace UGF.DebugTools.Runtime.UI.Sections
 {
-    public abstract class DebugUISection
+    public abstract class DebugUISection : InitializeBase
     {
         public string DisplayName { get; }
 
@@ -11,16 +12,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             if (string.IsNullOrEmpty(displayName)) throw new ArgumentException("Value cannot be null or empty.", nameof(displayName));
 
             DisplayName = displayName;
-        }
-
-        public void Enable()
-        {
-            OnEnable();
-        }
-
-        public void Disable()
-        {
-            OnDisable();
         }
 
         public void Select()
@@ -36,14 +27,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         public void DrawGUILayout()
         {
             OnDrawGUILayout();
-        }
-
-        protected virtual void OnEnable()
-        {
-        }
-
-        protected virtual void OnDisable()
-        {
         }
 
         protected virtual void OnSelect()

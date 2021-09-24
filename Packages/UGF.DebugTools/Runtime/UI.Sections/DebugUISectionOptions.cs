@@ -14,9 +14,9 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             m_onAlignmentSelect = OnAlignmentSelect;
         }
 
-        protected override void OnEnable()
+        protected override void OnInitialize()
         {
-            base.OnEnable();
+            base.OnInitialize();
 
             if (DebugUI.Drawer.TryGet(out DebugUISectionDrawer drawer))
             {
@@ -24,9 +24,9 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             }
         }
 
-        protected override void OnDisable()
+        protected override void OnUninitialize()
         {
-            base.OnDisable();
+            base.OnUninitialize();
 
             m_drawer = null;
         }

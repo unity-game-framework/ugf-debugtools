@@ -1,9 +1,9 @@
-﻿namespace UGF.DebugTools.Runtime
+﻿using UGF.Initialize.Runtime;
+
+namespace UGF.DebugTools.Runtime
 {
-    public interface IDebugUIDrawer
+    public interface IDebugUIDrawer : IInitialize
     {
-        void Enable();
-        void Disable();
         void DrawGUI();
     }
 }

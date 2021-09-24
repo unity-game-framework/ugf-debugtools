@@ -30,14 +30,36 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             m_onMenuItemHandler = OnMenuSectionsSelected;
         }
 
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            {
+                pair.Value.Initialize();
+            }
+
+            m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Sections Display", OnFunctionDisplay);
+        }
+
+        protected override void OnUninitialize()
+        {
+            base.OnUninitialize();
+
+            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            {
+                pair.Value.Uninitialize();
+            }
+
+            DebugUI.RemoveFunction(DebugUI.DebugFunctionGroupName, m_functionDisplay);
+        }
+
         public void Add(string id, DebugUISection section)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
             if (section == null) throw new ArgumentNullException(nameof(section));
 
             m_sections.Add(id, section);
-
-            section.Enable();
         }
 
         public bool Remove(string id)
@@ -46,7 +68,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             if (m_sections.TryGetValue(id, out DebugUISection section))
             {
-                section.Disable();
                 m_sections.Remove(id);
                 return true;
             }
@@ -60,7 +81,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
             {
-                pair.Value.Disable();
+                pair.Value.Uninitialize();
             }
 
             m_sections.Clear();
@@ -94,30 +115,6 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
                 m_selected = string.Empty;
             }
-        }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
-            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
-            {
-                pair.Value.Enable();
-            }
-
-            m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Sections Display", OnFunctionDisplay);
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-
-            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
-            {
-                pair.Value.Disable();
-            }
-
-            DebugUI.RemoveFunction(DebugUI.DebugFunctionGroupName, m_functionDisplay);
         }
 
         protected override void OnUpdatePosition()
