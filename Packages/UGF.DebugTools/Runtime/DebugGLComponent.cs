@@ -62,10 +62,16 @@ namespace UGF.DebugTools.Runtime
             DebugGL.DrawerSet(m_drawer);
 
             m_drawer.Initialize();
+
+            Camera.onPostRender += m_onPostRenderHandler;
+
+            StartCoroutine(OnRenderEndRoutine());
         }
 
         private void OnDestroy()
         {
+            Camera.onPostRender -= m_onPostRenderHandler;
+
             if (HasDrawer)
             {
                 m_drawer.Uninitialize();
@@ -77,18 +83,6 @@ namespace UGF.DebugTools.Runtime
 
                 m_drawer = null;
             }
-        }
-
-        private void OnEnable()
-        {
-            Camera.onPostRender += m_onPostRenderHandler;
-
-            StartCoroutine(OnRenderEndRoutine());
-        }
-
-        private void OnDisable()
-        {
-            Camera.onPostRender -= m_onPostRenderHandler;
         }
 
         private void OnRender(Camera _)
