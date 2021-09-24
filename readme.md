@@ -4,7 +4,7 @@ UGF.DebugTools
 
 ## Info
 
-- **Version**: `1.0.0-preview.2`
+- **Version**: `1.0.0-preview.3`
 - **Unity**: `2021.1`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
