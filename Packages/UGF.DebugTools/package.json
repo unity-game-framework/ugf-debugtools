@@ -21,6 +21,7 @@
   "dependencies": {
     "com.ugf.editortools": "1.13.1",
     "com.ugf.builder": "2.0.1",
+    "com.ugf.initialize": "2.6.0",
     "com.unity.modules.imgui": "1.0.0"
   }
 }

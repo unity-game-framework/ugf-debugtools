@@ -119,6 +119,8 @@ namespace UGF.DebugTools.Runtime
                 };
 
                 Drawer.Add(id, drawer);
+
+                drawer.Initialize();
             }
 
             return drawer;

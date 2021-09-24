@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.GL.Scopes;
+using UGF.Initialize.Runtime;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
-    public class DebugGLDrawer
+    public class DebugGLDrawer : InitializeBase
     {
         public bool Enable { get; set; } = true;
         public IReadOnlyDictionary<string, DebugGLShape> Shapes { get; }
         public IReadOnlyList<DebugGLDrawCommand> Commands { get; }
+        public Material DefaultMaterial { get { return m_defaultMaterial != null ? m_defaultMaterial : throw new ArgumentException("Value not specified."); } }
+        public bool HasDefaultMaterial { get { return m_defaultMaterial != null; } }
 
         private readonly Dictionary<string, DebugGLShape> m_shapes = new Dictionary<string, DebugGLShape>();
         private readonly List<DebugGLDrawCommand> m_commands = new List<DebugGLDrawCommand>();
+        private Material m_defaultMaterial;
 
         public DebugGLDrawer()
         {
@@ -34,6 +38,11 @@ namespace UGF.DebugTools.Runtime
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
             return m_shapes.Remove(id);
+        }
+
+        public void ClearShapes()
+        {
+            m_shapes.Clear();
         }
 
         public void AddCommand(DebugGLDrawCommand command)
@@ -93,6 +102,16 @@ namespace UGF.DebugTools.Runtime
                     UnityEngine.GL.Vertex(vertices[i]);
                 }
             }
+        }
+
+        public void SetDefaultMaterial(Material material)
+        {
+            m_defaultMaterial = material ? material : throw new ArgumentNullException(nameof(material));
+        }
+
+        public void ClearDefaultMaterial()
+        {
+            m_defaultMaterial = null;
         }
     }
 }

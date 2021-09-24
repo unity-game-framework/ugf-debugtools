@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
@@ -9,38 +10,69 @@ namespace UGF.DebugTools.Runtime
     public class DebugGLComponent : MonoBehaviour
     {
         [SerializeField] private bool m_enable = true;
+        [SerializeField] private bool m_defaultShapes = true;
         [SerializeField] private Material m_defaultMaterial;
         [SerializeField] private List<AssetReference<DebugGLShapeAsset>> m_shapes = new List<AssetReference<DebugGLShapeAsset>>();
 
         public bool Enable { get { return m_enable; } set { m_enable = value; } }
+        public bool DefaultShapes { get { return m_defaultShapes; } set { m_defaultShapes = value; } }
         public Material DefaultMaterial { get { return m_defaultMaterial; } set { m_defaultMaterial = value; } }
         public List<AssetReference<DebugGLShapeAsset>> Shapes { get { return m_shapes; } }
+        public DebugGLDrawer Drawer { get { return m_drawer ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasDrawer { get { return m_drawer != null; } }
 
+        private DebugGLDrawer m_drawer;
+        private readonly Camera.CameraCallback m_onPostRenderHandler;
         private static readonly WaitForEndOfFrame m_waitForEndOfFrame = new WaitForEndOfFrame();
-        private static readonly Camera.CameraCallback m_onPostRenderHandler = OnRender;
+
+        public DebugGLComponent()
+        {
+            m_onPostRenderHandler = OnRender;
+        }
 
         private void Start()
         {
-            DebugGL.Drawer.Enable = m_enable;
-            DebugGL.SetDefaultMaterial(m_defaultMaterial ? m_defaultMaterial : DebugGLUtility.CreateDefaultMaterial());
+            if (DebugGL.HasDrawer) throw new InvalidOperationException("Debug GL Drawer already specified.");
+
+            m_drawer = new DebugGLDrawer
+            {
+                Enable = m_enable
+            };
+
+            m_drawer.SetDefaultMaterial(m_defaultMaterial ? m_defaultMaterial : DebugGLUtility.CreateDefaultMaterial());
+
+            m_drawer.AddShape(DebugGL.ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
+            m_drawer.AddShape(DebugGL.ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
+            m_drawer.AddShape(DebugGL.ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
+            m_drawer.AddShape(DebugGL.ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
+            m_drawer.AddShape(DebugGL.ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
+            m_drawer.AddShape(DebugGL.ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
+            m_drawer.AddShape(DebugGL.ShapeCylinderWireId, DebugGLUtility.CreateShapeCylinderWire());
 
             for (int i = 0; i < m_shapes.Count; i++)
             {
                 AssetReference<DebugGLShapeAsset> reference = m_shapes[i];
 
-                DebugGL.Drawer.AddShape(reference.Guid, reference.Asset.Build());
+                m_drawer.AddShape(reference.Guid, reference.Asset.Build());
             }
+
+            DebugGL.DrawerSet(m_drawer);
+
+            m_drawer.Initialize();
         }
 
         private void OnDestroy()
         {
-            DebugGL.ClearDefaultMaterial();
-
-            for (int i = 0; i < m_shapes.Count; i++)
+            if (HasDrawer)
             {
-                AssetReference<DebugGLShapeAsset> reference = m_shapes[i];
+                m_drawer.Uninitialize();
 
-                DebugGL.Drawer.RemoveShape(reference.Guid);
+                if (DebugGL.HasDrawer && DebugGL.Drawer == m_drawer)
+                {
+                    DebugGL.DrawerClear();
+                }
+
+                m_drawer = null;
             }
         }
 
@@ -56,18 +88,21 @@ namespace UGF.DebugTools.Runtime
             Camera.onPostRender -= m_onPostRenderHandler;
         }
 
-        private static void OnRender(Camera _)
+        private void OnRender(Camera _)
         {
-            DebugGL.Drawer.DrawGL();
+            if (HasDrawer)
+            {
+                m_drawer.DrawGL();
+            }
         }
 
         private IEnumerator OnRenderEndRoutine()
         {
-            while (enabled)
+            while (enabled && HasDrawer)
             {
                 yield return m_waitForEndOfFrame;
 
-                DebugGL.Drawer.ClearCommands();
+                m_drawer.ClearCommands();
             }
         }
     }

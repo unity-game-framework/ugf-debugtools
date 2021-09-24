@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.UI.Scopes;
+using UGF.Initialize.Runtime;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
-    public class DebugUIDrawer
+    public class DebugUIDrawer : InitializeBase
     {
         public bool Enable { get; set; } = true;
         public IReadOnlyDictionary<string, IDebugUIDrawer> Drawers { get; }
@@ -23,35 +24,46 @@ namespace UGF.DebugTools.Runtime
             Drawers = new ReadOnlyDictionary<string, IDebugUIDrawer>(m_drawers);
         }
 
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
+            {
+                pair.Value.Initialize();
+            }
+        }
+
+        protected override void OnUninitialize()
+        {
+            base.OnUninitialize();
+
+            foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
+            {
+                pair.Value.Uninitialize();
+            }
+        }
+
         public void Add(string id, IDebugUIDrawer drawer)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
             if (drawer == null) throw new ArgumentNullException(nameof(drawer));
 
             m_drawers.Add(id, drawer);
-
-            drawer.Enable();
         }
 
         public bool Remove(string id)
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
-            if (m_drawers.TryGetValue(id, out IDebugUIDrawer drawer))
-            {
-                m_drawers.Remove(id);
-                drawer.Disable();
-                return true;
-            }
-
-            return false;
+            return m_drawers.Remove(id);
         }
 
         public void Clear()
         {
             foreach (KeyValuePair<string, IDebugUIDrawer> pair in m_drawers)
             {
-                pair.Value.Disable();
+                pair.Value.Uninitialize();
             }
 
             m_drawers.Clear();

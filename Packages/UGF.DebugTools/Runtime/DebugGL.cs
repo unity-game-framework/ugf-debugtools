@@ -1,37 +1,22 @@
 ﻿using System;
-using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugGL
     {
-        public static DebugGLDrawer Drawer { get; } = new DebugGLDrawer();
-        public static Material DefaultMaterial { get { return m_defaultMaterial != null ? m_defaultMaterial : throw new ArgumentException("Value not specified."); } }
-        public static bool HasDefaultMaterial { get { return m_defaultMaterial != null; } }
+        public static DebugGLDrawer Drawer { get { return m_drawer ?? throw new ArgumentException("Value not specified."); } }
+        public static bool HasDrawer { get { return m_drawer != null; } }
 
-        private static Material m_defaultMaterial;
+        private static DebugGLDrawer m_drawer;
 
-        static DebugGL()
+        public static void DrawerSet(DebugGLDrawer drawer)
         {
-            Drawer.AddShape(ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
-            Drawer.AddShape(ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
-            Drawer.AddShape(ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
-            Drawer.AddShape(ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
-            Drawer.AddShape(ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
-            Drawer.AddShape(ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
-            Drawer.AddShape(ShapeCylinderWireId, DebugGLUtility.CreateShapeCylinderWire());
+            m_drawer = drawer ?? throw new ArgumentNullException(nameof(drawer));
         }
 
-        public static void SetDefaultMaterial(Material material)
+        public static void DrawerClear()
         {
-            if (material == null) throw new ArgumentNullException(nameof(material));
-
-            m_defaultMaterial = material;
-        }
-
-        public static void ClearDefaultMaterial()
-        {
-            m_defaultMaterial = null;
+            m_drawer = null;
         }
     }
 }
