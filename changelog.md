@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-preview.4](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/1.0.0-preview.4) - 2021-10-03  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-debugtools/milestone/4?closed=1)  
+    
+
+### Fixed
+
+- Fix DebugUIWindowDrawer using editor code ([#21](https://github.com/unity-game-framework/ugf-debugtools/pull/21))  
+    - Fix `DebugUIWindowDrawer` class to use runtime scroll view scope instead of editor one.
+
 ## [1.0.0-preview.3](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/1.0.0-preview.3) - 2021-09-24  
 
 ### Release Notes
