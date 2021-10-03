@@ -1,5 +1,5 @@
 ﻿using System;
-using UnityEditor;
+using UGF.DebugTools.Runtime.UI.Scopes;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -21,6 +21,13 @@ namespace UGF.DebugTools.Runtime
             m_windowFunction = OnWindow;
         }
 
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            m_windowId = GetHashCode();
+        }
+
         public void Focus()
         {
             if (m_windowId.HasValue)
@@ -40,13 +47,11 @@ namespace UGF.DebugTools.Runtime
             {
                 OnUpdatePosition();
 
-                m_windowId ??= GetHashCode();
-
                 GUIStyle style = DisplayBackground ? GUI.skin.window : GUIStyle.none;
 
                 Position = IsModal
-                    ? GUI.ModalWindow(m_windowId.Value, Position, m_windowFunction, GUIContent.none, style)
-                    : GUI.Window(m_windowId.Value, Position, m_windowFunction, GUIContent.none, style);
+                    ? GUI.ModalWindow(WindowId, Position, m_windowFunction, GUIContent.none, style)
+                    : GUI.Window(WindowId, Position, m_windowFunction, GUIContent.none, style);
             }
         }
 
@@ -58,11 +63,11 @@ namespace UGF.DebugTools.Runtime
 
         private void OnWindow(int id)
         {
-            using (var view = new EditorGUILayout.ScrollViewScope(m_scroll))
+            using (var view = new DebugUIScrollViewScope(m_scroll))
             {
                 OnDrawGUILayout();
 
-                m_scroll = view.scrollPosition;
+                m_scroll = view.ScrollPosition;
             }
         }
     }
