@@ -5,7 +5,7 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+      "url": "https://api.upmhub.org/registries/unity-game-framework"
     },
     "com.ugf.debugtools": {
       "version": "file:UGF.DebugTools",
@@ -23,24 +23,24 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+      "url": "https://api.upmhub.org/registries/unity-game-framework"
     },
     "com.ugf.initialize": {
       "version": "2.6.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+      "url": "https://api.upmhub.org/registries/unity-game-framework"
     },
     "com.unity.ext.nunit": {
-      "version": "1.0.6",
+      "version": "2.0.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.7",
+      "version": "3.0.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -49,11 +49,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.29",
+      "version": "1.3.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.ext.nunit": "1.0.6",
+        "com.unity.ext.nunit": "2.0.3",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
