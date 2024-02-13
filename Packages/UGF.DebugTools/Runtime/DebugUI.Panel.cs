@@ -31,7 +31,10 @@ namespace UGF.DebugTools.Runtime
 
         public static bool RemovePanel(DebugUIPanel panel)
         {
-            panel.Uninitialize();
+            if (panel.IsInitialized)
+            {
+                panel.Uninitialize();
+            }
 
             return Provider.Drawers.Get<DebugUIPanelDrawer>().Panels.Remove(panel);
         }
