@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-preview](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/2.0.0-preview) - 2024-02-13  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-debugtools/milestone/5?closed=1)  
+    
+
+### Changed
+
+- Update to latest Unity ([#23](https://github.com/unity-game-framework/ugf-debugtools/issues/23))  
+    - Update dependencies: `com.ugf.editortools` to `3.0.0-preview.2`, `com.ugf.builder` to `2.0.2` and `com.ugf.initialize` to `2.9.0` versions, add `com.ugf.runtimetools` of `3.0.0-preview.7` version.
+    - Update package _Unity_ version to `2023.2`.
+    - Update package registry to _NPM Hub_.
+    - Change _Debug UI_ and _Debug GL_ classes to the latest standards.
+
 ## [1.0.0-preview.4](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/1.0.0-preview.4) - 2021-10-03  
 
 ### Release Notes

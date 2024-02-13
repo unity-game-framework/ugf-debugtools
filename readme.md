@@ -2,17 +2,18 @@
 
 UGF.DebugTools
 
-## Info
+## Information
 
-- **Version**: `1.0.0-preview.4`
-- **Unity**: `2021.1`
+- **Version**: `2.0.0-preview`
+- **Unity**: `2023.2`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
-- `com.ugf.editortools`: `1.13.1`
-- `com.ugf.builder`: `2.0.1`
-- `com.ugf.initialize`: `2.6.0`
+- `com.ugf.editortools`: `3.0.0-preview.2`
+- `com.ugf.builder`: `2.0.2`
+- `com.ugf.initialize`: `2.9.0`
+- `com.ugf.runtimetools`: `3.0.0-preview.7`
 - `com.unity.modules.imgui`: `1.0.0`
 
 
