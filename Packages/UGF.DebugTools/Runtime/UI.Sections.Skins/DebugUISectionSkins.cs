@@ -29,7 +29,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
             {
                 GUISkin skin = Skins[i];
 
-                menu.Add(skin.name, GUI.skin == skin, item => DebugUI.Drawer.SetSkin(item.GetValue<GUISkin>()), skin);
+                menu.Add(skin.name, GUI.skin == skin, item => DebugUI.Provider.SetSkin(item.GetValue<GUISkin>()), skin);
             }
 
             return menu;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -8,65 +6,43 @@ namespace UGF.DebugTools.Runtime
     [AddComponentMenu("Unity Game Framework/Debug/Debug UI", 2000)]
     public class DebugUIComponent : MonoBehaviour
     {
-        [SerializeField] private bool m_enable = true;
-        [SerializeField] private float m_scale = 1F;
-        [SerializeField] private GUISkin m_skin;
-        [SerializeField] private List<AssetReference<DebugUIDrawerAsset>> m_drawers = new List<AssetReference<DebugUIDrawerAsset>>();
+        [SerializeField] private DebugUIProviderAsset m_provider;
 
-        public bool Enable { get { return m_enable; } set { m_enable = value; } }
-        public float Scale { get { return m_scale; } set { m_scale = value; } }
-        public GUISkin Skin { get { return m_skin; } set { m_skin = value; } }
-        public List<AssetReference<DebugUIDrawerAsset>> Drawers { get { return m_drawers; } }
-        public DebugUIDrawer Drawer { get { return m_drawer ?? throw new ArgumentException("Value not specified."); } }
-        public bool HasDrawer { get { return m_drawer != null; } }
+        public DebugUIProviderAsset Provider { get { return m_provider; } set { m_provider = value; } }
+        public DebugUIProvider Instance { get { return m_instance ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasInstance { get { return m_instance != null; } }
 
-        private DebugUIDrawer m_drawer;
+        private DebugUIProvider m_instance;
 
         private void Start()
         {
-            if (DebugUI.HasDrawer) throw new InvalidOperationException("Debug UI Drawer already specified.");
+            if (DebugUI.HasProvider) throw new InvalidOperationException("Debug UI Drawer already specified.");
 
-            m_drawer = new DebugUIDrawer
-            {
-                Enable = m_enable,
-                Scale = Vector2.one * m_scale
-            };
+            m_instance = m_provider.Build();
 
-            if (m_skin != null)
-            {
-                m_drawer.SetSkin(m_skin);
-            }
+            DebugUI.SetProvider(m_instance);
 
-            for (int i = 0; i < m_drawers.Count; i++)
-            {
-                AssetReference<DebugUIDrawerAsset> reference = m_drawers[i];
-
-                m_drawer.Add(reference.Guid, reference.Asset.Build());
-            }
-
-            DebugUI.DrawerSet(m_drawer);
-
-            m_drawer.Initialize();
+            m_instance.Initialize();
         }
 
         private void OnDestroy()
         {
-            if (HasDrawer)
+            if (HasInstance)
             {
-                m_drawer.Uninitialize();
+                m_instance.Uninitialize();
 
-                if (DebugUI.HasDrawer && DebugUI.Drawer == m_drawer)
+                if (DebugUI.HasProvider && DebugUI.Provider == m_instance)
                 {
-                    DebugUI.DrawerClear();
+                    DebugUI.ClearProvider();
                 }
 
-                m_drawer = null;
+                m_instance = null;
             }
         }
 
         private void OnGUI()
         {
-            m_drawer.DrawGUI();
+            m_instance.DrawGUI();
 
             DebugUIContentCache.Reset();
         }

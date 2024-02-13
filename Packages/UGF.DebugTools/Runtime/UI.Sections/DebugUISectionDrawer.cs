@@ -1,31 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UGF.DebugTools.Runtime.UI.Functions;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UGF.DebugTools.Runtime.UI.Scopes;
+using UGF.EditorTools.Runtime.Ids;
+using UGF.RuntimeTools.Runtime.Providers;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Sections
 {
     public class DebugUISectionDrawer : DebugUIWindowDrawer
     {
-        public IReadOnlyDictionary<string, DebugUISection> Sections { get; }
+        public Provider<GlobalId, DebugUISection> Sections { get; } = new Provider<GlobalId, DebugUISection>();
         public Vector2 Size { get; set; } = new Vector2(200F, 200F);
         public DebugUISectionAlignment Alignment { get; set; } = DebugUISectionAlignment.Left;
-        public string Selected { get { return HasSelected ? m_selected : throw new ArgumentException("Value not specified."); } }
-        public bool HasSelected { get { return !string.IsNullOrEmpty(m_selected); } }
+        public GlobalId Selected { get { return m_selected ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasSelected { get { return m_selected.HasValue; } }
 
-        private readonly Dictionary<string, DebugUISection> m_sections = new Dictionary<string, DebugUISection>();
         private readonly Func<DebugUIMenu> m_onMenuCreateFunction;
         private readonly DebugUIMenuItemHandler m_onMenuItemHandler;
         private DebugUIFunction m_functionDisplay;
-        private string m_selected;
+        private GlobalId? m_selected;
 
         public DebugUISectionDrawer()
         {
-            Sections = new ReadOnlyDictionary<string, DebugUISection>(m_sections);
-
             m_onMenuCreateFunction = OnMenuSectionsCreate;
             m_onMenuItemHandler = OnMenuSectionsSelected;
         }
@@ -34,9 +31,9 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             base.OnInitialize();
 
-            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            foreach ((_, DebugUISection section) in Sections)
             {
-                pair.Value.Initialize();
+                section.Initialize();
             }
 
             m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Sections Display", OnFunctionDisplay);
@@ -46,58 +43,37 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             base.OnUninitialize();
 
-            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            foreach ((_, DebugUISection section) in Sections)
             {
-                pair.Value.Uninitialize();
+                section.Uninitialize();
             }
 
             DebugUI.RemoveFunction(DebugUI.DebugFunctionGroupName, m_functionDisplay);
-        }
-
-        public void Add(string id, DebugUISection section)
-        {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
-            if (section == null) throw new ArgumentNullException(nameof(section));
-
-            m_sections.Add(id, section);
-        }
-
-        public bool Remove(string id)
-        {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
-
-            if (m_sections.TryGetValue(id, out DebugUISection section))
-            {
-                m_sections.Remove(id);
-                return true;
-            }
-
-            return false;
         }
 
         public void Clear()
         {
             ClearSelected();
 
-            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            foreach ((_, DebugUISection section) in Sections)
             {
-                pair.Value.Uninitialize();
+                section.Uninitialize();
             }
 
-            m_sections.Clear();
+            Sections.Clear();
         }
 
-        public bool SetSelected(string id)
+        public bool SetSelected(GlobalId id)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
+            if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
 
             ClearSelected();
 
-            if (m_sections.TryGetValue(id, out DebugUISection section))
+            if (Sections.TryGet(id, out DebugUISection section))
             {
                 m_selected = id;
-                section.Select();
 
+                section.Select();
                 return false;
             }
 
@@ -108,12 +84,12 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             if (HasSelected)
             {
-                if (m_sections.TryGetValue(m_selected, out DebugUISection section))
+                if (Sections.TryGet(Selected, out DebugUISection section))
                 {
                     section.Deselect();
                 }
 
-                m_selected = string.Empty;
+                m_selected = default;
             }
         }
 
@@ -132,7 +108,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             if (HasSelected)
             {
-                if (m_sections.TryGetValue(Selected, out DebugUISection section))
+                if (Sections.TryGet(Selected, out DebugUISection section))
                 {
                     section.DrawGUILayout();
                 }
@@ -157,7 +133,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             if (HasSelected)
             {
-                return m_sections.TryGetValue(Selected, out DebugUISection section)
+                return Sections.TryGet(Selected, out DebugUISection section)
                     ? section.DisplayName
                     : "Unknown";
             }
@@ -171,9 +147,9 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             menu.Add("None", !HasSelected, m_onMenuItemHandler);
 
-            foreach (KeyValuePair<string, DebugUISection> pair in m_sections)
+            foreach ((GlobalId id, DebugUISection section) in Sections)
             {
-                menu.Add(pair.Value.DisplayName, m_selected == pair.Key, m_onMenuItemHandler, pair.Key);
+                menu.Add(section.DisplayName, HasSelected && Selected == id, m_onMenuItemHandler, id);
             }
 
             return menu;
@@ -183,7 +159,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             if (item.HasValue)
             {
-                string id = item.GetValue<string>();
+                var id = item.GetValue<GlobalId>();
 
                 SetSelected(id);
             }

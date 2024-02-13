@@ -11,18 +11,28 @@ namespace UGF.DebugTools.Editor.UI.Functions
         private SerializedProperty m_propertyDisplay;
         private SerializedProperty m_propertyWidth;
         private ReorderableListDrawer m_listFunctions;
+        private ReorderableListSelectionDrawerByElement m_listFunctionsSelection;
 
         private void OnEnable()
         {
             m_propertyDisplay = serializedObject.FindProperty("m_display");
             m_propertyWidth = serializedObject.FindProperty("m_width");
+
             m_listFunctions = new ReorderableListDrawer(serializedObject.FindProperty("m_functions"));
+
+            m_listFunctionsSelection = new ReorderableListSelectionDrawerByElement(m_listFunctions)
+            {
+                Drawer = { DisplayTitlebar = true }
+            };
+
             m_listFunctions.Enable();
+            m_listFunctionsSelection.Enable();
         }
 
         private void OnDisable()
         {
             m_listFunctions.Disable();
+            m_listFunctionsSelection.Disable();
         }
 
         public override void OnInspectorGUI()
@@ -35,6 +45,7 @@ namespace UGF.DebugTools.Editor.UI.Functions
                 EditorGUILayout.PropertyField(m_propertyWidth);
 
                 m_listFunctions.DrawGUILayout();
+                m_listFunctionsSelection.DrawGUILayout();
             }
         }
     }

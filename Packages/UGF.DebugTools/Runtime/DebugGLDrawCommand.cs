@@ -1,20 +1,21 @@
 ﻿using System;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
     public readonly struct DebugGLDrawCommand
     {
-        public string ShapeId { get; }
+        public GlobalId ShapeId { get; }
         public Vector3 Position { get; }
         public Quaternion Rotation { get; }
         public Vector3 Scale { get; }
         public Color Color { get; }
         public Material Material { get; }
 
-        public DebugGLDrawCommand(string shapeId, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
+        public DebugGLDrawCommand(GlobalId shapeId, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
         {
-            if (string.IsNullOrEmpty(shapeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(shapeId));
+            if (!shapeId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(shapeId));
 
             ShapeId = shapeId;
             Position = position;
@@ -26,12 +27,12 @@ namespace UGF.DebugTools.Runtime
 
         public bool IsValid()
         {
-            return !string.IsNullOrEmpty(ShapeId);
+            return ShapeId.IsValid() && Material != null;
         }
 
         public bool Equals(DebugGLDrawCommand other)
         {
-            return ShapeId == other.ShapeId && Position.Equals(other.Position) && Rotation.Equals(other.Rotation) && Scale.Equals(other.Scale) && Color.Equals(other.Color);
+            return ShapeId.Equals(other.ShapeId) && Position.Equals(other.Position) && Rotation.Equals(other.Rotation) && Scale.Equals(other.Scale) && Color.Equals(other.Color) && Equals(Material, other.Material);
         }
 
         public override bool Equals(object obj)
@@ -41,15 +42,7 @@ namespace UGF.DebugTools.Runtime
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                int hashCode = ShapeId != null ? ShapeId.GetHashCode() : 0;
-                hashCode = (hashCode * 397) ^ Position.GetHashCode();
-                hashCode = (hashCode * 397) ^ Rotation.GetHashCode();
-                hashCode = (hashCode * 397) ^ Scale.GetHashCode();
-                hashCode = (hashCode * 397) ^ Color.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(ShapeId, Position, Rotation, Scale, Color, Material);
         }
     }
 }

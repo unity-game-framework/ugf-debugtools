@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
-    public abstract class DebugUIWindowDrawer : DebugUIDrawerBase
+    public abstract class DebugUIWindowDrawer : DebugUIDrawer
     {
         public bool Display { get; set; }
         public bool DisplayBackground { get; set; } = true;
@@ -36,7 +36,7 @@ namespace UGF.DebugTools.Runtime
             }
         }
 
-        public void Unfocus()
+        public void UnFocus()
         {
             GUI.UnfocusWindow();
         }

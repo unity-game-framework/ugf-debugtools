@@ -6,34 +6,34 @@ namespace UGF.DebugTools.Runtime
     {
         public static DebugUIPanelText PanelText(string text)
         {
-            var panel = PanelAdd<DebugUIPanelText>();
+            var panel = AddPanel<DebugUIPanelText>();
 
             panel.Text = text;
 
             return panel;
         }
 
-        public static T PanelAdd<T>() where T : DebugUIPanel, new()
+        public static T AddPanel<T>() where T : DebugUIPanel, new()
         {
             var panel = new T();
 
-            PanelAdd(panel);
+            AddPanel(panel);
 
             return panel;
         }
 
-        public static void PanelAdd(DebugUIPanel panel)
+        public static void AddPanel(DebugUIPanel panel)
         {
-            Drawer.Get<DebugUIPanelDrawer>().Add(panel);
+            Provider.Drawers.Get<DebugUIPanelDrawer>().Panels.Add(panel);
 
             panel.Initialize();
         }
 
-        public static bool PanelRemove(DebugUIPanel panel)
+        public static bool RemovePanel(DebugUIPanel panel)
         {
             panel.Uninitialize();
 
-            return Drawer.Get<DebugUIPanelDrawer>().Remove(panel);
+            return Provider.Drawers.Get<DebugUIPanelDrawer>().Panels.Remove(panel);
         }
     }
 }

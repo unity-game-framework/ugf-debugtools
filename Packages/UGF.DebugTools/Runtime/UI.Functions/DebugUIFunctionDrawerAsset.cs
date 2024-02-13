@@ -14,7 +14,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         public float Width { get { return m_width; } set { m_width = value; } }
         public List<DebugUIFunctionAsset> Functions { get { return m_functions; } }
 
-        protected override IDebugUIDrawer OnBuild()
+        protected override DebugUIDrawer OnBuild()
         {
             var drawer = new DebugUIFunctionDrawer
             {

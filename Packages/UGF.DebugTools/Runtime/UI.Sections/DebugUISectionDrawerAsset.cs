@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
+using UGF.EditorTools.Runtime.Assets;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Sections
@@ -10,14 +10,14 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         [SerializeField] private float m_width = 200F;
         [SerializeField] private float m_height = 200F;
         [SerializeField] private DebugUISectionAlignment m_alignment = DebugUISectionAlignment.Right;
-        [SerializeField] private List<AssetReference<DebugUISectionAsset>> m_sections = new List<AssetReference<DebugUISectionAsset>>();
+        [SerializeField] private List<AssetIdReference<DebugUISectionAsset>> m_sections = new List<AssetIdReference<DebugUISectionAsset>>();
 
         public float Width { get { return m_width; } set { m_width = value; } }
         public float Height { get { return m_height; } set { m_height = value; } }
         public DebugUISectionAlignment Alignment { get { return m_alignment; } set { m_alignment = value; } }
-        public List<AssetReference<DebugUISectionAsset>> Sections { get { return m_sections; } }
+        public List<AssetIdReference<DebugUISectionAsset>> Sections { get { return m_sections; } }
 
-        protected override IDebugUIDrawer OnBuild()
+        protected override DebugUIDrawer OnBuild()
         {
             var drawer = new DebugUISectionDrawer
             {
@@ -27,10 +27,9 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             for (int i = 0; i < m_sections.Count; i++)
             {
-                AssetReference<DebugUISectionAsset> reference = m_sections[i];
-                DebugUISection section = reference.Asset.Build();
+                AssetIdReference<DebugUISectionAsset> reference = m_sections[i];
 
-                drawer.Add(reference.Guid, section);
+                drawer.Sections.Add(reference.Guid, reference.Asset.Build());
             }
 
             return drawer;

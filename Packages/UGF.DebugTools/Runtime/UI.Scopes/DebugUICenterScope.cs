@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Scopes
 {
-    public struct DebugUICenterScope : IDisposable
+    public readonly struct DebugUICenterScope : IDisposable
     {
         public DebugUICenterScope(GUIContent content, params GUILayoutOption[] options) : this(content, GUIStyle.none, options)
         {

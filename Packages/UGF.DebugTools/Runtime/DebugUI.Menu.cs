@@ -1,5 +1,6 @@
 ﻿using System;
 using UGF.DebugTools.Runtime.UI.Menu;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -109,16 +110,14 @@ namespace UGF.DebugTools.Runtime
 
         private static DebugUIMenuDrawer GetMenuDrawer()
         {
-            if (!Drawer.TryGet(out DebugUIMenuDrawer drawer))
+            if (!Provider.Drawers.TryGet(out DebugUIMenuDrawer drawer))
             {
-                string id = Guid.NewGuid().ToString("N");
-
                 drawer = new DebugUIMenuDrawer
                 {
                     Display = true
                 };
 
-                Drawer.Add(id, drawer);
+                Provider.Drawers.Add(GlobalId.Generate(), drawer);
 
                 drawer.Initialize();
             }

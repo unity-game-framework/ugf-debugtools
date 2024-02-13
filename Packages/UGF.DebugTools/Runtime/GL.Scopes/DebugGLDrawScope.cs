@@ -2,7 +2,7 @@
 
 namespace UGF.DebugTools.Runtime.GL.Scopes
 {
-    public struct DebugGLDrawScope : IDisposable
+    public readonly struct DebugGLDrawScope : IDisposable
     {
         public DebugGLDrawScope(DebugGLMode mode) : this((int)mode)
         {

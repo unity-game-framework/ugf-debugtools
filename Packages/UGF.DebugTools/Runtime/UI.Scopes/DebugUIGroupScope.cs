@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Scopes
 {
-    public struct DebugUIGroupScope : IDisposable
+    public readonly struct DebugUIGroupScope : IDisposable
     {
         public DebugUIGroupScope(Rect position) : this(position, GUIContent.none, GUIStyle.none)
         {
