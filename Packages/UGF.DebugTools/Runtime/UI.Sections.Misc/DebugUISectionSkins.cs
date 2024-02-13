@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime.UI.Sections.Skins
+namespace UGF.DebugTools.Runtime.UI.Sections.Misc
 {
     public class DebugUISectionSkins : DebugUISection
     {

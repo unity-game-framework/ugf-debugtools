@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime.UI.Sections.Skins
+namespace UGF.DebugTools.Runtime.UI.Sections.Misc
 {
     [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug UI Skin Section", order = 2000)]
     public class DebugUISectionSkinsAsset : DebugUISectionAsset
