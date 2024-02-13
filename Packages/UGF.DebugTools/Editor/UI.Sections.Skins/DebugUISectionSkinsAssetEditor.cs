@@ -1,4 +1,4 @@
-﻿using UGF.DebugTools.Runtime.UI.Sections.Skins;
+﻿using UGF.DebugTools.Runtime.UI.Sections.Misc;
 using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.Scopes;
 using UnityEditor;
