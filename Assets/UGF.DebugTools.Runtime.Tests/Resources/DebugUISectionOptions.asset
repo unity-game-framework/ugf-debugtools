@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb5e8f967784494581466902f18adcb3, type: 3}
-  m_Name: New Debug UI Section Options Asset
+  m_Name: DebugUISectionOptions
   m_EditorClassIdentifier: 

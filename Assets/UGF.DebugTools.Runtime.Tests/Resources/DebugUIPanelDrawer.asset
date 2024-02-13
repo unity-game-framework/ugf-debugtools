@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cfaf4b6045d4d05b8a7b8e2cfc0de09, type: 3}
-  m_Name: New Debug UI Section Skin Samples Asset
+  m_Script: {fileID: 11500000, guid: 1ae4bc8fa71d48849ee52ed74f5ca4a0, type: 3}
+  m_Name: DebugUIPanelDrawer
   m_EditorClassIdentifier: 
+  m_display: 0

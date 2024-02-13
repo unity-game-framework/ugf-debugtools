@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65cfcf55c37249c19cdd8a8c53be4a9f, type: 3}
-  m_Name: New Debug UI Section Skins Asset
+  m_Name: DebugUISectionSkins
   m_EditorClassIdentifier: 
   m_skins:
   - {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}

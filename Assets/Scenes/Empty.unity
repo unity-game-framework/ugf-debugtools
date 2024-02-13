@@ -246,10 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f703d31518bf42139c3e84790d308364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_enable: 1
-  m_defaultShapes: 1
-  m_defaultMaterial: {fileID: 0}
-  m_shapes: []
+  m_provider: {fileID: 11400000, guid: bfa8b04d346b5ac4db074bff6c9e7f79, type: 2}
 --- !u!1 &770230239
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,16 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc789d3dfe8e4c90ae18d29e6a687166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_enable: 1
-  m_scale: 2
-  m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
-  m_drawers:
-  - m_guid: f856bfcfa6327534fbdcfb32e09bad6f
-    m_asset: {fileID: 11400000, guid: f856bfcfa6327534fbdcfb32e09bad6f, type: 2}
-  - m_guid: e22946bc75712b245899bc6dfb0c8498
-    m_asset: {fileID: 11400000, guid: e22946bc75712b245899bc6dfb0c8498, type: 2}
-  - m_guid: 2c3a2510c22cba645ac071cc0c57d937
-    m_asset: {fileID: 11400000, guid: 2c3a2510c22cba645ac071cc0c57d937, type: 2}
+  m_provider: {fileID: 11400000, guid: 86583775dadcab140bb014903c0da5e9, type: 2}
 --- !u!1 &1188849071
 GameObject:
   m_ObjectHideFlags: 0
