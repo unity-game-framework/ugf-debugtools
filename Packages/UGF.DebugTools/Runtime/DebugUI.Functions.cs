@@ -19,22 +19,22 @@ namespace UGF.DebugTools.Runtime
 
         public static DebugUIFunction AddFunction(string groupName, GUIContent content, DebugUIFunctionExecuteHandler executeHandler)
         {
-            return Drawer.Get<DebugUIFunctionDrawer>().Add(groupName, content, executeHandler);
+            return Provider.Drawers.Get<DebugUIFunctionDrawer>().Add(groupName, content, executeHandler);
         }
 
         public static DebugUIFunction AddFunction(string groupName, GUIContent content, DebugUIFunctionExecuteHandler executeHandler, DebugUIFunctionValidateHandler validateHandler)
         {
-            return Drawer.Get<DebugUIFunctionDrawer>().Add(groupName, content, executeHandler, validateHandler);
+            return Provider.Drawers.Get<DebugUIFunctionDrawer>().Add(groupName, content, executeHandler, validateHandler);
         }
 
         public static void AddFunction(string groupName, DebugUIFunction function)
         {
-            Drawer.Get<DebugUIFunctionDrawer>().Add(groupName, function);
+            Provider.Drawers.Get<DebugUIFunctionDrawer>().Add(groupName, function);
         }
 
         public static bool RemoveFunction(string groupName, DebugUIFunction function)
         {
-            return Drawer.Get<DebugUIFunctionDrawer>().Remove(groupName, function);
+            return Provider.Drawers.Get<DebugUIFunctionDrawer>().Remove(groupName, function);
         }
     }
 }

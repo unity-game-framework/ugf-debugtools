@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.GL.Scopes
 {
-    public struct DebugGLMatrixScope : IDisposable
+    public readonly struct DebugGLMatrixScope : IDisposable
     {
         public DebugGLMatrixScope(Matrix4x4 matrix)
         {

@@ -2,7 +2,7 @@
 
 namespace UGF.DebugTools.Runtime
 {
-    public abstract class DebugUIDrawerAsset : BuilderAsset<IDebugUIDrawer>
+    public abstract class DebugUIDrawerAsset : BuilderAsset<DebugUIDrawer>
     {
     }
 }

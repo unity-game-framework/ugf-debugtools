@@ -10,7 +10,7 @@ namespace UGF.DebugTools.Runtime.GL.Sections
 
         protected override void OnDrawGUILayout()
         {
-            DebugGL.Drawer.Enable = DebugUI.FieldToggle("Enable", DebugGL.Drawer.Enable);
+            DebugGL.Provider.Enable = DebugUI.FieldToggle("Enable", DebugGL.Provider.Enable);
         }
     }
 }

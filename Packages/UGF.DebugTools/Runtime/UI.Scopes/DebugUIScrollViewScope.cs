@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI.Scopes
 {
-    public struct DebugUIScrollViewScope : IDisposable
+    public readonly struct DebugUIScrollViewScope : IDisposable
     {
-        public Vector2 ScrollPosition { get; private set; }
+        public Vector2 ScrollPosition { get; }
 
         public DebugUIScrollViewScope(Vector2 scrollPosition, bool alwaysShowHorizontal = false, bool alwaysShowVertical = false, params GUILayoutOption[] options)
         {

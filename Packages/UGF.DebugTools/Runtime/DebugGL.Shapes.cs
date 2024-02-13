@@ -1,17 +1,17 @@
-﻿using System;
+﻿using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugGL
     {
-        public static string ShapeLineWireId { get; } = Guid.NewGuid().ToString("N");
-        public static string ShapeTriangleWireId { get; } = Guid.NewGuid().ToString("N");
-        public static string ShapeQuadWireId { get; } = Guid.NewGuid().ToString("N");
-        public static string ShapeCircleWireId { get; } = Guid.NewGuid().ToString("N");
-        public static string ShapeCubeWireId { get; } = Guid.NewGuid().ToString("N");
-        public static string ShapeSphereWireId { get; } = Guid.NewGuid().ToString("N");
-        public static string ShapeCylinderWireId { get; } = Guid.NewGuid().ToString("N");
+        public static GlobalId ShapeLineWireId { get; } = GlobalId.Generate();
+        public static GlobalId ShapeTriangleWireId { get; } = GlobalId.Generate();
+        public static GlobalId ShapeQuadWireId { get; } = GlobalId.Generate();
+        public static GlobalId ShapeCircleWireId { get; } = GlobalId.Generate();
+        public static GlobalId ShapeCubeWireId { get; } = GlobalId.Generate();
+        public static GlobalId ShapeSphereWireId { get; } = GlobalId.Generate();
+        public static GlobalId ShapeCylinderWireId { get; } = GlobalId.Generate();
 
         public static void Line(Vector3 start, Vector3 end, Color color)
         {
@@ -52,14 +52,14 @@ namespace UGF.DebugTools.Runtime
             Shape(ShapeCylinderWireId, position, rotation, scale, color);
         }
 
-        public static void Shape(string id, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
+        public static void Shape(GlobalId id, Vector3 position, Quaternion rotation, Vector3 scale, Color color)
         {
-            Shape(id, position, rotation, scale, color, Drawer.DefaultMaterial);
+            Shape(id, position, rotation, scale, color, Provider.DefaultMaterial);
         }
 
-        public static void Shape(string id, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
+        public static void Shape(GlobalId id, Vector3 position, Quaternion rotation, Vector3 scale, Color color, Material material)
         {
-            Drawer.AddCommand(new DebugGLDrawCommand(id, position, rotation, scale, color, material));
+            Provider.Commands.Add(new DebugGLDrawCommand(id, position, rotation, scale, color, material));
         }
     }
 }

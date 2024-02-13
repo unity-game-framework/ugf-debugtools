@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0fa9b121f64e1f83b28ca10e31f731, type: 3}
+  m_Name: DebugUIProvider
+  m_EditorClassIdentifier: 
+  m_enable: 1
+  m_scale: 1.5
+  m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
+  m_drawers:
+  - m_guid:
+      m_first: 15250463461747492690
+      m_second: 6755841746922121752
+    m_asset: {fileID: 11400000, guid: d188875287b7d3a4182a0c5c4692c15d, type: 2}
+  - m_guid:
+      m_first: 4504984439284446958
+      m_second: 5024863672204210491
+    m_asset: {fileID: 11400000, guid: a63636eeeb7a3e843b317f12e3e6bb45, type: 2}
+  - m_guid:
+      m_first: 18425378906131320046
+      m_second: 8196283146458756153
+    m_asset: {fileID: 11400000, guid: 47eeccee187effb439f4318f180cbf71, type: 2}

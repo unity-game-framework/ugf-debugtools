@@ -9,7 +9,7 @@ namespace UGF.DebugTools.Runtime.UI.Panels
 
         public bool Display { get { return m_display; } set { m_display = value; } }
 
-        protected override IDebugUIDrawer OnBuild()
+        protected override DebugUIDrawer OnBuild()
         {
             return new DebugUIPanelDrawer
             {

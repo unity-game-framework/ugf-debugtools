@@ -64,6 +64,7 @@ namespace UGF.DebugTools.Runtime
             if (Event.current.type == EventType.Repaint)
             {
                 float padding = GUI.skin.button.padding.right;
+
                 var rectFoldout = new Rect(position.xMax - position.height - padding, position.y, LineHeight, LineHeight);
 
                 GUI.skin.FindStyle(DebugUIStyles.Foldout).Draw(rectFoldout, false, false, true, false);
@@ -113,6 +114,7 @@ namespace UGF.DebugTools.Runtime
         public static string DelayedTextField(Rect position, string value)
         {
             int controlId = GUIUtility.GetControlID(m_delayedTextFieldControlHint, FocusType.Keyboard, position);
+
             string controlName = $"{m_delayedTextFieldControlName}:{controlId}";
 
             GUI.SetNextControlName(controlName);

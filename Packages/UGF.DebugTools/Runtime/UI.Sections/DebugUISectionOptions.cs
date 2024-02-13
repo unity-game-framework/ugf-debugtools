@@ -18,7 +18,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
         {
             base.OnInitialize();
 
-            if (DebugUI.Drawer.TryGet(out DebugUISectionDrawer drawer))
+            if (DebugUI.Provider.Drawers.TryGet(out DebugUISectionDrawer drawer))
             {
                 m_drawer = drawer;
             }

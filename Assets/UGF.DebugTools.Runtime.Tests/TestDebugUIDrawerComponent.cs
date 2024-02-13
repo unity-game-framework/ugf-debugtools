@@ -143,7 +143,7 @@ namespace UGF.DebugTools.Runtime.Tests
 
         private void Start()
         {
-            DebugUI.PanelAdd<TestPanel>().BindTransform(transform);
+            DebugUI.AddPanel<TestPanel>().BindTransform(transform);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
             functions.Add(function);
 
-            Sort(functions);
+            OnSort(functions);
         }
 
         public bool Remove(string groupName, DebugUIFunction function)
@@ -44,7 +44,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
             {
                 if (functions.Count > 0)
                 {
-                    Sort(functions);
+                    OnSort(functions);
                 }
                 else
                 {
@@ -82,18 +82,18 @@ namespace UGF.DebugTools.Runtime.UI.Functions
 
             if (DisplayMenu)
             {
-                foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functions)
+                foreach ((string groupName, List<DebugUIFunction> functions) in m_functions)
                 {
-                    m_functionsUpdate.Add(pair.Key, pair.Value);
+                    m_functionsUpdate.Add(groupName, functions);
                 }
 
-                foreach (KeyValuePair<string, List<DebugUIFunction>> pair in m_functionsUpdate)
+                foreach ((string groupName, List<DebugUIFunction> functions) in m_functionsUpdate)
                 {
                     Rect position = DebugUI.GetControlRect();
 
-                    if (DebugUI.Dropdown(position, pair.Key))
+                    if (DebugUI.Dropdown(position, groupName))
                     {
-                        DebugUIMenu menu = OnCreateMenu(pair.Value);
+                        DebugUIMenu menu = OnCreateMenu(functions);
 
                         DebugUI.MenuShowDropdown(menu, position);
                     }
@@ -103,7 +103,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
             }
         }
 
-        private DebugUIMenu OnCreateMenu(List<DebugUIFunction> functions)
+        private DebugUIMenu OnCreateMenu(IReadOnlyList<DebugUIFunction> functions)
         {
             var menu = new DebugUIMenu();
 
@@ -124,7 +124,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
             return menu;
         }
 
-        private void Sort(List<DebugUIFunction> functions)
+        private void OnSort(List<DebugUIFunction> functions)
         {
             functions.Sort((x, y) => string.Compare(x.Content.text, y.Content.text, StringComparison.Ordinal));
         }

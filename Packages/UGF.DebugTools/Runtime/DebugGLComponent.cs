@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime
@@ -9,21 +7,15 @@ namespace UGF.DebugTools.Runtime
     [AddComponentMenu("Unity Game Framework/Debug/Debug GL", 2000)]
     public class DebugGLComponent : MonoBehaviour
     {
-        [SerializeField] private bool m_enable = true;
-        [SerializeField] private bool m_defaultShapes = true;
-        [SerializeField] private Material m_defaultMaterial;
-        [SerializeField] private List<AssetReference<DebugGLShapeAsset>> m_shapes = new List<AssetReference<DebugGLShapeAsset>>();
+        [SerializeField] private DebugGLProviderAsset m_provider;
 
-        public bool Enable { get { return m_enable; } set { m_enable = value; } }
-        public bool DefaultShapes { get { return m_defaultShapes; } set { m_defaultShapes = value; } }
-        public Material DefaultMaterial { get { return m_defaultMaterial; } set { m_defaultMaterial = value; } }
-        public List<AssetReference<DebugGLShapeAsset>> Shapes { get { return m_shapes; } }
-        public DebugGLDrawer Drawer { get { return m_drawer ?? throw new ArgumentException("Value not specified."); } }
-        public bool HasDrawer { get { return m_drawer != null; } }
+        public DebugGLProviderAsset Provider { get { return m_provider; } set { m_provider = value; } }
+        public DebugGLProvider Instance { get { return m_instance ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasInstance { get { return m_instance != null; } }
 
-        private DebugGLDrawer m_drawer;
         private readonly Camera.CameraCallback m_onPostRenderHandler;
-        private static readonly WaitForEndOfFrame m_waitForEndOfFrame = new WaitForEndOfFrame();
+        private readonly WaitForEndOfFrame m_waitForEndOfFrame = new WaitForEndOfFrame();
+        private DebugGLProvider m_instance;
 
         public DebugGLComponent()
         {
@@ -32,36 +24,13 @@ namespace UGF.DebugTools.Runtime
 
         private void Start()
         {
-            if (DebugGL.HasDrawer) throw new InvalidOperationException("Debug GL Drawer already specified.");
+            if (DebugGL.HasProvider) throw new InvalidOperationException("Debug GL Drawer already specified.");
 
-            m_drawer = new DebugGLDrawer
-            {
-                Enable = m_enable
-            };
+            m_instance = m_provider.Build();
 
-            m_drawer.SetDefaultMaterial(m_defaultMaterial ? m_defaultMaterial : DebugGLUtility.CreateDefaultMaterial());
+            DebugGL.SetProvider(m_instance);
 
-            if (m_defaultShapes)
-            {
-                m_drawer.AddShape(DebugGL.ShapeLineWireId, DebugGLUtility.CreateShapeLineWire());
-                m_drawer.AddShape(DebugGL.ShapeTriangleWireId, DebugGLUtility.CreateShapeTriangleWire());
-                m_drawer.AddShape(DebugGL.ShapeQuadWireId, DebugGLUtility.CreateShapeQuadWire());
-                m_drawer.AddShape(DebugGL.ShapeCircleWireId, DebugGLUtility.CreateShapeCircleWire());
-                m_drawer.AddShape(DebugGL.ShapeCubeWireId, DebugGLUtility.CreateShapeCubeWire());
-                m_drawer.AddShape(DebugGL.ShapeSphereWireId, DebugGLUtility.CreateShapeSphereWire());
-                m_drawer.AddShape(DebugGL.ShapeCylinderWireId, DebugGLUtility.CreateShapeCylinderWire());
-            }
-
-            for (int i = 0; i < m_shapes.Count; i++)
-            {
-                AssetReference<DebugGLShapeAsset> reference = m_shapes[i];
-
-                m_drawer.AddShape(reference.Guid, reference.Asset.Build());
-            }
-
-            DebugGL.DrawerSet(m_drawer);
-
-            m_drawer.Initialize();
+            m_instance.Initialize();
 
             Camera.onPostRender += m_onPostRenderHandler;
 
@@ -72,34 +41,34 @@ namespace UGF.DebugTools.Runtime
         {
             Camera.onPostRender -= m_onPostRenderHandler;
 
-            if (HasDrawer)
+            if (HasInstance)
             {
-                m_drawer.Uninitialize();
+                m_instance.Uninitialize();
 
-                if (DebugGL.HasDrawer && DebugGL.Drawer == m_drawer)
+                if (DebugGL.HasProvider && DebugGL.Provider == m_instance)
                 {
-                    DebugGL.DrawerClear();
+                    DebugGL.ClearProvider();
                 }
 
-                m_drawer = null;
+                m_instance = null;
             }
         }
 
         private void OnRender(Camera _)
         {
-            if (HasDrawer)
+            if (HasInstance)
             {
-                m_drawer.DrawGL();
+                m_instance.DrawGL();
             }
         }
 
         private IEnumerator OnRenderEndRoutine()
         {
-            while (enabled && HasDrawer)
+            while (enabled && HasInstance)
             {
                 yield return m_waitForEndOfFrame;
 
-                m_drawer.ClearCommands();
+                m_instance.Commands.Clear();
             }
         }
     }

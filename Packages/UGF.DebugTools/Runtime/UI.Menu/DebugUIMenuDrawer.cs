@@ -17,7 +17,7 @@ namespace UGF.DebugTools.Runtime.UI.Menu
         public DebugUIMenuDrawer()
         {
             DisplayBackground = false;
-            IsModal = true;
+            WindowType = DebugUIWindowType.Modal;
         }
 
         public void SetMenu(DebugUIMenu menu)

@@ -4,19 +4,19 @@ namespace UGF.DebugTools.Runtime
 {
     public static partial class DebugGL
     {
-        public static DebugGLDrawer Drawer { get { return m_drawer ?? throw new ArgumentException("Value not specified."); } }
-        public static bool HasDrawer { get { return m_drawer != null; } }
+        public static DebugGLProvider Provider { get { return m_provider ?? throw new ArgumentException("Value not specified."); } }
+        public static bool HasProvider { get { return m_provider != null; } }
 
-        private static DebugGLDrawer m_drawer;
+        private static DebugGLProvider m_provider;
 
-        public static void DrawerSet(DebugGLDrawer drawer)
+        public static void SetProvider(DebugGLProvider provider)
         {
-            m_drawer = drawer ?? throw new ArgumentNullException(nameof(drawer));
+            m_provider = provider ?? throw new ArgumentNullException(nameof(provider));
         }
 
-        public static void DrawerClear()
+        public static void ClearProvider()
         {
-            m_drawer = null;
+            m_provider = null;
         }
     }
 }
