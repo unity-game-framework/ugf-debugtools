@@ -20,6 +20,7 @@ namespace UGF.DebugTools.Runtime.UI.Panels
             }
 
             m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Panels Display", OnFunctionDisplay);
+            m_functionDisplay.Enabled = Display;
         }
 
         protected override void OnUninitialize()

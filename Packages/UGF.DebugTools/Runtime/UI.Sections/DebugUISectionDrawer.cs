@@ -37,6 +37,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             }
 
             m_functionDisplay = DebugUI.AddFunction(DebugUI.DebugFunctionGroupName, "Sections Display", OnFunctionDisplay);
+            m_functionDisplay.Enabled = Display;
         }
 
         protected override void OnUninitialize()
@@ -99,7 +100,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections
 
             Rect screen = DebugUIUtility.GetScreenRect();
 
-            Position = GetPosition(screen, Alignment, Size);
+            Position = OnGetPosition(screen, Alignment, Size);
         }
 
         protected override void OnDrawGUILayout()
@@ -176,18 +177,17 @@ namespace UGF.DebugTools.Runtime.UI.Sections
             function.Enabled = Display;
         }
 
-        private Rect GetPosition(Rect screen, DebugUISectionAlignment alignment, Vector2 size)
+        private Rect OnGetPosition(Rect screen, DebugUISectionAlignment alignment, Vector2 size)
         {
-            switch (alignment)
+            return alignment switch
             {
-                case DebugUISectionAlignment.Top: return new Rect(0F, 0F, screen.width, size.y);
-                case DebugUISectionAlignment.Bottom: return new Rect(0F, screen.height - size.y, screen.width, size.y);
-                case DebugUISectionAlignment.Right: return new Rect(screen.width - size.x, 0F, size.x, screen.height);
-                case DebugUISectionAlignment.Left: return new Rect(0F, 0F, size.x, screen.height);
-                case DebugUISectionAlignment.Full: return new Rect(0F, 0F, screen.width, screen.height);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null);
-            }
+                DebugUISectionAlignment.Top => new Rect(0F, 0F, screen.width, size.y),
+                DebugUISectionAlignment.Bottom => new Rect(0F, screen.height - size.y, screen.width, size.y),
+                DebugUISectionAlignment.Right => new Rect(screen.width - size.x, 0F, size.x, screen.height),
+                DebugUISectionAlignment.Left => new Rect(0F, 0F, size.x, screen.height),
+                DebugUISectionAlignment.Full => new Rect(0F, 0F, screen.width, screen.height),
+                _ => throw new ArgumentOutOfRangeException(nameof(alignment), alignment, "Debug UI section alignment is unknown.")
+            };
         }
     }
 }
