@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DebugUIProvider
   m_EditorClassIdentifier: 
   m_enable: 1
-  m_scale: 1
+  m_scale: 1.5
   m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
   m_drawers:
   - m_guid:
