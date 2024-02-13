@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cfaf4b6045d4d05b8a7b8e2cfc0de09, type: 3}
-  m_Name: DebugUISectionSkinSamples
+  m_Name: TestDebugUISectionSkinSamples
   m_EditorClassIdentifier: 

@@ -1,11 +1,12 @@
 ﻿using System;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UGF.DebugTools.Runtime.UI.Scopes;
+using UGF.DebugTools.Runtime.UI.Sections;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime.UI.Sections.Skins
+namespace UGF.DebugTools.Runtime.Tests
 {
-    public class DebugUISectionSkinSamples : DebugUISection
+    public class TestDebugUISectionSkinSamples : DebugUISection
     {
         private readonly Func<DebugUIMenu> m_onMenuCreate;
         private readonly DebugUIMenuItemHandler m_onMenuItemHandler;
@@ -22,7 +23,7 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Skins
         private string m_delayedText2 = "Delayed Text 2";
         private TypeCode m_enum;
 
-        public DebugUISectionSkinSamples() : base("UI Skin Samples")
+        public TestDebugUISectionSkinSamples() : base("UI Skin Samples")
         {
             m_onMenuCreate = OnMenuCreate;
             m_onMenuItemHandler = OnMenuSelect;

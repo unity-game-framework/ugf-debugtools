@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d86acfc259b442718b8f5090e0b658d6, type: 3}
-  m_Name: DebugUIFunctionDrawer
+  m_Script: {fileID: 11500000, guid: f7e98cce9a954809b83350ff23309523, type: 3}
+  m_Name: TestDebugUIFunction
   m_EditorClassIdentifier: 
-  m_display: 1
-  m_width: 200
-  m_functions:
-  - {fileID: 11400000, guid: 40819c68b734bda4eb58f986cd9dddb1, type: 2}
+  m_groupName: Tests
