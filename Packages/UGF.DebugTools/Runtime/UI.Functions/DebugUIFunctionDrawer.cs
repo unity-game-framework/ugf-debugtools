@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Object = UnityEngine.Object;
 
 namespace UGF.DebugTools.Runtime.UI.Functions
 {
     public class DebugUIFunctionDrawer : DebugUIWindowDrawer
     {
         public bool DisplayMenu { get; set; }
+        public bool DisplayMenuDisableEventSystem { get; set; }
         public float Width { get; set; } = 200F;
 
         private readonly Dictionary<string, List<DebugUIFunction>> m_functions = new Dictionary<string, List<DebugUIFunction>>();
         private readonly Dictionary<string, List<DebugUIFunction>> m_functionsUpdate = new Dictionary<string, List<DebugUIFunction>>();
+        private bool m_eventSystemPreviousState;
 
         public DebugUIFunctionDrawer()
         {
@@ -77,8 +81,18 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         {
             string label = DisplayMenu ? "Debug Functions" : string.Empty;
 
-            DisplayMenu = GUILayout.Toggle(DisplayMenu, label);
-            DisplayBackground = DisplayMenu;
+            bool change = GUILayout.Toggle(DisplayMenu, label);
+
+            if (change != DisplayMenu)
+            {
+                DisplayMenu = change;
+                DisplayBackground = DisplayMenu;
+
+                if (DisplayMenuDisableEventSystem)
+                {
+                    OnChangeEventSystem(!change);
+                }
+            }
 
             if (DisplayMenu)
             {
@@ -127,6 +141,27 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         private void OnSort(List<DebugUIFunction> functions)
         {
             functions.Sort((x, y) => string.Compare(x.Content.text, y.Content.text, StringComparison.Ordinal));
+        }
+
+        private void OnChangeEventSystem(bool value)
+        {
+#if UGF_DEBUGTOOLS_UI_INSTALLED
+            var eventSystem = Object.FindAnyObjectByType<EventSystem>(FindObjectsInactive.Include);
+
+            if (eventSystem != null)
+            {
+                if (value)
+                {
+                    eventSystem.enabled = m_eventSystemPreviousState;
+                }
+                else
+                {
+                    m_eventSystemPreviousState = eventSystem.enabled;
+
+                    eventSystem.enabled = false;
+                }
+            }
+#endif
         }
     }
 }
