@@ -9,6 +9,7 @@ namespace UGF.DebugTools.Editor.UI.Functions
     internal class DebugUIFunctionDrawerAssetEditor : UnityEditor.Editor
     {
         private SerializedProperty m_propertyDisplay;
+        private SerializedProperty m_propertyDisplayMenuDisableEventSystem;
         private SerializedProperty m_propertyWidth;
         private ReorderableListDrawer m_listFunctions;
         private ReorderableListSelectionDrawerByElement m_listFunctionsSelection;
@@ -16,6 +17,7 @@ namespace UGF.DebugTools.Editor.UI.Functions
         private void OnEnable()
         {
             m_propertyDisplay = serializedObject.FindProperty("m_display");
+            m_propertyDisplayMenuDisableEventSystem = serializedObject.FindProperty("m_displayMenuDisableEventSystem");
             m_propertyWidth = serializedObject.FindProperty("m_width");
 
             m_listFunctions = new ReorderableListDrawer(serializedObject.FindProperty("m_functions"));
@@ -42,6 +44,7 @@ namespace UGF.DebugTools.Editor.UI.Functions
                 EditorIMGUIUtility.DrawScriptProperty(serializedObject);
 
                 EditorGUILayout.PropertyField(m_propertyDisplay);
+                EditorGUILayout.PropertyField(m_propertyDisplayMenuDisableEventSystem);
                 EditorGUILayout.PropertyField(m_propertyWidth);
 
                 m_listFunctions.DrawGUILayout();
