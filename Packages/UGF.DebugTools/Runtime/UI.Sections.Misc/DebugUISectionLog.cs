@@ -69,6 +69,8 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Misc
 
         private void OnDrawLog(ref DebugUISectionLogData log)
         {
+            OnLogHeader(ref log);
+
             using (new DebugUIVerticalScope(GUIContent.none, m_styles.Frame))
             {
                 using (new DebugUIHorizontalScope(GUIContent.none))
@@ -107,27 +109,35 @@ namespace UGF.DebugTools.Runtime.UI.Sections.Misc
 
         private void OnLogMessageReceived(string condition, string stacktrace, LogType type)
         {
-            Color color = OnLogTypeColor(type);
-
-            m_builder.Append('[');
-            m_builder.Append(DateTime.Now.ToString("hh:mm:ss"));
-            m_builder.Append("] <color=#");
-            m_builder.Append(ColorUtility.ToHtmlStringRGB(color));
-            m_builder.Append("><b>");
-            m_builder.Append(type.ToString().ToUpper());
-            m_builder.Append("</b></color> ");
-            m_builder.Append(condition);
-
             m_log.Add(new DebugUISectionLogData
             {
                 Foldout = false,
-                Header = m_builder.ToString(),
-                Body = stacktrace,
+                Time = DateTime.Now,
                 Type = type,
-                Message = condition
+                Message = condition,
+                Body = stacktrace,
             });
+        }
 
-            m_builder.Clear();
+        private void OnLogHeader(ref DebugUISectionLogData log)
+        {
+            if (string.IsNullOrEmpty(log.Header))
+            {
+                Color color = OnLogTypeColor(log.Type);
+
+                m_builder.Append('[');
+                m_builder.Append(DateTime.Now.ToString("hh:mm:ss"));
+                m_builder.Append("] <color=#");
+                m_builder.Append(ColorUtility.ToHtmlStringRGB(color));
+                m_builder.Append("><b>");
+                m_builder.Append(log.Type.ToString().ToUpper());
+                m_builder.Append("</b></color> ");
+                m_builder.Append(log.Message);
+
+                log.Header = m_builder.ToString();
+
+                m_builder.Clear();
+            }
         }
 
         private Color OnLogTypeColor(LogType type)
