@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UGF.DebugTools.Runtime.UI.Menu;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Object = UnityEngine.Object;
 
 namespace UGF.DebugTools.Runtime.UI.Functions
 {
@@ -146,7 +144,7 @@ namespace UGF.DebugTools.Runtime.UI.Functions
         private void OnChangeEventSystem(bool value)
         {
 #if UGF_DEBUGTOOLS_UI_INSTALLED
-            var eventSystem = Object.FindAnyObjectByType<EventSystem>(FindObjectsInactive.Include);
+            var eventSystem = UnityEngine.Object.FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>(FindObjectsInactive.Include);
 
             if (eventSystem != null)
             {
