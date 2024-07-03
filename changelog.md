@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-preview.1](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/2.0.0-preview.1) - 2024-07-03  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-debugtools/milestone/6?closed=1)  
+    
+
+### Added
+
+- Add disable UI event system when displayed ([#27](https://github.com/unity-game-framework/ugf-debugtools/issues/27))  
+    - Add `DebugUIFunctionDrawer.DisplayMenuDisableEventSystem` property to determine whether to disable _UI Event System_ when menu is displayed, in cases when _UI_ package installed.
+- Add console section ([#25](https://github.com/unity-game-framework/ugf-debugtools/issues/25))  
+    - Add `DebugUISectionLog` and related classes as _Debug_ section to display recorded logs.
+
 ## [2.0.0-preview](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/2.0.0-preview) - 2024-02-13  
 
 ### Release Notes
