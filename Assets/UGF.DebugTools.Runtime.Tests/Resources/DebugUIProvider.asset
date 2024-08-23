@@ -17,14 +17,14 @@ MonoBehaviour:
   m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
   m_drawers:
   - m_guid:
-      m_first: 15250463461747492690
-      m_second: 6755841746922121752
+      serializedVersion: 2
+      Hash: d188875287b7d3a4182a0c5c4692c15d
     m_asset: {fileID: 11400000, guid: d188875287b7d3a4182a0c5c4692c15d, type: 2}
   - m_guid:
-      m_first: 4504984439284446958
-      m_second: 5024863672204210491
+      serializedVersion: 2
+      Hash: a63636eeeb7a3e843b317f12e3e6bb45
     m_asset: {fileID: 11400000, guid: a63636eeeb7a3e843b317f12e3e6bb45, type: 2}
   - m_guid:
-      m_first: 18425378906131320046
-      m_second: 8196283146458756153
+      serializedVersion: 2
+      Hash: 47eeccee187effb439f4318f180cbf71
     m_asset: {fileID: 11400000, guid: 47eeccee187effb439f4318f180cbf71, type: 2}
