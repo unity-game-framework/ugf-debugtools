@@ -15,4 +15,8 @@ MonoBehaviour:
   m_enable: 1
   m_documentGameObjectName: DebugUIDocument
   m_panelSettings: {fileID: 11400000, guid: aea7462e536e7fd4aa01dcd8a1b99f73, type: 2}
-  m_drawers: []
+  m_elements:
+  - m_guid:
+      serializedVersion: 2
+      Hash: 60cd3c2b48853f54da28610dd4153c79
+    m_asset: {fileID: 11400000, guid: 60cd3c2b48853f54da28610dd4153c79, type: 2}
