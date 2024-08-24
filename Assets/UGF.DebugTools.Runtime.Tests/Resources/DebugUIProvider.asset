@@ -13,18 +13,6 @@ MonoBehaviour:
   m_Name: DebugUIProvider
   m_EditorClassIdentifier: 
   m_enable: 1
-  m_scale: 1.5
-  m_skin: {fileID: 11400000, guid: 4346a5dd01e15a745b7d3df2ba5ab6d3, type: 2}
-  m_drawers:
-  - m_guid:
-      serializedVersion: 2
-      Hash: d188875287b7d3a4182a0c5c4692c15d
-    m_asset: {fileID: 11400000, guid: d188875287b7d3a4182a0c5c4692c15d, type: 2}
-  - m_guid:
-      serializedVersion: 2
-      Hash: a63636eeeb7a3e843b317f12e3e6bb45
-    m_asset: {fileID: 11400000, guid: a63636eeeb7a3e843b317f12e3e6bb45, type: 2}
-  - m_guid:
-      serializedVersion: 2
-      Hash: 47eeccee187effb439f4318f180cbf71
-    m_asset: {fileID: 11400000, guid: 47eeccee187effb439f4318f180cbf71, type: 2}
+  m_documentGameObjectName: DebugUIDocument
+  m_panelSettings: {fileID: 11400000, guid: aea7462e536e7fd4aa01dcd8a1b99f73, type: 2}
+  m_drawers: []
