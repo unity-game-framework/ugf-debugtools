@@ -9,8 +9,7 @@ namespace UGF.DebugTools.Runtime.UI
     public class DebugUIProvider : InitializeBase
     {
         public UIDocument Document { get; }
-        public Provider<GlobalId, DebugUIElement> Drawers { get; } = new Provider<GlobalId, DebugUIElement>();
-        public Provider<GlobalId, VisualElement> Elements { get; } = new Provider<GlobalId, VisualElement>();
+        public Provider<GlobalId, DebugUIElement> Elements { get; } = new Provider<GlobalId, DebugUIElement>();
 
         public DebugUIProvider(PanelSettings panelSettings, string documentGameObjectName = "DebugUIDocument") : this(DebugUIUtility.CreateDocument(panelSettings, documentGameObjectName))
         {
@@ -25,14 +24,8 @@ namespace UGF.DebugTools.Runtime.UI
         {
             base.OnInitialize();
 
-            foreach ((GlobalId id, DebugUIElement drawer) in Drawers)
+            foreach ((_, DebugUIElement element) in Elements)
             {
-                drawer.Initialize();
-
-                VisualElement element = drawer.CreateElement();
-
-                Elements.Add(id, element);
-
                 Document.rootVisualElement.Add(element);
             }
         }
@@ -46,16 +39,11 @@ namespace UGF.DebugTools.Runtime.UI
 
         public void Clear()
         {
-            foreach ((GlobalId id, DebugUIElement drawer) in Drawers)
+            foreach ((_, DebugUIElement element) in Elements)
             {
-                drawer.Uninitialize();
-
-                VisualElement element = Elements.Get(id);
-
                 Document.rootVisualElement.Remove(element);
             }
 
-            Drawers.Clear();
             Elements.Clear();
         }
     }
