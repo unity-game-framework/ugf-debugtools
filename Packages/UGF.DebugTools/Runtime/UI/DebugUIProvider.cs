@@ -2,31 +2,39 @@
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Initialize.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
+using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace UGF.DebugTools.Runtime.UI
 {
     public class DebugUIProvider : InitializeBase
     {
-        public UIDocument Document { get; }
+        public PanelSettings PanelSettings { get; }
+        public string DocumentGameObjectName { get; }
         public Provider<GlobalId, DebugUIElement> Elements { get; } = new Provider<GlobalId, DebugUIElement>();
+        public UIDocument Document { get { return m_document ?? throw new InitializeStateException(); } }
 
-        public DebugUIProvider(PanelSettings panelSettings, string documentGameObjectName = "DebugUIDocument") : this(DebugUIUtility.CreateDocument(panelSettings, documentGameObjectName))
-        {
-        }
+        private UIDocument m_document;
 
-        public DebugUIProvider(UIDocument document)
+        public DebugUIProvider(PanelSettings panelSettings, string documentGameObjectName = "DebugUIDocument")
         {
-            Document = document ?? throw new ArgumentNullException(nameof(document));
+            if (string.IsNullOrEmpty(documentGameObjectName)) throw new ArgumentException("Value cannot be null or empty.", nameof(documentGameObjectName));
+
+            PanelSettings = panelSettings;
+            DocumentGameObjectName = documentGameObjectName;
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
+            m_document = new GameObject(DocumentGameObjectName).AddComponent<UIDocument>();
+            m_document.panelSettings = PanelSettings;
+
             foreach ((_, DebugUIElement element) in Elements)
             {
-                Document.rootVisualElement.Add(element);
+                m_document.rootVisualElement.Add(element);
             }
         }
 
@@ -34,17 +42,19 @@ namespace UGF.DebugTools.Runtime.UI
         {
             base.OnUninitialize();
 
-            Clear();
-        }
-
-        public void Clear()
-        {
-            foreach ((_, DebugUIElement element) in Elements)
+            if (m_document != null)
             {
-                Document.rootVisualElement.Remove(element);
+                foreach ((_, DebugUIElement element) in Elements)
+                {
+                    m_document.rootVisualElement.Remove(element);
+                }
+
+                Object.Destroy(m_document.gameObject);
             }
 
             Elements.Clear();
+
+            m_document = null;
         }
     }
 }

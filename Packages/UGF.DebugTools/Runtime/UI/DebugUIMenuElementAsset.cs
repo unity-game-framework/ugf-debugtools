@@ -8,8 +8,10 @@ namespace UGF.DebugTools.Runtime.UI
     [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug UI Menu Element", order = 2000)]
     public class DebugUIMenuElementAsset : DebugUIElementAsset
     {
+        [SerializeField] private string m_displayName = "Debug Menu";
         [SerializeField] private List<AssetIdReference<DebugUIElementAsset>> m_elements = new List<AssetIdReference<DebugUIElementAsset>>();
 
+        public string DisplayName { get { return m_displayName; } set { m_displayName = value; } }
         public List<AssetIdReference<DebugUIElementAsset>> Elements { get { return m_elements; } }
 
         protected override DebugUIElement OnBuild()
@@ -27,7 +29,7 @@ namespace UGF.DebugTools.Runtime.UI
                 menus.Add(reference.Guid, element);
             }
 
-            return new DebugUIMenuElement(menus);
+            return new DebugUIMenuElement(m_displayName, menus);
         }
     }
 }

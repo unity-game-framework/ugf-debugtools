@@ -9,11 +9,13 @@ namespace UGF.DebugTools.Editor.UI
     [CustomEditor(typeof(DebugUIMenuElementAsset), true)]
     internal class DebugUIMenuElementAssetEditor : UnityEditor.Editor
     {
+        private SerializedProperty m_propertyDisplayName;
         private AssetIdReferenceListDrawer m_listElements;
         private ReorderableListSelectionDrawerByPath m_listElementsSelection;
 
         private void OnEnable()
         {
+            m_propertyDisplayName = serializedObject.FindProperty("m_displayName");
             m_listElements = new AssetIdReferenceListDrawer(serializedObject.FindProperty("m_elements"));
 
             m_listElementsSelection = new ReorderableListSelectionDrawerByPath(m_listElements, "m_asset")
@@ -36,6 +38,8 @@ namespace UGF.DebugTools.Editor.UI
             using (new SerializedObjectUpdateScope(serializedObject))
             {
                 EditorIMGUIUtility.DrawScriptProperty(serializedObject);
+
+                EditorGUILayout.PropertyField(m_propertyDisplayName);
 
                 m_listElements.DrawGUILayout();
                 m_listElementsSelection.DrawGUILayout();

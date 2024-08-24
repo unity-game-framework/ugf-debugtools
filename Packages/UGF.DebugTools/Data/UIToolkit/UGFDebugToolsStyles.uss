@@ -1,0 +1,24 @@
+.ugf-debugtools-menu {
+    max-width: 500px;
+    flex-grow: 1;
+}
+
+.ugf-debugtools-menu--enabled {
+    background-color: rgba(127, 127, 127, 0.75);
+}
+
+.ugf-debugtools-menu--disabled {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.ugf-debugtools-menu__header {
+    flex-direction: row;
+}
+
+.ugf-debugtools-menu__body-content--selected {
+    display: flex;
+}
+
+.ugf-debugtools-menu__body-content--not-selected {
+    display: none;
+}

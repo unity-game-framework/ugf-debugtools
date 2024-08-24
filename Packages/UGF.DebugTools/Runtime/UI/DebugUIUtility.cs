@@ -1,23 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace UGF.DebugTools.Runtime.UI
 {
     public static class DebugUIUtility
     {
-        public static UIDocument CreateDocument(PanelSettings panelSettings, string gameObjectName)
-        {
-            if (panelSettings == null) throw new ArgumentNullException(nameof(panelSettings));
-            if (string.IsNullOrEmpty(gameObjectName)) throw new ArgumentException("Value cannot be null or empty.", nameof(gameObjectName));
-
-            var document = new GameObject(gameObjectName).AddComponent<UIDocument>();
-
-            document.panelSettings = panelSettings;
-
-            return document;
-        }
-
         public static bool TryWorldToGUIPosition(Vector3 position, out Vector2 result)
         {
             return TryWorldToGUIPosition(position, Camera.current, out result);
