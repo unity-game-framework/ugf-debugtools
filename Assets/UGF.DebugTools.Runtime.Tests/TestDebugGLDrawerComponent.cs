@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UGF.DebugTools.Runtime.GL;
+using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.Tests
 {

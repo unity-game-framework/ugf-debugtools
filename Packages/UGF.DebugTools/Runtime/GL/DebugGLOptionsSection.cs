@@ -1,6 +1,6 @@
 ﻿using UGF.DebugTools.Runtime.UI.Sections;
 
-namespace UGF.DebugTools.Runtime.GL.Sections
+namespace UGF.DebugTools.Runtime.GL
 {
     public class DebugGLOptionsSection : DebugUISection
     {

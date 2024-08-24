@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.GL
 {
     [AddComponentMenu("Unity Game Framework/Debug/Debug GL", 2000)]
     public class DebugGLComponent : MonoBehaviour

@@ -2,9 +2,9 @@
 using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.GL
 {
-    public readonly struct DebugGLDrawCommand
+    public readonly struct DebugGLDrawCommand : IEquatable<DebugGLDrawCommand>
     {
         public GlobalId ShapeId { get; }
         public Vector3 Position { get; }

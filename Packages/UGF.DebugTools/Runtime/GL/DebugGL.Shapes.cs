@@ -1,7 +1,7 @@
 ﻿using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.GL
 {
     public static partial class DebugGL
     {

@@ -3,7 +3,7 @@ using UGF.Builder.Runtime;
 using UGF.EditorTools.Runtime.Assets;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.GL
 {
     [CreateAssetMenu(menuName = "Unity Game Framework/Debug/Debug GL Provider", order = 2000)]
     public class DebugGLProviderAsset : BuilderAsset<DebugGLProvider>

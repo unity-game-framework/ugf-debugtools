@@ -1,4 +1,4 @@
-﻿namespace UGF.DebugTools.Runtime
+﻿namespace UGF.DebugTools.Runtime.GL
 {
     public enum DebugGLMode
     {

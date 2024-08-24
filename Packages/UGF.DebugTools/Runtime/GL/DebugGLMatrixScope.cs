@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime.GL.Scopes
+namespace UGF.DebugTools.Runtime.GL
 {
     public readonly struct DebugGLMatrixScope : IDisposable
     {

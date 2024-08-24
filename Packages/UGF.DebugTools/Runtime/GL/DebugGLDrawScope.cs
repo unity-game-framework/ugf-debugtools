@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UGF.DebugTools.Runtime.GL.Scopes
+namespace UGF.DebugTools.Runtime.GL
 {
     public readonly struct DebugGLDrawScope : IDisposable
     {

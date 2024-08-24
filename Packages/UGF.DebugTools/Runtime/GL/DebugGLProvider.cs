@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using UGF.DebugTools.Runtime.GL.Scopes;
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Initialize.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 using UnityEngine;
 
-namespace UGF.DebugTools.Runtime
+namespace UGF.DebugTools.Runtime.GL
 {
     public class DebugGLProvider : InitializeBase
     {

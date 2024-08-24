@@ -1,10 +1,10 @@
-﻿using UGF.DebugTools.Runtime;
+﻿using UGF.DebugTools.Runtime.GL;
 using UGF.EditorTools.Editor.Assets;
 using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.Scopes;
 using UnityEditor;
 
-namespace UGF.DebugTools.Editor
+namespace UGF.DebugTools.Editor.GL
 {
     [CustomEditor(typeof(DebugGLProviderAsset), true)]
     internal class DebugGLProviderAssetEditor : UnityEditor.Editor
