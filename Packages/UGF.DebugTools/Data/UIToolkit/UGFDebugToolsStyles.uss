@@ -15,6 +15,10 @@
     flex-direction: row;
 }
 
+.ugf-debugtools-menu__body {
+    flex-grow: 1;
+}
+
 .ugf-debugtools-menu__body-content--selected {
     display: flex;
 }
@@ -27,4 +31,8 @@
     position: absolute;
     align-self: flex-end;
     background-color: rgba(127, 127, 127, 0.75);
+}
+
+.ugf-debugtools-log__entry__body {
+    white-space: normal;
 }
