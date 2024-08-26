@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UGF.EditorTools.Runtime.Ids;
 using UnityEngine.UIElements;
 
 namespace UGF.DebugTools.Runtime.UI
@@ -8,10 +7,11 @@ namespace UGF.DebugTools.Runtime.UI
     public class DebugUIMenuElement : DebugUIElement
     {
         public string DisplayName { get; }
-        public IDictionary<GlobalId, DebugUIElement> Menus { get; }
-        public GlobalId Selected { get { return m_selected ?? throw new ArgumentException("Value not specified."); } }
-        public bool HasSelected { get { return m_selected != null; } }
+        public IReadOnlyList<DebugUIMenu> Menus { get; }
+        public int Selected { get { return m_selected ?? throw new ArgumentException("Value not specified."); } }
+        public bool HasSelected { get { return m_selected.HasValue; } }
 
+        public static string NoneMenuName { get; } = "None";
         public static string UssClassName { get; } = "ugf-debugtools-menu";
         public static string EnabledUssClassName { get; } = "ugf-debugtools-menu--enabled";
         public static string DisabledUssClassName { get; } = "ugf-debugtools-menu--disabled";
@@ -24,9 +24,9 @@ namespace UGF.DebugTools.Runtime.UI
 
         private readonly VisualElement m_headerContent;
         private readonly VisualElement m_bodyContent;
-        private GlobalId? m_selected;
+        private int? m_selected;
 
-        public DebugUIMenuElement(string displayName, IDictionary<GlobalId, DebugUIElement> menus)
+        public DebugUIMenuElement(string displayName, IReadOnlyList<DebugUIMenu> menus)
         {
             if (string.IsNullOrEmpty(displayName)) throw new ArgumentException("Value cannot be null or empty.", nameof(displayName));
 
@@ -47,7 +47,7 @@ namespace UGF.DebugTools.Runtime.UI
             };
 
             var toggle = new Toggle();
-            var selection = new PopupField<GlobalId?>(OnSelectionCreateList(), 0, OnSelectionNameFormat, OnSelectionNameFormat);
+            var selection = new PopupField<int?>(OnSelectionCreateList(), 0, OnSelectionNameFormat, OnSelectionNameFormat);
 
             Add(header);
             Add(body);
@@ -59,11 +59,13 @@ namespace UGF.DebugTools.Runtime.UI
             m_headerContent.Add(new Label(DisplayName));
             m_bodyContent.Add(selection);
 
-            foreach ((_, DebugUIElement element) in Menus)
+            for (int i = 0; i < Menus.Count; i++)
             {
-                element.AddToClassList(BodyContentNotSelectedUssClassName);
+                DebugUIMenu menu = Menus[i];
 
-                m_bodyContent.Add(element);
+                menu.Element.AddToClassList(BodyContentNotSelectedUssClassName);
+
+                m_bodyContent.Add(menu.Element);
             }
 
             toggle.RegisterValueChangedCallback(OnToggle);
@@ -79,28 +81,28 @@ namespace UGF.DebugTools.Runtime.UI
             m_bodyContent.AddToClassList(BodyContentUssClassName);
         }
 
-        public void SetSelected(GlobalId id)
+        public void SetSelected(int index)
         {
-            if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
+            if (index < 0 || index >= Menus.Count) throw new ArgumentOutOfRangeException(nameof(index));
 
             ClearSelected();
 
-            m_selected = id;
+            m_selected = index;
 
-            DebugUIElement element = Menus[m_selected.Value];
+            DebugUIMenu menu = Menus[m_selected.Value];
 
-            element.RemoveFromClassList(BodyContentNotSelectedUssClassName);
-            element.AddToClassList(BodyContentSelectedUssClassName);
+            menu.Element.RemoveFromClassList(BodyContentNotSelectedUssClassName);
+            menu.Element.AddToClassList(BodyContentSelectedUssClassName);
         }
 
         public bool ClearSelected()
         {
             if (m_selected.HasValue)
             {
-                DebugUIElement element = Menus[m_selected.Value];
+                DebugUIMenu menu = Menus[m_selected.Value];
 
-                element.RemoveFromClassList(BodyContentSelectedUssClassName);
-                element.AddToClassList(BodyContentNotSelectedUssClassName);
+                menu.Element.RemoveFromClassList(BodyContentSelectedUssClassName);
+                menu.Element.AddToClassList(BodyContentNotSelectedUssClassName);
 
                 m_selected = null;
                 return true;
@@ -118,7 +120,7 @@ namespace UGF.DebugTools.Runtime.UI
             m_bodyContent.visible = changeEvent.newValue;
         }
 
-        private void OnSelectionChange(ChangeEvent<GlobalId?> changeEvent)
+        private void OnSelectionChange(ChangeEvent<int?> changeEvent)
         {
             if (changeEvent.newValue.HasValue)
             {
@@ -130,18 +132,18 @@ namespace UGF.DebugTools.Runtime.UI
             }
         }
 
-        private string OnSelectionNameFormat(GlobalId? id)
+        private string OnSelectionNameFormat(int? id)
         {
-            return id.HasValue ? Menus[id.Value].name : "None";
+            return id.HasValue ? Menus[id.Value].Name : NoneMenuName;
         }
 
-        private List<GlobalId?> OnSelectionCreateList()
+        private List<int?> OnSelectionCreateList()
         {
-            var list = new List<GlobalId?> { default };
+            var list = new List<int?> { default };
 
-            foreach ((GlobalId id, _) in Menus)
+            for (int i = 0; i < Menus.Count; i++)
             {
-                list.Add(id);
+                list.Add(i);
             }
 
             return list;

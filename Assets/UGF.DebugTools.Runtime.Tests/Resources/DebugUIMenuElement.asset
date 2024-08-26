@@ -13,16 +13,10 @@ MonoBehaviour:
   m_Name: DebugUIMenuElement
   m_EditorClassIdentifier: 
   m_displayName: Debug Menu
-  m_elements:
-  - m_guid:
-      serializedVersion: 2
-      Hash: 0fa65e93e3ad3684183f9a1f295f2f61
-    m_asset: {fileID: 11400000, guid: 0fa65e93e3ad3684183f9a1f295f2f61, type: 2}
-  - m_guid:
-      serializedVersion: 2
-      Hash: f86c269d4588ce7458554c74e06f9b54
-    m_asset: {fileID: 11400000, guid: f86c269d4588ce7458554c74e06f9b54, type: 2}
-  - m_guid:
-      serializedVersion: 2
-      Hash: e2589b9ae1a2a1b43b869efdfc789269
-    m_asset: {fileID: 11400000, guid: e2589b9ae1a2a1b43b869efdfc789269, type: 2}
+  m_menu:
+  - m_name: Log
+    m_element: {fileID: 11400000, guid: 0fa65e93e3ad3684183f9a1f295f2f61, type: 2}
+  - m_name: Test 1
+    m_element: {fileID: 11400000, guid: f86c269d4588ce7458554c74e06f9b54, type: 2}
+  - m_name: Test 2
+    m_element: {fileID: 11400000, guid: e2589b9ae1a2a1b43b869efdfc789269, type: 2}

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using UGF.EditorTools.Runtime.Assets;
-using UGF.EditorTools.Runtime.Ids;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UGF.DebugTools.Runtime.UI
@@ -9,24 +8,30 @@ namespace UGF.DebugTools.Runtime.UI
     public class DebugUIMenuElementAsset : DebugUIElementAsset
     {
         [SerializeField] private string m_displayName = "Debug Menu";
-        [SerializeField] private List<AssetIdReference<DebugUIElementAsset>> m_elements = new List<AssetIdReference<DebugUIElementAsset>>();
+        [SerializeField] private List<MenuData> m_menu = new List<MenuData>();
 
         public string DisplayName { get { return m_displayName; } set { m_displayName = value; } }
-        public List<AssetIdReference<DebugUIElementAsset>> Elements { get { return m_elements; } }
+        public List<MenuData> Menu { get { return m_menu; } }
+
+        [Serializable]
+        public struct MenuData
+        {
+            [SerializeField] private string m_name;
+            [SerializeField] private DebugUIElementAsset m_element;
+
+            public string Name { get { return m_name; } set { m_name = value; } }
+            public DebugUIElementAsset Element { get { return m_element; } set { m_element = value; } }
+        }
 
         protected override DebugUIElement OnBuild()
         {
-            var menus = new Dictionary<GlobalId, DebugUIElement>();
+            var menus = new List<DebugUIMenu>();
 
-            for (int i = 0; i < m_elements.Count; i++)
+            for (int i = 0; i < m_menu.Count; i++)
             {
-                AssetIdReference<DebugUIElementAsset> reference = m_elements[i];
+                MenuData menu = m_menu[i];
 
-                DebugUIElement element = reference.Asset.Build();
-
-                element.name = reference.Asset.name;
-
-                menus.Add(reference.Guid, element);
+                menus.Add(new DebugUIMenu(menu.Name, menu.Element.Build()));
             }
 
             return new DebugUIMenuElement(m_displayName, menus);

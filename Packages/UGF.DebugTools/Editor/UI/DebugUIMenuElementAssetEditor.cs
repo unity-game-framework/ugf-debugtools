@@ -1,5 +1,4 @@
 ﻿using UGF.DebugTools.Runtime.UI;
-using UGF.EditorTools.Editor.Assets;
 using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.Scopes;
 using UnityEditor;
@@ -10,27 +9,27 @@ namespace UGF.DebugTools.Editor.UI
     internal class DebugUIMenuElementAssetEditor : UnityEditor.Editor
     {
         private SerializedProperty m_propertyDisplayName;
-        private AssetIdReferenceListDrawer m_listElements;
-        private ReorderableListSelectionDrawerByPath m_listElementsSelection;
+        private ReorderableListKeyAndValueDrawer m_listMenu;
+        private ReorderableListSelectionDrawerByPath m_listMenuSelection;
 
         private void OnEnable()
         {
             m_propertyDisplayName = serializedObject.FindProperty("m_displayName");
-            m_listElements = new AssetIdReferenceListDrawer(serializedObject.FindProperty("m_elements"));
+            m_listMenu = new ReorderableListKeyAndValueDrawer(serializedObject.FindProperty("m_menu"), "m_name", "m_element");
 
-            m_listElementsSelection = new ReorderableListSelectionDrawerByPath(m_listElements, "m_asset")
+            m_listMenuSelection = new ReorderableListSelectionDrawerByPath(m_listMenu, "m_element")
             {
                 Drawer = { DisplayTitlebar = true }
             };
 
-            m_listElements.Enable();
-            m_listElementsSelection.Enable();
+            m_listMenu.Enable();
+            m_listMenuSelection.Enable();
         }
 
         private void OnDisable()
         {
-            m_listElements.Disable();
-            m_listElementsSelection.Disable();
+            m_listMenu.Disable();
+            m_listMenuSelection.Disable();
         }
 
         public override void OnInspectorGUI()
@@ -41,8 +40,8 @@ namespace UGF.DebugTools.Editor.UI
 
                 EditorGUILayout.PropertyField(m_propertyDisplayName);
 
-                m_listElements.DrawGUILayout();
-                m_listElementsSelection.DrawGUILayout();
+                m_listMenu.DrawGUILayout();
+                m_listMenuSelection.DrawGUILayout();
             }
         }
     }
