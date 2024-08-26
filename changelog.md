@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0-preview](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/3.0.0-preview) - 2024-08-26  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-debugtools/milestone/7?closed=1)  
+    
+
+### Added
+
+- Add UI Toolkit support ([#26](https://github.com/unity-game-framework/ugf-debugtools/issues/26))  
+    - Update dependencies: `com.ugf.editortools` to `3.0.0-preview.13`, `com.ugf.runtimetools` to `3.0.0-preview.18`, add `com.unity.modules.uielements` of `1.0.0`, and remove of `com.unity.modules.imgui`.
+    - Add _UI Toolkit_ implementation.
+    - Remove _IMGUI_ implementation.
+
 ## [2.0.0-preview.1](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/2.0.0-preview.1) - 2024-07-03  
 
 ### Release Notes
