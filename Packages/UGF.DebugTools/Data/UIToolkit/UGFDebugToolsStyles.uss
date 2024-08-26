@@ -22,3 +22,9 @@
 .ugf-debugtools-menu__body-content--not-selected {
     display: none;
 }
+
+.ugf-debugtools-stats {
+    position: absolute;
+    align-self: flex-end;
+    background-color: rgba(127, 127, 127, 0.75);
+}

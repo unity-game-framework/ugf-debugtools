@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0fa9b121f64e1f83b28ca10e31f731, type: 3}
   m_Name: DebugUIProvider
   m_EditorClassIdentifier: 
-  m_enable: 1
   m_documentGameObjectName: DebugUIDocument
   m_panelSettings: {fileID: 11400000, guid: aea7462e536e7fd4aa01dcd8a1b99f73, type: 2}
   m_elements:
+  - m_guid:
+      serializedVersion: 2
+      Hash: be2fef809798e9846a58212d1aad47d0
+    m_asset: {fileID: 11400000, guid: be2fef809798e9846a58212d1aad47d0, type: 2}
   - m_guid:
       serializedVersion: 2
       Hash: 60cd3c2b48853f54da28610dd4153c79
