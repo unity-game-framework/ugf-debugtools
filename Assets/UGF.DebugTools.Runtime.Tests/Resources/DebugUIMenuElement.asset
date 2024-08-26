@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab278e66c6444b67b2ad2cec1ec398f1, type: 3}
   m_Name: DebugUIMenuElement
   m_EditorClassIdentifier: 
+  m_displayName: Debug Menu
   m_elements:
+  - m_guid:
+      serializedVersion: 2
+      Hash: 0fa65e93e3ad3684183f9a1f295f2f61
+    m_asset: {fileID: 11400000, guid: 0fa65e93e3ad3684183f9a1f295f2f61, type: 2}
   - m_guid:
       serializedVersion: 2
       Hash: f86c269d4588ce7458554c74e06f9b54

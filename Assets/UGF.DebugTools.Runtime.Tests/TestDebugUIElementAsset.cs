@@ -22,6 +22,15 @@ namespace UGF.DebugTools.Runtime.Tests
         public TestDebugUIElement(string message)
         {
             Add(new Label(message));
+            Add(new Button(OnMessageLogs) { text = "Test Message Logs" });
+        }
+
+        private void OnMessageLogs()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Debug.Log($"Test Message '{i}'");
+            }
         }
     }
 }
