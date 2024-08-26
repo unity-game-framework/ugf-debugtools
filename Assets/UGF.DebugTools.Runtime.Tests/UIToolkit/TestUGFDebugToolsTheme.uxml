@@ -1,0 +1,37 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement style="flex-grow: 0; background-color: rgba(128, 128, 128, 0.75);">
+        <engine:Label text="Label" />
+        <engine:Button text="Button" />
+        <engine:Toggle label="Toggle" />
+        <engine:ToggleButtonGroup label="Toggle Button Group" />
+        <engine:Scroller high-value="100" direction="Horizontal" value="42" />
+        <engine:TextField label="Text Field" placeholder-text="filler text" />
+        <engine:Foldout text="Foldout" />
+        <engine:Slider label="Slider" value="42" high-value="100" />
+        <engine:SliderInt label="SliderInt" value="42" high-value="100" />
+        <engine:MinMaxSlider label="Min/Max Slider" value="10,12" low-limit="-10" high-limit="40" />
+        <engine:ProgressBar value="22" title="my-progress" />
+        <engine:DropdownField label="Dropdown" choices="1,2,3" />
+        <engine:EnumField label="Enum" value="Center" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" />
+        <engine:RadioButton label="Radio Button" />
+        <engine:RadioButtonGroup label="Radio Button Group" />
+        <engine:Tab label="Tab" />
+        <engine:TabView />
+        <engine:IntegerField label="Integer Field" value="42" />
+        <engine:FloatField label="Float Field" value="42.2" />
+        <engine:LongField label="Long Field" value="42" />
+        <engine:DoubleField label="Double Field" value="42.2" />
+        <engine:Hash128Field label="Hash128 Field" value="885eea9fcca73bdadde4ecd6a3af1312" />
+        <engine:Vector2Field label="Vec2 Field" />
+        <engine:Vector3Field label="Vec3 Field" />
+        <engine:Vector4Field label="Vec4 Field" />
+        <engine:RectField label="Rect" />
+        <engine:BoundsField label="Bounds" />
+        <engine:UnsignedIntegerField label="Unsigned Integer Field" value="42" />
+        <engine:UnsignedLongField label="Unsigned Long Field" value="42" />
+        <engine:Vector2IntField label="Vector2Int" />
+        <engine:Vector3IntField label="Vector3Int" />
+        <engine:RectIntField label="RectInt" />
+        <engine:BoundsIntField label="BoundsInt" />
+    </engine:VisualElement>
+</engine:UXML>
