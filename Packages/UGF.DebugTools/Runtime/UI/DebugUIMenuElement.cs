@@ -22,7 +22,9 @@ namespace UGF.DebugTools.Runtime.UI
         public static string BodyContentSelectedUssClassName { get; } = "ugf-debugtools-menu__body-content--selected";
         public static string BodyContentNotSelectedUssClassName { get; } = "ugf-debugtools-menu__body-content--not-selected";
 
+        private readonly VisualElement m_header;
         private readonly VisualElement m_headerContent;
+        private readonly VisualElement m_body;
         private readonly VisualElement m_bodyContent;
         private int? m_selected;
 
@@ -30,11 +32,20 @@ namespace UGF.DebugTools.Runtime.UI
         {
             if (string.IsNullOrEmpty(displayName)) throw new ArgumentException("Value cannot be null or empty.", nameof(displayName));
 
+            pickingMode = PickingMode.Ignore;
+
             DisplayName = displayName;
             Menus = menus ?? throw new ArgumentNullException(nameof(menus));
 
-            var header = new VisualElement();
-            var body = new VisualElement();
+            m_header = new VisualElement
+            {
+                pickingMode = PickingMode.Ignore
+            };
+
+            m_body = new VisualElement
+            {
+                pickingMode = PickingMode.Ignore
+            };
 
             m_headerContent = new VisualElement
             {
@@ -43,18 +54,18 @@ namespace UGF.DebugTools.Runtime.UI
 
             m_bodyContent = new VisualElement
             {
-                visible = false,
+                visible = false
             };
 
             var toggle = new Toggle();
             var selection = new PopupField<int?>(OnSelectionCreateList(), 0, OnSelectionNameFormat, OnSelectionNameFormat);
 
-            Add(header);
-            Add(body);
+            Add(m_header);
+            Add(m_body);
 
-            header.Add(toggle);
-            header.Add(m_headerContent);
-            body.Add(m_bodyContent);
+            m_header.Add(toggle);
+            m_header.Add(m_headerContent);
+            m_body.Add(m_bodyContent);
 
             m_headerContent.Add(new Label(DisplayName));
             m_bodyContent.Add(selection);
@@ -74,8 +85,8 @@ namespace UGF.DebugTools.Runtime.UI
             AddToClassList(UssClassName);
             AddToClassList(DisabledUssClassName);
 
-            header.AddToClassList(HeaderUssClassName);
-            body.AddToClassList(BodyUssClassName);
+            m_header.AddToClassList(HeaderUssClassName);
+            m_body.AddToClassList(BodyUssClassName);
 
             m_headerContent.AddToClassList(HeaderContentUssClassName);
             m_bodyContent.AddToClassList(BodyContentUssClassName);
@@ -116,7 +127,9 @@ namespace UGF.DebugTools.Runtime.UI
             EnableInClassList(EnabledUssClassName, changeEvent.newValue);
             EnableInClassList(DisabledUssClassName, !changeEvent.newValue);
 
+            m_header.pickingMode = changeEvent.newValue ? PickingMode.Position : PickingMode.Ignore;
             m_headerContent.visible = changeEvent.newValue;
+            m_body.pickingMode = changeEvent.newValue ? PickingMode.Position : PickingMode.Ignore;
             m_bodyContent.visible = changeEvent.newValue;
         }
 
