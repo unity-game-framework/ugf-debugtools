@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0-preview.1](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/3.0.0-preview.1) - 2024-10-24  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-debugtools/milestone/8?closed=1)  
+    
+
+### Fixed
+
+- Fix debug menu picking mode ([#32](https://github.com/unity-game-framework/ugf-debugtools/issues/32))  
+    - Fix `DebugUIMenuElement` class picking mode setup depending on visibility.
+- Fix debug log entry body error ([#31](https://github.com/unity-game-framework/ugf-debugtools/issues/31))  
+    - Fix `DebugUILogEntryData` structure body argument check.
+
 ## [3.0.0-preview](https://github.com/unity-game-framework/ugf-debugtools/releases/tag/3.0.0-preview) - 2024-08-26  
 
 ### Release Notes
