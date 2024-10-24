@@ -2,7 +2,7 @@
 
 namespace UGF.DebugTools.Runtime.UI
 {
-    public static partial class DebugUI
+    public static class DebugUI
     {
         public static DebugUIProvider Provider { get { return m_provider ?? throw new ArgumentException("Value not specified."); } }
         public static bool HasProvider { get { return m_provider != null; } }
